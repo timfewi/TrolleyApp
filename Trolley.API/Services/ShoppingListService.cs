@@ -78,6 +78,40 @@ namespace Trolley.API.Services
             }
         }
 
+        public async Task AddProductToShoppingListAsync(Guid shoppingListId, Guid productId)
+        {
+            var shoppingList = await _context.ShoppingLists.FindAsync(shoppingListId);
+            var product = await _context.Products.FindAsync(productId);
 
+            if (shoppingList == null || product == null)
+            {
+                throw new KeyNotFoundException(
+                    $"Couldn't find shopping list with id: {shoppingListId} or product with id: {productId}");
+            }
+
+            var productShoppingList = new ProductShoppingList
+            {
+                ProductId = productId,
+                ShoppingListId = shoppingListId
+            };
+
+            _context.ProductShoppingLists.Add(productShoppingList);
+            await _context.SaveChangesAsync();
+        }
+
+        public Task<Market> CalculateShoppingListTotalPriceAsync(Guid shoppingListId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Market> CheapestMarketForShoppingListAsync(Guid shoppingListId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveProductFromShoppingListAsync(Guid shoppingListId, Guid productId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

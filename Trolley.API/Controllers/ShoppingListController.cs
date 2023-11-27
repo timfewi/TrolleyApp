@@ -20,6 +20,7 @@ namespace Trolley.API.Controllers
         }
 
         // Post: api/ShoppingList
+        // Create a shopping list
         [HttpPost]
         public async Task<ActionResult<ShoppingListCreateDto>> CreateShoppingList(ShoppingListCreateDto shoppingListCreateDto)
         {
@@ -42,6 +43,7 @@ namespace Trolley.API.Controllers
             }
         }
         // GET: api/ShoppingList/{id}
+        // Get a shopping list by id
         [HttpGet("{id}")]
         public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListById(Guid id)
         {
@@ -57,11 +59,13 @@ namespace Trolley.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
                 return BadRequest(ex.Message);
             }
         }
 
-        // PUT: api/ShoppingList/{id}   
+        // PUT: api/ShoppingList/{id}
+        // Update a shopping list
         [HttpPut]
         [Route("{id:Guid}")]
         public async Task<ActionResult<ShoppingListUpdateDto>> UpdateShoppingList(Guid id, ShoppingListUpdateDto shoppingListUpdateDto)
@@ -80,6 +84,25 @@ namespace Trolley.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // DELETE: api/ShoppingList/{id}
+        // Delete a shopping list
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<ActionResult> DeleteShoppingList(Guid id)
+        {
+            try
+            {
+                await _shoppingListService.DeleteShoppingListAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
                 return BadRequest(ex.Message);
             }
         }

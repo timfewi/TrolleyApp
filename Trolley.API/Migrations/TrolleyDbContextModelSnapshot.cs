@@ -142,7 +142,6 @@ namespace Trolley.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Timestamp")
@@ -322,10 +321,10 @@ namespace Trolley.API.Migrations
 
             modelBuilder.Entity("Trolley.API.Entities.ProductShoppingList", b =>
                 {
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoppingListId")
+                    b.Property<Guid?>("ShoppingListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ProductId", "ShoppingListId");

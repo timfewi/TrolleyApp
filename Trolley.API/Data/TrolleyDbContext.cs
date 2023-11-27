@@ -6,7 +6,7 @@ namespace Trolley.API.Data
     public class TrolleyDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> ProductCategory { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Icon> Icons { get; set; }
         public DbSet<Market> Markets { get; set; }
         public DbSet<Price> Prices { get; set; }

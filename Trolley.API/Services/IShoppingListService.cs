@@ -9,5 +9,10 @@ namespace Trolley.API.Services
         Task<ShoppingList> GetShoppingListByIdAsync(Guid id);
         Task<ShoppingList> UpdateShoppingListAsync(ShoppingList shoppingList);
         Task DeleteShoppingListAsync(Guid id);
+        Task AddProductToShoppingListAsync(Guid shoppingListId, Guid productId);
+        Task<Market> CalculateShoppingListTotalPriceAsync(Guid shoppingListId);
+        Task<Market> CheapestMarketForShoppingListAsync(Guid shoppingListId);
+        Task RemoveProductFromShoppingListAsync(Guid shoppingListId, Guid productId);
+
     }
 }
