@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 
-namespace Trolley.Domain.Data
+namespace Trolley.API.Data
 {
     public class TrolleyDbContext : DbContext
     {

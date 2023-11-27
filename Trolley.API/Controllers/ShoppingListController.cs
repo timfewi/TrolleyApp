@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Trolley.Domain.Data;
+using Trolley.API.Data;
 
 namespace Trolley.API.Controllers
 {

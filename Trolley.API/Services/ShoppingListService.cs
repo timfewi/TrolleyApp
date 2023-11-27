@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
-using Trolley.Domain.Data;
+using Trolley.API.Data;
 
 namespace Trolley.API.Services
 {
@@ -12,33 +12,9 @@ namespace Trolley.API.Services
 
         }
 
-        public async Task<ShoppingList> GetShoppingListByIdAsync(Guid id)
-        {
-            var shoppingList = await _context.ShoppingLists
-                .Include(s => s.ProductShoppingLists)
-                .ThenInclude(psl => psl.Product)
-                .FirstOrDefaultAsync(s => s.Id == id);
-
-            if (shoppingList == null)
-            {
-                return null;
-            }
 
 
-            if (shoppingList.ProductShoppingLists != null)
-            {
-                foreach (var psl in shoppingList.ProductShoppingLists)
-                {
 
-                    if (psl.Product == null)
-                    {
-                        psl.Product = await _context.Products.FirstOrDefaultAsync(p => p.Id == psl.ProductId);
-                    }
-                }
-            }
-
-            return shoppingList;
-        }
 
     }
 }

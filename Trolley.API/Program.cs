@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-using Trolley.Domain.Data;
+using Trolley.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

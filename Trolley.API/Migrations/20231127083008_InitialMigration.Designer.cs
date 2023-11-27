@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Trolley.Domain.Data;
+using Trolley.API.Data;
 
 #nullable disable
 
 namespace Trolley.API.Migrations
 {
     [DbContext(typeof(TrolleyDbContext))]
-    [Migration("20231125110053_InitialMigration")]
+    [Migration("20231127083008_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
