@@ -16,8 +16,8 @@ namespace Trolley.API.Entities
         // Navigation Properties
 
         public virtual Guid ProductCategoryId { get; set; }
-        public virtual Guid BrandId { get; set; }
-        public virtual Guid ShoppingListId { get; set; }
+        public virtual Guid? BrandId { get; set; }
+        public virtual Guid? ShoppingListId { get; set; }
         public virtual Guid MarketsId { get; set; }
         public virtual Guid PricesId { get; set; }
 

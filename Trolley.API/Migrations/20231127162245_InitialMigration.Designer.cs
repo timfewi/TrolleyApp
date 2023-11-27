@@ -12,8 +12,8 @@ using Trolley.API.Data;
 namespace Trolley.API.Migrations
 {
     [DbContext(typeof(TrolleyDbContext))]
-    [Migration("20231127134350_InitialMigrate")]
-    partial class InitialMigrate
+    [Migration("20231127162245_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,14 +243,20 @@ namespace Trolley.API.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("PriceTimestamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double?>("Reduction")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
@@ -265,7 +271,7 @@ namespace Trolley.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BrandId")
+                    b.Property<Guid?>("BrandId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryId")
@@ -306,7 +312,7 @@ namespace Trolley.API.Migrations
                     b.Property<Guid>("ProductCategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoppingListId")
+                    b.Property<Guid?>("ShoppingListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("Timestamp")

@@ -12,18 +12,18 @@ class Program
 {
     public static void Main(string[] args)
     {
-        var connectionString =
-            "Data Source=localhost;Initial Catalog=TrolleyDB;Trusted_Connection=True;TrustServerCertificate=true;";
-        var optionsBuilder = new DbContextOptionsBuilder<TrolleyDbContext>();
-        optionsBuilder.UseSqlServer(connectionString);
+        //var connectionString =
+        //    "Data Source=localhost;Initial Catalog=TrolleyDB;Trusted_Connection=True;TrustServerCertificate=true;";
+        //var optionsBuilder = new DbContextOptionsBuilder<TrolleyDbContext>();
+        //optionsBuilder.UseSqlServer(connectionString);
 
-        using (var context = new TrolleyDbContext(optionsBuilder.Options))
-        {
-            // Aufrufen der Seed-Methode
-            DbInitializer.Initialize(context);
-        }
+        //using (var context = new TrolleyDbContext(optionsBuilder.Options))
+        //{
+        //    // Aufrufen der Seed-Methode
+        //    DbInitializer.Initialize(context);
+        //}
 
-        Console.WriteLine("Datenbank wurde erfolgreich mit Seed-Daten gefüllt.");
+        //Console.WriteLine("Datenbank wurde erfolgreich mit Seed-Daten gefüllt.");
     }
 
 }

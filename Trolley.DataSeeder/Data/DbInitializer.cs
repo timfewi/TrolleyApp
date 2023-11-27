@@ -1,4 +1,5 @@
-﻿using Trolley.API.Data;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Trolley.API.Data;
 using Trolley.API.Entities;
 using Trolley.API.Enums;
 
@@ -6,6 +7,7 @@ namespace Trolley.DataSeeder.Data
 {
     public static class DbInitializer
     {
+        private static Random _random = new Random();
         public static void Initialize(TrolleyDbContext context)
         {
             context.Database.EnsureCreated();
@@ -427,6 +429,106 @@ namespace Trolley.DataSeeder.Data
             // Produkte erstellen
 
             #endregion
+
+            AddProductWithRandomPrices(
+                context,
+                "Bio Bananen",
+                true,
+                bananeId,
+                new[] { billaId, hoferId, sparId, lidlId, pennyId },
+                () => GenerateRandomPrice(1.7, 2.7));
+
+            AddProductWithRandomPrices(
+                context,
+                "Normale Bananen",
+                false,
+                bananeId,
+                new[] { billaId, hoferId, sparId, lidlId, pennyId },
+                () => GenerateRandomPrice(1.2, 2.1));
+
+            AddProductWithRandomPrices(
+                context,
+                "Bio Äpfel",
+                true,
+                apfelId,
+                new[] { billaId, hoferId, sparId, lidlId, pennyId },
+                () => GenerateRandomPrice(2.0, 3.0));
+
+            AddProductWithRandomPrices(
+                context,
+                "Normale Äpfel",
+                false,
+                apfelId,
+                new[] { billaId, hoferId, sparId, lidlId, pennyId },
+                () => GenerateRandomPrice(1.5, 2.5));
+
+
+
+        }
+
+        private static void AddProductWithRandomPrices(
+            TrolleyDbContext context,
+            string productName,
+            bool isOrganic,
+            //Guid brandId,
+            Guid categoryId,
+            Guid[] marketIds,
+            Func<double> priceGenerator)
+        {
+            var productId = Guid.NewGuid();
+
+            var product = new Product
+            {
+                Id = productId,
+                CreatedBy = "Codegenerator",
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                ModifiedBy = "Codegenerator",
+                Timestamp = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
+                Name = productName,
+                Description = productName + "Beschreibung",
+                IsOrganic = isOrganic,
+                IsAvailable = true,
+                //BrandId = brandId,
+                ProductCategoryId = categoryId,
+            };
+
+            context.Products.Add(product);
+
+            foreach (var marketId in marketIds)
+            {
+                var priceId = Guid.NewGuid();
+                var priceAmount = priceGenerator();
+                var price = new Price
+                {
+                    Id = priceId,
+                    CreatedBy = "Codegenerator",
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    ModifiedBy = "Codegenerator",
+                    PriceTimestamp = DateTime.Now,
+                    Timestamp = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
+                    Amount = priceAmount,
+                    MarketProductPrices = new List<MarketProductPrice>(),
+                };
+
+                context.Prices.Add(price);
+
+                var marketProductPrice = new MarketProductPrice
+                {
+                    MarketId = marketId,
+                    ProductId = productId,
+                    PriceId = priceId,
+                };
+
+                context.MarketProductPrices.Add(marketProductPrice);
+            }
+            context.SaveChanges();
+        }
+
+        private static double GenerateRandomPrice(double min, double max)
+        {
+            return _random.NextDouble() * (max - min) + min;
         }
     }
 }
