@@ -489,7 +489,14 @@ namespace Trolley.DataSeeder.Data
                 },
             };
 
-            context.Categories.AddRange(gemueseSubCategories);
+            foreach (var gemuese in gemueseSubCategories)
+            {
+                var existingGemuese = context.Categories.Find(gemuese.Id);
+                if (existingGemuese == null)
+                {
+                    context.Categories.Add(gemuese);
+                }
+            }
             context.SaveChanges();
 
             #endregion
@@ -637,7 +644,14 @@ namespace Trolley.DataSeeder.Data
                 },
             };
 
-            context.Categories.AddRange(fleischSubCategories);
+            foreach (var fleisch in fleischSubCategories)
+            {
+                var existingFleisch = context.Categories.Find(fleisch.Id);
+                if (existingFleisch == null)
+                {
+                    context.Categories.Add(fleisch);
+                }
+            }
             context.SaveChanges();
             #endregion
 
@@ -775,7 +789,14 @@ namespace Trolley.DataSeeder.Data
                 }
             };
 
-            context.Categories.AddRange(fischSubCategories);
+            foreach (var fisch in fischSubCategories)
+            {
+                var existingFisch = context.Categories.Find(fisch.Id);
+                if (existingFisch == null)
+                {
+                    context.Categories.Add(fisch);
+                }
+            }
             context.SaveChanges();
             #endregion
 
@@ -1011,7 +1032,14 @@ namespace Trolley.DataSeeder.Data
 
             };
 
-            context.Categories.AddRange(milchProdukteSubCategories);
+            foreach (var milchProdukte in milchProdukteSubCategories)
+            {
+                var existingMilchProdukte = context.Categories.Find(milchProdukte.Id);
+                if (existingMilchProdukte == null)
+                {
+                    context.Categories.Add(milchProdukte);
+                }
+            }
             context.SaveChanges();
             #endregion
 
@@ -1093,7 +1121,14 @@ namespace Trolley.DataSeeder.Data
             };
 
 
-            context.Categories.AddRange(getraenkeSubCategories);
+            foreach (var getraenke in getraenkeSubCategories)
+            {
+                var existingGetraenke = context.Categories.Find(getraenke.Id);
+                if (existingGetraenke == null)
+                {
+                    context.Categories.Add(getraenke);
+                }
+            }
             context.SaveChanges();
             #endregion
 
@@ -1169,7 +1204,15 @@ namespace Trolley.DataSeeder.Data
                 },
             };
 
-            context.Categories.AddRange(backwarenSubCategories);
+            foreach (var backwaren in backwarenSubCategories)
+            {
+                var existingBackwaren = context.Categories.Find(backwaren.Id);
+                if (existingBackwaren == null)
+                {
+                    context.Categories.Add(backwaren);
+                }
+            }
+
             context.SaveChanges();
             #endregion
 
@@ -1234,7 +1277,15 @@ namespace Trolley.DataSeeder.Data
                 },
             };
 
-            context.Categories.AddRange(suesswarenSubCategories);
+            foreach (var suesswaren in suesswarenSubCategories)
+            {
+                var existingSuesswaren = context.Categories.Find(suesswaren.Id);
+                if (existingSuesswaren == null)
+                {
+                    context.Categories.Add(suesswaren);
+                }
+            }
+
             context.SaveChanges();
             #endregion
 
@@ -1343,7 +1394,15 @@ namespace Trolley.DataSeeder.Data
                     },
             };
 
-            context.Categories.AddRange(tiefKuehlSubCategories);
+            foreach (var tiefKuehl in tiefKuehlSubCategories)
+            {
+                var existingTiefKuehl = context.Categories.Find(tiefKuehl.Id);
+                if (existingTiefKuehl == null)
+                {
+                    context.Categories.Add(tiefKuehl);
+                }
+            }
+
             context.SaveChanges();
             #endregion
 
@@ -1596,7 +1655,15 @@ namespace Trolley.DataSeeder.Data
 
             };
 
-            context.Categories.AddRange(sonstigesSubCategories);
+            foreach (var sonstiges in sonstigesSubCategories)
+            {
+                var existingSonstiges = context.Categories.Find(sonstiges.Id);
+                if (existingSonstiges == null)
+                {
+                    context.Categories.Add(sonstiges);
+                }
+            }
+
             context.SaveChanges();
             #endregion
         }
