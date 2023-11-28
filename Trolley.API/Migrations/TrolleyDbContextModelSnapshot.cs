@@ -173,7 +173,7 @@ namespace Trolley.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsNearest")
+                    b.Property<bool?>("IsNearest")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedBy")
@@ -332,6 +332,9 @@ namespace Trolley.API.Migrations
 
                     b.Property<Guid?>("ShoppingListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductId", "ShoppingListId");
 

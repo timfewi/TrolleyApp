@@ -12,7 +12,7 @@ using Trolley.API.Data;
 namespace Trolley.API.Migrations
 {
     [DbContext(typeof(TrolleyDbContext))]
-    [Migration("20231127162245_InitialMigration")]
+    [Migration("20231128110425_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -176,7 +176,7 @@ namespace Trolley.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsNearest")
+                    b.Property<bool?>("IsNearest")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedBy")
@@ -335,6 +335,9 @@ namespace Trolley.API.Migrations
 
                     b.Property<Guid?>("ShoppingListId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductId", "ShoppingListId");
 

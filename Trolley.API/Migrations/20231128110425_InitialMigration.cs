@@ -142,7 +142,7 @@ namespace Trolley.API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsNearest = table.Column<bool>(type: "bit", nullable: false),
+                    IsNearest = table.Column<bool>(type: "bit", nullable: true),
                     Category = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -270,7 +270,8 @@ namespace Trolley.API.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

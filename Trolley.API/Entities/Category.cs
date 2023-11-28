@@ -13,7 +13,7 @@ namespace Trolley.API.Entities
         public Guid? ParentCategoryId { get; set; }
         public Category ParentCategory { get; set; }
 
-        public Guid IconId { get; set; }
+        public Guid? IconId { get; set; }
         public Icon Icon { get; set; }
 
 

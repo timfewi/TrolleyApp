@@ -8,7 +8,7 @@ namespace Trolley.API.Entities
     public class Market : BaseEntity
     {
         public string Name { get; set; }
-        public bool IsNearest { get; set; }
+        public bool? IsNearest { get; set; }
         public MarketCategory Category { get; set; }
 
         // Navigation properties
