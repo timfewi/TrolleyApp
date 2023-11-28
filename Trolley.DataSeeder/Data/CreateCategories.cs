@@ -111,7 +111,6 @@ namespace Trolley.DataSeeder.Data
             context.SaveChanges();
             #endregion
 
-
             #region ObstSubCategories
 
             var obstSubCategories = new List<Category>
@@ -1072,7 +1071,6 @@ namespace Trolley.DataSeeder.Data
             context.SaveChanges();
             #endregion
 
-
             #region SüsswarenSubCategories
 
             var suesswarenSubCategories = new List<Category>
@@ -1132,7 +1130,6 @@ namespace Trolley.DataSeeder.Data
             context.Categories.AddRange(suesswarenSubCategories);
             context.SaveChanges();
             #endregion
-
 
             #region TiefkuehlSubCategories
 

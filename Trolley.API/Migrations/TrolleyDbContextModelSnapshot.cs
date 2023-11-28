@@ -90,7 +90,7 @@ namespace Trolley.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IconId")
+                    b.Property<Guid?>("IconId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifiedBy")
@@ -112,7 +112,8 @@ namespace Trolley.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IconId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IconId] IS NOT NULL");
 
                     b.HasIndex("ParentCategoryId");
 
@@ -287,7 +288,7 @@ namespace Trolley.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
+                    b.Property<bool>("IsBrandedProduct")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsOrganic")
@@ -481,9 +482,7 @@ namespace Trolley.API.Migrations
                 {
                     b.HasOne("Trolley.API.Entities.Icon", "Icon")
                         .WithOne("Category")
-                        .HasForeignKey("Trolley.API.Entities.Category", "IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Trolley.API.Entities.Category", "IconId");
 
                     b.HasOne("Trolley.API.Entities.Category", "ParentCategory")
                         .WithMany("ChildCategories")

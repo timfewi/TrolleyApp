@@ -58,7 +58,7 @@ namespace Trolley.API.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ParentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IconId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IconId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -77,8 +77,7 @@ namespace Trolley.API.Migrations
                         name: "FK_Category_Icon_IconId",
                         column: x => x.IconId,
                         principalTable: "Icon",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +88,7 @@ namespace Trolley.API.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsOrganic = table.Column<bool>(type: "bit", nullable: false),
-                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    IsBrandedProduct = table.Column<bool>(type: "bit", nullable: false),
                     ProductCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -328,7 +327,8 @@ namespace Trolley.API.Migrations
                 name: "IX_Category_IconId",
                 table: "Category",
                 column: "IconId",
-                unique: true);
+                unique: true,
+                filter: "[IconId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Category_ParentCategoryId",
