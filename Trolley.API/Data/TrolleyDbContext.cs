@@ -150,10 +150,6 @@ namespace Trolley.API.Data
 
             ChangeTracker.Clear();
 
-            //foreach (var entityEntry in changedEntries)
-            //{
-            //    entityEntry.State = EntityState.Detached;
-            //}
 
             return result;
         }
@@ -166,11 +162,6 @@ namespace Trolley.API.Data
             var result = await base.SaveChangesAsync(cancellationToken);
 
             ChangeTracker.Clear();
-
-            //foreach (var entityEntry in changedEntries)
-            //{
-            //    entityEntry.State = EntityState.Detached;
-            //}
 
             return result;
         }
