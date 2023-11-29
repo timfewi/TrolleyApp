@@ -139,5 +139,84 @@ namespace Trolley.API.Data
             //);
 
         }
+
+
+        public override int SaveChanges()
+        {
+
+            ApplyDateAndUser();
+
+            var result = base.SaveChanges();
+
+            ChangeTracker.Clear();
+
+            //foreach (var entityEntry in changedEntries)
+            //{
+            //    entityEntry.State = EntityState.Detached;
+            //}
+
+            return result;
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+
+            ApplyDateAndUser();
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            ChangeTracker.Clear();
+
+            //foreach (var entityEntry in changedEntries)
+            //{
+            //    entityEntry.State = EntityState.Detached;
+            //}
+
+            return result;
+        }
+
+        private void ApplyDateAndUser()
+        {
+            var currentUser = "SYSTEM";
+
+            var changedEntries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is BaseEntity && (
+                    e.State == EntityState.Added ||
+                    e.State == EntityState.Modified))
+                .ToList();
+
+            var deletedEntries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is BaseEntity && (e.State == EntityState.Deleted))
+                .ToList();
+
+            var now = DateTime.Now;
+
+            foreach (var entityEntry in changedEntries)
+            {
+                if (currentUser == null)
+                    throw new InvalidOperationException("CurrentUser not set.");
+
+                var baseEntity = ((BaseEntity)entityEntry.Entity);
+
+                baseEntity.DateModified = now;
+                baseEntity.ModifiedBy = currentUser;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    baseEntity.DateCreated = now;
+                    baseEntity.CreatedBy = currentUser;
+                }
+                else if (entityEntry.State == EntityState.Modified)
+                {
+                    var originalDateCreated = entityEntry.OriginalValues.GetValue<DateTime>(nameof(BaseEntity.DateCreated));
+                    var originalCreatedById = entityEntry.OriginalValues.GetValue<string>(nameof(BaseEntity.CreatedBy));
+
+                    baseEntity.DateCreated = originalDateCreated;
+                    baseEntity.CreatedBy = originalCreatedById;
+                }
+            }
+        }
     }
 }
