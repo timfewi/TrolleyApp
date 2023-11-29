@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Data
@@ -98,43 +99,35 @@ namespace Trolley.API.Data
             modelBuilder.Entity<Market>().HasData(
                 new Market { Id = 1, Name = "Billa" },
                 new Market { Id = 2, Name = "Spar" },
-                new Market { Id = 3, Name = "Hofer" },
-                new Market { Id = 4, Name = "Lidl" },
-                new Market { Id = 5, Name = "Penny" }
+                new Market { Id = 3, Name = "Hofer" }
                 );
 
             // Seed Data for Brands
             modelBuilder.Entity<Brand>().HasData(
+                // Billa Brands
                 new Brand { Id = 1, Name = "Ja! Natürlich" },
-                new Brand { Id = 2, Name = "S-Budget" },
-                new Brand { Id = 3, Name = "Spar" },
-                new Brand { Id = 4, Name = "Billa" },
-                new Brand { Id = 5, Name = "Hofer" },
-                new Brand { Id = 6, Name = "Lidl" },
-                new Brand { Id = 7, Name = "Penny" },
-                new Brand { Id = 8, Name = "Milka" },
-                new Brand { Id = 9, Name = "Manner" },
-                new Brand { Id = 10, Name = "Ferrero" },
-                new Brand { Id = 11, Name = "Red Bull" },
-                new Brand { Id = 12, Name = "Coca Cola" },
-                new Brand { Id = 13, Name = "Pepsi" },
-                new Brand { Id = 14, Name = "Nestle" },
-                new Brand { Id = 15, Name = "Maggi" },
-                new Brand { Id = 16, Name = "Knorr" },
-                new Brand { Id = 17, Name = "Ariel" },
-                new Brand { Id = 18, Name = "Persil" },
-                new Brand { Id = 19, Name = "Lenor" },
-                new Brand { Id = 20, Name = "Head & Shoulders" },
-                new Brand { Id = 21, Name = "Nivea" },
-                new Brand { Id = 22, Name = "Dove" },
-                new Brand { Id = 23, Name = "Balea" },
-                new Brand { Id = 24, Name = "Palmolive" },
-                new Brand { Id = 25, Name = "Colgate" },
-                new Brand { Id = 26, Name = "Signal" },
-                new Brand { Id = 27, Name = "Oral-B" },
-                new Brand { Id = 28, Name = "Blend-a-med" },
-                new Brand { Id = 29, Name = "Listerine" }
+                new Brand { Id = 2, Name = "Billa" },
+                new Brand { Id = 3, Name = "Billa Corso" },
+                // Spar Brands
+                new Brand { Id = 4, Name = "Natur Pur" },
+                new Brand { Id = 5, Name = "S-Budget" },
+                new Brand { Id = 6, Name = "Spar Vital" },
+                // Hofer Brands
+                new Brand { Id = 7, Name = "Zurück zum Ursprung" },
+                new Brand { Id = 8, Name = "Hofer Bio" },
+                new Brand { Id = 9, Name = "Hofer Selection" }
                 );
+
+
+
+            // Seed data for Obst Products
+            // IsOrganic = false and IsDiscountProduct = false than its BillaCorso, Spar Vital, Hofer Selection , Price is the highest
+            // IsOrganic = true and IsDiscountProduct = false than its Ja! Natürlich, Natur Pur, Zurück zum Ursprung, Price is medium
+            // IsOrganic = false and IsDiscountProduct = true than its Billa, S-Budget, Hofer Bio, Price is the lowest
+            // Make Prices Truly Random
+            //modelBuilder.Entity<Product>().HasData(
+
+            //);
 
         }
     }
