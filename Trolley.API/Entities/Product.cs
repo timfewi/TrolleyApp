@@ -9,7 +9,7 @@ namespace Trolley.API.Entities
         public string Name { get; set; }
         public bool IsOrganic { get; set; }
         public bool IsDiscountProduct { get; set; }
-        public double Price { get; set; }
+        //public double Price { get; set; }
         public virtual int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public virtual int? IconId { get; set; }

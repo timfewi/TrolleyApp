@@ -4,7 +4,7 @@ using Trolley.API.Entities;
 namespace Trolley.API.Entities
 {
     [Table(nameof(ShoppingListUser))]
-    public class ShoppingListUser
+    public class ShoppingListUser : BaseEntity
     {
 
         public int ShoppingListId { get; set; }

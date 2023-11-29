@@ -116,16 +116,25 @@ namespace Trolley.API.Data
                 new Brand { Id = 7, Name = "Zurück zum Ursprung" },
                 new Brand { Id = 8, Name = "Hofer Bio" },
                 new Brand { Id = 9, Name = "Hofer Selection" }
+
                 );
 
 
 
+
+
             // Seed data for Obst Products
-            // IsOrganic = false and IsDiscountProduct = false than its BillaCorso, Spar Vital, Hofer Selection , Price is the highest
+
+            // IsOrganic = false and IsDiscountProduct = false than its BillaCorso, Spar Vital, Hofer Selection, Price is the highest
+
             // IsOrganic = true and IsDiscountProduct = false than its Ja! Natürlich, Natur Pur, Zurück zum Ursprung, Price is medium
-            // IsOrganic = false and IsDiscountProduct = true than its Billa, S-Budget, Hofer Bio, Price is the lowest
+            // IsOrganic = false and IsDiscountProduct = true than its Billa, S - Budget, Hofer Bio, Price is the lowest
+
             // Make Prices Truly Random
+
             //modelBuilder.Entity<Product>().HasData(
+            //    new Product { Id = 1, Name = "Apfel", ProductCategoryId = 1, IconId = 1 },
+            //    new Product { Id = 2, Name = "Apfel", ProductCategoryId = 1, }
 
             //);
 

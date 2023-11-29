@@ -6,7 +6,7 @@ namespace Trolley.API.Entities
 {
 
     [Table(nameof(BrandProduct))]
-    public class BrandProduct
+    public class BrandProduct : BaseEntity
     {
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
