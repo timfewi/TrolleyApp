@@ -76,6 +76,66 @@ namespace Trolley.API.Data
                 .WithMany(p => p.BrandProducts)
                 .HasForeignKey(bp => bp.ProductId);
 
+
+            // Seed data for ProductCategory
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new ProductCategory { Id = 1, Name = "Obst" },
+                new ProductCategory { Id = 2, Name = "Gemüse" },
+                new ProductCategory { Id = 3, Name = "Getreideprodukte" },
+                new ProductCategory { Id = 4, Name = "Fleisch & Geflügel" },
+                new ProductCategory { Id = 5, Name = "Fisch & Meeresfrüchte" },
+                new ProductCategory { Id = 6, Name = "Milchprodukte" },
+                new ProductCategory { Id = 7, Name = "Samen & Hülsenfrüchte" },
+                new ProductCategory { Id = 8, Name = "Zutaten & Gewürze" },
+                new ProductCategory { Id = 9, Name = "Getränke" },
+                new ProductCategory { Id = 10, Name = "Süssigkeiten & Snacks" },
+                new ProductCategory { Id = 11, Name = "Kaffee & Tee" },
+                new ProductCategory { Id = 12, Name = "Pflege & Gesundheit" },
+                new ProductCategory { Id = 13, Name = "Haushalt" }
+            );
+
+            // Seed data for Markets
+            modelBuilder.Entity<Market>().HasData(
+                new Market { Id = 1, Name = "Billa" },
+                new Market { Id = 2, Name = "Spar" },
+                new Market { Id = 3, Name = "Hofer" },
+                new Market { Id = 4, Name = "Lidl" },
+                new Market { Id = 5, Name = "Penny" }
+                );
+
+            // Seed Data for Brands
+            modelBuilder.Entity<Brand>().HasData(
+                new Brand { Id = 1, Name = "Ja! Natürlich" },
+                new Brand { Id = 2, Name = "S-Budget" },
+                new Brand { Id = 3, Name = "Spar" },
+                new Brand { Id = 4, Name = "Billa" },
+                new Brand { Id = 5, Name = "Hofer" },
+                new Brand { Id = 6, Name = "Lidl" },
+                new Brand { Id = 7, Name = "Penny" },
+                new Brand { Id = 8, Name = "Milka" },
+                new Brand { Id = 9, Name = "Manner" },
+                new Brand { Id = 10, Name = "Ferrero" },
+                new Brand { Id = 11, Name = "Red Bull" },
+                new Brand { Id = 12, Name = "Coca Cola" },
+                new Brand { Id = 13, Name = "Pepsi" },
+                new Brand { Id = 14, Name = "Nestle" },
+                new Brand { Id = 15, Name = "Maggi" },
+                new Brand { Id = 16, Name = "Knorr" },
+                new Brand { Id = 17, Name = "Ariel" },
+                new Brand { Id = 18, Name = "Persil" },
+                new Brand { Id = 19, Name = "Lenor" },
+                new Brand { Id = 20, Name = "Head & Shoulders" },
+                new Brand { Id = 21, Name = "Nivea" },
+                new Brand { Id = 22, Name = "Dove" },
+                new Brand { Id = 23, Name = "Balea" },
+                new Brand { Id = 24, Name = "Palmolive" },
+                new Brand { Id = 25, Name = "Colgate" },
+                new Brand { Id = 26, Name = "Signal" },
+                new Brand { Id = 27, Name = "Oral-B" },
+                new Brand { Id = 28, Name = "Blend-a-med" },
+                new Brand { Id = 29, Name = "Listerine" }
+                );
+
         }
     }
 }
