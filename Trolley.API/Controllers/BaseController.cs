@@ -7,7 +7,7 @@ namespace Trolley.API.Controllers
     public class BaseController : Controller
     {
         protected readonly TrolleyDbContext _context;
-        protected readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
         protected readonly IMapper _mapper;
 
 

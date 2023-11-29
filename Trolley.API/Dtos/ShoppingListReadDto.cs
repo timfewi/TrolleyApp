@@ -2,7 +2,7 @@
 {
     public class ShoppingListReadDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public bool IsCheapest { get; set; }
         public DateTime DateCreated { get; set; }

@@ -20,11 +20,11 @@ namespace Trolley.API.Services
         }
 
 
-        public async Task<ShoppingList> GetShoppingListByIdAsync(Guid id)
+        public async Task<ShoppingList> GetShoppingListByIdAsync(int id)
         {
             try
             {
-                if (id == Guid.Empty)
+                if (id == 0)
                 {
                     throw new Exception($"Couldn't find shopping list with id: {id}");
 
@@ -61,7 +61,7 @@ namespace Trolley.API.Services
         }
 
 
-        public async Task DeleteShoppingListAsync(Guid id)
+        public async Task DeleteShoppingListAsync(int id)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace Trolley.API.Services
             }
         }
 
-        public async Task AddProductToShoppingListAsync(Guid shoppingListId, Guid productId)
+        public async Task AddProductToShoppingListAsync(int shoppingListId, int productId)
         {
             var shoppingList = await _context.ShoppingLists.FindAsync(shoppingListId);
             var product = await _context.Products.FindAsync(productId);
@@ -99,17 +99,17 @@ namespace Trolley.API.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<Market> CalculateShoppingListTotalPriceAsync(Guid shoppingListId)
+        public Task<Market> CalculateShoppingListTotalPriceAsync(int shoppingListId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Market> CheapestMarketForShoppingListAsync(Guid shoppingListId)
+        public Task<Market> CheapestMarketForShoppingListAsync(int shoppingListId)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveProductFromShoppingListAsync(Guid shoppingListId, Guid productId)
+        public Task RemoveProductFromShoppingListAsync(int shoppingListId, int productId)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,6 @@ namespace Trolley.API.Entities
     [Table(nameof(ShoppingList))]
     public class ShoppingList : BaseEntity
     {
-        public string Name { get; set; }
         public bool IsCheapest { get; set; }
 
         // Navigation properties

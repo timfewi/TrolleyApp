@@ -2,7 +2,7 @@
 {
     public class ShoppingListDeleteDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
     }
 }

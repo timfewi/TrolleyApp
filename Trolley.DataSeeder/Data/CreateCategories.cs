@@ -117,7 +117,14 @@ namespace Trolley.DataSeeder.Data
                 },
             };
 
-            context.Categories.AddRange(mainCategories);
+            foreach (var mainCategory in mainCategories)
+            {
+                var existingMainCategory = context.Categories.Find(mainCategory.Id);
+                if (existingMainCategory == null)
+                {
+                    context.Categories.Add(mainCategory);
+                }
+            }
             context.SaveChanges();
             #endregion
 

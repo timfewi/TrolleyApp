@@ -6,14 +6,13 @@ namespace Trolley.API.Data
     public class TrolleyDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Icon> Icons { get; set; }
         public DbSet<Market> Markets { get; set; }
-        public DbSet<Price> Prices { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<BrandProduct> BrandProducts { get; set; }
-        public DbSet<MarketProductPrice> MarketProductPrices { get; set; }
+        public DbSet<MarketProduct> MarketProduct { get; set; }
         public DbSet<ProductShoppingList> ProductShoppingLists { get; set; }
         public DbSet<ShoppingListUser> ShoppingListUsers { get; set; }
         public DbSet<User> User { get; set; }
@@ -24,21 +23,17 @@ namespace Trolley.API.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // MarketProductPrice
-            modelBuilder.Entity<MarketProductPrice>()
-                .HasKey(mpp => new { mpp.MarketId, mpp.ProductId, mpp.PriceId });
-            modelBuilder.Entity<MarketProductPrice>()
+            // MarketProduct
+            modelBuilder.Entity<MarketProduct>()
+                .HasKey(mpp => new { mpp.MarketId, mpp.ProductId });
+            modelBuilder.Entity<MarketProduct>()
                 .HasOne(mpp => mpp.Market)
-                .WithMany(m => m.MarketProductPrices)
+                .WithMany(m => m.MarketProduct)
                 .HasForeignKey(mpp => mpp.MarketId);
-            modelBuilder.Entity<MarketProductPrice>()
+            modelBuilder.Entity<MarketProduct>()
                 .HasOne(mpp => mpp.Product)
-                .WithMany(p => p.MarketProductPrices)
+                .WithMany(p => p.MarketProducts)
                 .HasForeignKey(mpp => mpp.ProductId);
-            modelBuilder.Entity<MarketProductPrice>()
-                .HasOne(mpp => mpp.Price)
-                .WithMany(p => p.MarketProductPrices)
-                .HasForeignKey(mpp => mpp.PriceId);
 
 
 

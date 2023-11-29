@@ -6,13 +6,13 @@ namespace Trolley.API.Services
     public interface IShoppingListService
     {
         Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList);
-        Task<ShoppingList> GetShoppingListByIdAsync(Guid id);
+        Task<ShoppingList> GetShoppingListByIdAsync(int id);
         Task<ShoppingList> UpdateShoppingListAsync(ShoppingList shoppingList);
-        Task DeleteShoppingListAsync(Guid id);
-        Task AddProductToShoppingListAsync(Guid shoppingListId, Guid productId);
-        Task<Market> CalculateShoppingListTotalPriceAsync(Guid shoppingListId);
-        Task<Market> CheapestMarketForShoppingListAsync(Guid shoppingListId);
-        Task RemoveProductFromShoppingListAsync(Guid shoppingListId, Guid productId);
+        Task DeleteShoppingListAsync(int id);
+        Task AddProductToShoppingListAsync(int shoppingListId, int productId);
+        Task<Market> CalculateShoppingListTotalPriceAsync(int shoppingListId);
+        Task<Market> CheapestMarketForShoppingListAsync(int shoppingListId);
+        Task RemoveProductFromShoppingListAsync(int shoppingListId, int productId);
 
     }
 }

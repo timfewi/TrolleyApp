@@ -6,5 +6,6 @@
         User = 1,
         Guest = 2,
         ShopOwner = 3,
+        PremiumUser = 4
     }
 }

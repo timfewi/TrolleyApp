@@ -7,9 +7,9 @@ namespace Trolley.API.Entities
     public class ShoppingListUser
     {
 
-        public Guid ShoppingListId { get; set; }
+        public int ShoppingListId { get; set; }
         public ShoppingList ShoppingList { get; set; }
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

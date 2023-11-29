@@ -45,7 +45,7 @@ namespace Trolley.API.Controllers
         // GET: api/ShoppingList/{id}
         // Get a shopping list by id
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListById(Guid id)
+        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListById(int id)
         {
             try
             {
@@ -67,8 +67,8 @@ namespace Trolley.API.Controllers
         // PUT: api/ShoppingList/{id}
         // Update a shopping list
         [HttpPut]
-        [Route("{id:Guid}")]
-        public async Task<ActionResult<ShoppingListUpdateDto>> UpdateShoppingList(Guid id, ShoppingListUpdateDto shoppingListUpdateDto)
+        [Route("{id:int}")]
+        public async Task<ActionResult<ShoppingListUpdateDto>> UpdateShoppingList(int id, ShoppingListUpdateDto shoppingListUpdateDto)
         {
             try
             {
@@ -92,8 +92,8 @@ namespace Trolley.API.Controllers
         // DELETE: api/ShoppingList/{id}
         // Delete a shopping list
         [HttpDelete]
-        [Route("{id:Guid}")]
-        public async Task<ActionResult> DeleteShoppingList(Guid id)
+        [Route("{id:int}")]
+        public async Task<ActionResult> DeleteShoppingList(int id)
         {
             try
             {
