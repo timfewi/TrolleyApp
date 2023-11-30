@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 using Trolley.API.Data;
 using Trolley.API.Dtos;
@@ -120,7 +121,22 @@ namespace Trolley.API.Services
             return shoppingListDto;
         }
 
+        public async Task<KeyValuePair<string, double>> CalculateCheapestMarketForShoppingListAsync(int shoppingListId)
+        {
+            var shoppingList = await GetShoppingListByIdAsync(shoppingListId);
+            if (shoppingList == null)
+            {
+                throw new KeyNotFoundException($"Einkaufsliste mit ID {shoppingListId} nicht gefunden.");
+            }
 
+            var costPerMarket = await CalculateCostPerMarket(shoppingList);
+            return FindCheapestMarket(costPerMarket);
+        }
+
+
+
+
+        #region Logic for ShoppingListReadDto calculations
         private async Task<Double> CalculateTotalCost(ShoppingList shoppingList)
         {
             var result = 0.0;
@@ -181,6 +197,22 @@ namespace Trolley.API.Services
 
             return result;
         }
+
+
+
+        private KeyValuePair<string, double> FindCheapestMarket(Dictionary<string, double> costPerMarket)
+        {
+            if (costPerMarket == null || costPerMarket.Count == 0)
+            {
+                throw new InvalidOperationException("Keine Marktkosten verfügbar für die Berechnung.");
+            }
+            var cheapestMarket = costPerMarket.Aggregate((l, r) => l.Value < r.Value ? l : r);
+            return cheapestMarket;
+        }
+
+
+        #endregion
+
 
     }
 }

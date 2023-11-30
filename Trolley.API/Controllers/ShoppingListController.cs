@@ -153,5 +153,31 @@ namespace Trolley.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{id}/CheapestMarket")]
+        public async Task<ActionResult> GetCheapestMarketForShoppingList(int id)
+        {
+            try
+            {
+                var cheapestMarket = await _shoppingListService.CalculateCheapestMarketForShoppingListAsync(id);
+
+                return Ok(new
+                {
+                    CheapestMarket = cheapestMarket.Key,
+                    TotalPrice = cheapestMarket.Value
+                });
+            }
+            catch (KeyNotFoundException knfEx)
+            {
+                _logger.LogError(knfEx, knfEx.Message);
+                return NotFound(knfEx.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
