@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Register Services.
 builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
+builder.Services.AddScoped<ProductService>();
 
 
 // Add DbContext to the container.

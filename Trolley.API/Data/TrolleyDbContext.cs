@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
+using Trolley.API.Utils;
 
 namespace Trolley.API.Data
 {
@@ -20,6 +21,737 @@ namespace Trolley.API.Data
 
         public TrolleyDbContext(DbContextOptions<TrolleyDbContext> options) : base(options)
         {
+        }
+
+        public List<MarketProduct> GenerateMarketProducts()
+        {
+            var randomPriceGenerator = new RandomPriceGenerator();
+            var marketProducts = new List<MarketProduct>();
+
+            // MarketIds: Billa = 1, Spar = 2, Hofer = 3
+
+            for (int i = 1; i <= 3; i++)
+            {
+                #region MarketProducts
+                // Apfel isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.5, 2),
+                    ProductId = 1,
+                    MarketId = i   // Oder eine andere Logik zur Zuweisung von MarketId
+                });
+                // Apfel isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 2,
+                    MarketId = i
+                });
+                // Apfel isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 1.5),
+                    ProductId = 3,
+                    MarketId = i
+                });
+                // Forelle isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(5.0, 6.0),
+                    ProductId = 4,
+                    MarketId = i
+                });
+                // Forelle isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 7.0),
+                    ProductId = 5,
+                    MarketId = i
+                });
+                // Forelle isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(4.0, 5.0),
+                    ProductId = 6,
+                    MarketId = i
+                });
+                // Lachs isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 7.0),
+                    ProductId = 7,
+                    MarketId = i
+                });
+                // Lachs isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(7.0, 8.0),
+                    ProductId = 8,
+                    MarketId = i
+                });
+                // Lachs isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(4.0, 6.0),
+                    ProductId = 9,
+                    MarketId = i
+                });
+                // Garnelen isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 8.0),
+                    ProductId = 10,
+                    MarketId = i
+                });
+                // Garnelen isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(8.0, 10.0),
+                    ProductId = 11,
+                    MarketId = i
+                });
+                // Garnelen isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(5.0, 7.0),
+                    ProductId = 12,
+                    MarketId = i
+                });
+                // Shrimps isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 8.0),
+                    ProductId = 13,
+                    MarketId = i
+                });
+                // Shrimps isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(8.0, 10.0),
+                    ProductId = 14,
+                    MarketId = i
+                });
+                // Shrimps isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(5.0, 7.0),
+                    ProductId = 15,
+                    MarketId = i
+                });
+                // Marmelade isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 16,
+                    MarketId = i
+                });
+                // Marmelade isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 17,
+                    MarketId = i
+                });
+                // Marmelade isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 18,
+                    MarketId = i
+                });
+                // Nutella isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 19,
+                    MarketId = i
+                });
+                // Nutella isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 20,
+                    MarketId = i
+                });
+                // Nutella isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 21,
+                    MarketId = i
+                });
+                // Honig isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 22,
+                    MarketId = i
+                });
+                // Honig isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 23,
+                    MarketId = i
+                });
+                // Honig isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 24,
+                    MarketId = i
+                });
+                // Sugo isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 25,
+                    MarketId = i
+                });
+                // Sugo isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 26,
+                    MarketId = i
+                });
+                // Sugo isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 27,
+                    MarketId = i
+                });
+                // Pesto isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 28,
+                    MarketId = i
+                });
+                // Pesto isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 29,
+                    MarketId = i
+                });
+                // Pesto isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 30,
+                    MarketId = i
+                });
+                // Eis isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 31,
+                    MarketId = i
+                });
+                // Eis isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 32,
+                    MarketId = i
+                });
+                // Eis isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 33,
+                    MarketId = i
+                });
+                // Ei isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.3),
+                    ProductId = 34,
+                    MarketId = i
+                });
+                // Ei isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.3, 0.4),
+                    ProductId = 35,
+                    MarketId = i
+                });
+                // Ei isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.1, 0.2),
+                    ProductId = 36,
+                    MarketId = i
+                });
+                // Hühnerkeule isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 37,
+                    MarketId = i
+                });
+                // Hühnerkeule isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 38,
+                    MarketId = i
+                });
+                // Hühnerkeule isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 39,
+                    MarketId = i
+                });
+                // Entenkeule isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 40,
+                    MarketId = i
+                });
+                // Entenkeule isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(4.0, 5.0),
+                    ProductId = 41,
+                    MarketId = i
+                });
+                // Entenkeule isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 42,
+                    MarketId = i
+                });
+                // Eiswürfel isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 43,
+                    MarketId = i
+                });
+                // Eiswürfel isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 44,
+                    MarketId = i
+                });
+                // Eiswürfel isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 45,
+                    MarketId = i
+                });
+                // Rotwein isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(5.0, 6.0),
+                    ProductId = 46,
+                    MarketId = i
+                });
+                // Rotwein isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 7.0),
+                    ProductId = 47,
+                    MarketId = i
+                });
+                // Rotwein isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(4.0, 5.0),
+                    ProductId = 48,
+                    MarketId = i
+                });
+                // Weißwein isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(5.0, 6.0),
+                    ProductId = 49,
+                    MarketId = i
+                });
+                // Weißwein isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(6.0, 7.0),
+                    ProductId = 50,
+                    MarketId = i
+                });
+                // Weißwein isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(4.0, 5.0),
+                    ProductId = 51,
+                    MarketId = i
+                });
+                // Waffeln isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 52,
+                    MarketId = i
+                });
+                // Waffeln isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 53,
+                    MarketId = i
+                });
+                // Waffeln isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 54,
+                    MarketId = i
+                });
+                // Tiefkühlpizza isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 55,
+                    MarketId = i
+                });
+                // Tiefkühlpizza isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 56,
+                    MarketId = i
+                });
+                // Tiefkühlpizza isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 57,
+                    MarketId = i
+                });
+                // Pfefferoni isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 58,
+                    MarketId = i
+                });
+                // Pfefferoni isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 59,
+                    MarketId = i
+                });
+                // Pfefferoni isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 60,
+                    MarketId = i
+                });
+                // Chili isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 61,
+                    MarketId = i
+                });
+                // Chili isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 62,
+                    MarketId = i
+                });
+                // Chili isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 63,
+                    MarketId = i
+                });
+                // Dinkelkekse isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 64,
+                    MarketId = i
+                });
+                // Dinkelkekse isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 65,
+                    MarketId = i
+                });
+
+                // Dinkelkekse isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 66,
+                    MarketId = i
+                });
+                // Camembert isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 67,
+                    MarketId = i
+                });
+                // Camembert isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 68,
+                    MarketId = i
+                });
+                // Camembert isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 69,
+                    MarketId = i
+                });
+                // Gouda isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 70,
+                    MarketId = i
+                });
+                // Gouda isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 71,
+                    MarketId = i
+                });
+                // Gouda isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 72,
+                    MarketId = i
+                });
+                // Karotte isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.3),
+                    ProductId = 73,
+                    MarketId = i
+                });
+                // Karotte isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.3, 0.4),
+                    ProductId = 74,
+                    MarketId = i
+                });
+                // Karotte isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.1, 0.2),
+                    ProductId = 75,
+                    MarketId = i
+                });
+                // Burger isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 76,
+                    MarketId = i
+                });
+                // Burger isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 77,
+                    MarketId = i
+                });
+                // Burger isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 78,
+                    MarketId = i
+                });
+                // Schwarzbrot isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 79,
+                    MarketId = i
+                });
+                // Schwarzbrot isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 80,
+                    MarketId = i
+                });
+                // Schwarzbrot isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 81,
+                    MarketId = i
+                });
+                // Weißbrot isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 82,
+                    MarketId = i
+                });
+                // Weißbrot isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 83,
+                    MarketId = i
+                });
+                // Weißbrot isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 84,
+                    MarketId = i
+                });
+                // Toast isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 85,
+                    MarketId = i
+                });
+                // Toast isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 86,
+                    MarketId = i
+                });
+                // Toast isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 87,
+                    MarketId = i
+                });
+                // Reis isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 88,
+                    MarketId = i
+                });
+                // Reis isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 89,
+                    MarketId = i
+                });
+                // Reis isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 90,
+                    MarketId = i
+                });
+                // Mineralwasser(still) isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 91,
+                    MarketId = i
+                });
+                // Mineralwasser(still) isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 92,
+                    MarketId = i
+                });
+                // Mineralwasser(still) isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 93,
+                    MarketId = i
+                });
+                // Mineralwasser(mild) isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 94,
+                    MarketId = i
+                });
+                // Mineralwasser(mild) isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 95,
+                    MarketId = i
+                });
+                // Mineralwasser(mild) isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 96,
+                    MarketId = i
+                });
+                // Mineralwasser(prickelnd) isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.5, 1.0),
+                    ProductId = 97,
+                    MarketId = i
+                });
+                // Mineralwasser(prickelnd) isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 98,
+                    MarketId = i
+                });
+                // Mineralwasser(prickelnd) isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(0.2, 0.5),
+                    ProductId = 99,
+                    MarketId = i
+                });
+                // Speck isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 100,
+                    MarketId = i
+                });
+                // Speck isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(3.0, 4.0),
+                    ProductId = 101,
+                    MarketId = i
+                });
+                // Speck isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 2.0),
+                    ProductId = 102,
+                    MarketId = i
+                });
+                #endregion
+            }
+
+            return marketProducts;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -318,12 +1050,19 @@ namespace Trolley.API.Data
             // Hofer Selection = 9
 
             //modelBuilder.Entity<BrandProduct>().HasData(
-            //    new BrandProduct { BrandId = 1, ProductId = 1, Price =  },
+            //    new BrandProduct { BrandId = 1, ProductId = 1, },
             //    );
-
             #endregion
 
+
+            var marketProducts = GenerateMarketProducts();
+            modelBuilder.Entity<MarketProduct>().HasData(marketProducts.ToArray());
         }
+
+
+
+
+
 
 
         public override int SaveChanges()
