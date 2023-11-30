@@ -20,5 +20,6 @@ namespace Trolley.API.Entities
         public string? ModifiedBy { get; set; }
         public string? CreatedBy { get; set; }
 
+
     }
 }

@@ -12,8 +12,7 @@ namespace Trolley.API.Entities
         //public double Price { get; set; }
         public virtual int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
-        public virtual int? IconId { get; set; }
-        public Icon Icon { get; set; }
+        public string IconName { get; set; }
 
         public ICollection<ProductShoppingList> ProductShoppingLists { get; set; }
         public ICollection<BrandProduct> BrandProducts { get; set; }

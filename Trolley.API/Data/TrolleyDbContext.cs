@@ -8,7 +8,6 @@ namespace Trolley.API.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Icon> Icons { get; set; }
         public DbSet<Market> Markets { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -24,6 +23,8 @@ namespace Trolley.API.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             // MarketProduct
             modelBuilder.Entity<MarketProduct>()
                 .HasKey(mpp => new { mpp.MarketId, mpp.ProductId });
@@ -168,6 +169,7 @@ namespace Trolley.API.Data
 
         private void ApplyDateAndUser()
         {
+
             var currentUser = "SYSTEM";
 
             var changedEntries = ChangeTracker

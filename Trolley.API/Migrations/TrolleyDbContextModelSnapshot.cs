@@ -161,44 +161,6 @@ namespace Trolley.API.Migrations
                     b.ToTable("BrandProduct");
                 });
 
-            modelBuilder.Entity("Trolley.API.Entities.Icon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Icon");
-                });
-
             modelBuilder.Entity("Trolley.API.Entities.Market", b =>
                 {
                     b.Property<int>("Id")
@@ -322,8 +284,9 @@ namespace Trolley.API.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IconId")
-                        .HasColumnType("int");
+                    b.Property<string>("IconName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDiscountProduct")
                         .HasColumnType("bit");
@@ -348,8 +311,6 @@ namespace Trolley.API.Migrations
                         .HasColumnType("rowversion");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IconId");
 
                     b.HasIndex("ProductCategoryId");
 
@@ -693,17 +654,11 @@ namespace Trolley.API.Migrations
 
             modelBuilder.Entity("Trolley.API.Entities.Product", b =>
                 {
-                    b.HasOne("Trolley.API.Entities.Icon", "Icon")
-                        .WithMany("Products")
-                        .HasForeignKey("IconId");
-
                     b.HasOne("Trolley.API.Entities.ProductCategory", "ProductCategory")
                         .WithMany()
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Icon");
 
                     b.Navigation("ProductCategory");
                 });
@@ -749,11 +704,6 @@ namespace Trolley.API.Migrations
             modelBuilder.Entity("Trolley.API.Entities.Brand", b =>
                 {
                     b.Navigation("BrandProducts");
-                });
-
-            modelBuilder.Entity("Trolley.API.Entities.Icon", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Trolley.API.Entities.Market", b =>
