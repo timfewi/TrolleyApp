@@ -120,24 +120,208 @@ namespace Trolley.API.Data
 
                 );
 
+            #region IconNames
+            //Forelle - fish
+            //Lachs - fish
+            //Garnelen - shrimp
+            //Shrimps - shrimp
+            //Marmelade - jar
+            //Nutella - jar
+            //Honig - jar
+            //Sugo - jar
+            //Pesto - jar
+            //Eis - ice - cream
+            //Ei - egg
+            //Hühnerkeule - drumstick - bite
+            //Entenkeule - drumstick - bite
+            //Eiswürfel - cubes - stacked
+            //Rotwein - wine - bottle
+            //Weißwein - wine - bottle
+            //Waffeln - stroopwafel
+            //Tiefkühlpizza - pizza - slice
+            //Pfefferoni - pepper - hot
+            //Chili - pepper - hot
+            //Dinkelkekse - cookie
+            //Camembert - cheese
+            //Gouda - cheese
+            //Karotte - carrot
+            //Burger - burger
+            //Schwarzbrot - bread - slice
+            //Weißbrot - bread - slice
+            //Toast - bread - slice
+            //Reis - bowl - rice
+            //Mineralwasser(still) - bottle - water
+            //Mineralwasser(mild) - bottle - water
+            //Mineralwasser(prickelnd) - bottle - water
+            //Speck - bacon
+            //Apfel - apple - whole
+            #endregion
+
+            #region Products
+            modelBuilder.Entity<Product>().HasData(
+                //Apfel
+                new Product { Id = 1, Name = "Apfel", ProductCategoryId = 1, IconName = "apple-whole", IsOrganic = false, IsDiscountProduct = false },
+                new Product { Id = 2, Name = "Apfel", ProductCategoryId = 1, IconName = "apple-whole", IsOrganic = true, IsDiscountProduct = false },
+                new Product { Id = 3, Name = "Apfel", ProductCategoryId = 1, IconName = "apple-whole", IsOrganic = false, IsDiscountProduct = true },
+                // Forelle
+                new Product { Id = 4, Name = "Forelle", ProductCategoryId = 5, IconName = "fish", IsOrganic = false, IsDiscountProduct = false },
+                new Product { Id = 5, Name = "Forelle", ProductCategoryId = 5, IconName = "fish", IsOrganic = true, IsDiscountProduct = false },
+                new Product { Id = 6, Name = "Forelle", ProductCategoryId = 5, IconName = "fish", IsOrganic = false, IsDiscountProduct = true, },
+                // Lachs
+                new Product { Id = 7, Name = "Lachs", ProductCategoryId = 5, IconName = "fish", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 8, Name = "Lachs", ProductCategoryId = 5, IconName = "fish", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 9, Name = "Lachs", ProductCategoryId = 5, IconName = "fish", IsOrganic = false, IsDiscountProduct = true, },
+                // Garnelen
+                new Product { Id = 10, Name = "Garnelen", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 11, Name = "Garnelen", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 12, Name = "Garnelen", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = false, IsDiscountProduct = true, },
+                // Shrimps
+                new Product { Id = 13, Name = "Shrimps", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 14, Name = "Shrimps", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 15, Name = "Shrimps", ProductCategoryId = 5, IconName = "shrimp", IsOrganic = false, IsDiscountProduct = true, },
+                // Marmelade
+                new Product { Id = 16, Name = "Marmelade", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 17, Name = "Marmelade", ProductCategoryId = 8, IconName = "jar", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 18, Name = "Marmelade", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = true, },
+                // Nutella
+                new Product { Id = 19, Name = "Nutella", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 20, Name = "Nutella", ProductCategoryId = 8, IconName = "jar", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 21, Name = "Nutella", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = true, },
+                // Honig
+                new Product { Id = 22, Name = "Honig", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 23, Name = "Honig", ProductCategoryId = 8, IconName = "jar", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 24, Name = "Honig", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = true, },
+                // Sugo
+                new Product { Id = 25, Name = "Sugo", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 26, Name = "Sugo", ProductCategoryId = 8, IconName = "jar", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 27, Name = "Sugo", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = true, },
+                // Pesto
+                new Product { Id = 28, Name = "Pesto", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 29, Name = "Pesto", ProductCategoryId = 8, IconName = "jar", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 30, Name = "Pesto", ProductCategoryId = 8, IconName = "jar", IsOrganic = false, IsDiscountProduct = true, },
+                // Eis
+                new Product { Id = 31, Name = "Eis", ProductCategoryId = 10, IconName = "ice-cream", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 32, Name = "Eis", ProductCategoryId = 10, IconName = "ice-cream", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 33, Name = "Eis", ProductCategoryId = 10, IconName = "ice-cream", IsOrganic = false, IsDiscountProduct = true, },
+                // Ei
+                new Product { Id = 34, Name = "Ei", ProductCategoryId = 1, IconName = "egg", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 35, Name = "Ei", ProductCategoryId = 1, IconName = "egg", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 36, Name = "Ei", ProductCategoryId = 1, IconName = "egg", IsOrganic = false, IsDiscountProduct = true, },
+                // Hühnerkeule
+                new Product { Id = 37, Name = "Hühnerkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 38, Name = "Hühnerkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 39, Name = "Hühnerkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = false, IsDiscountProduct = true, },
+                // Entenkeule
+                new Product { Id = 40, Name = "Entenkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 41, Name = "Entenkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 42, Name = "Entenkeule", ProductCategoryId = 4, IconName = "drumstick-bite", IsOrganic = false, IsDiscountProduct = true, },
+                // Eiswürfel
+                new Product { Id = 43, Name = "Eiswürfel", ProductCategoryId = 9, IconName = "cubes-stacked", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 44, Name = "Eiswürfel", ProductCategoryId = 9, IconName = "cubes-stacked", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 45, Name = "Eiswürfel", ProductCategoryId = 9, IconName = "cubes-stacked", IsOrganic = false, IsDiscountProduct = true, },
+                // Rotwein
+                new Product { Id = 46, Name = "Rotwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 47, Name = "Rotwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 48, Name = "Rotwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                // Weißwein
+                new Product { Id = 49, Name = "Weißwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 50, Name = "Weißwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 51, Name = "Weißwein", ProductCategoryId = 9, IconName = "wine-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                // Waffeln
+                new Product { Id = 52, Name = "Waffeln", ProductCategoryId = 10, IconName = "stroopwafel", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 53, Name = "Waffeln", ProductCategoryId = 10, IconName = "stroopwafel", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 54, Name = "Waffeln", ProductCategoryId = 10, IconName = "stroopwafel", IsOrganic = false, IsDiscountProduct = true, },
+                // Tiefkühlpizza
+                new Product { Id = 55, Name = "Tiefkühlpizza", ProductCategoryId = 10, IconName = "pizza-slice", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 56, Name = "Tiefkühlpizza", ProductCategoryId = 10, IconName = "pizza-slice", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 57, Name = "Tiefkühlpizza", ProductCategoryId = 10, IconName = "pizza-slice", IsOrganic = false, IsDiscountProduct = true, },
+                // Pfefferoni
+                new Product { Id = 58, Name = "Pfefferoni", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 59, Name = "Pfefferoni", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 60, Name = "Pfefferoni", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = false, IsDiscountProduct = true, },
+                // Chili
+                new Product { Id = 61, Name = "Chili", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 62, Name = "Chili", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 63, Name = "Chili", ProductCategoryId = 8, IconName = "pepper-hot", IsOrganic = false, IsDiscountProduct = true, },
+                // Dinkelkekse
+                new Product { Id = 64, Name = "Dinkelkekse", ProductCategoryId = 10, IconName = "cookie", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 65, Name = "Dinkelkekse", ProductCategoryId = 10, IconName = "cookie", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 66, Name = "Dinkelkekse", ProductCategoryId = 10, IconName = "cookie", IsOrganic = false, IsDiscountProduct = true, },
+                // Camembert
+                new Product { Id = 67, Name = "Camembert", ProductCategoryId = 6, IconName = "cheese", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 68, Name = "Camembert", ProductCategoryId = 6, IconName = "cheese", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 69, Name = "Camembert", ProductCategoryId = 6, IconName = "cheese", IsOrganic = false, IsDiscountProduct = true, },
+                // Gouda
+                new Product { Id = 70, Name = "Gouda", ProductCategoryId = 6, IconName = "cheese", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 71, Name = "Gouda", ProductCategoryId = 6, IconName = "cheese", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 72, Name = "Gouda", ProductCategoryId = 6, IconName = "cheese", IsOrganic = false, IsDiscountProduct = true, },
+                // Karotte
+                new Product { Id = 73, Name = "Karotte", ProductCategoryId = 2, IconName = "carrot", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 74, Name = "Karotte", ProductCategoryId = 2, IconName = "carrot", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 75, Name = "Karotte", ProductCategoryId = 2, IconName = "carrot", IsOrganic = false, IsDiscountProduct = true, },
+                // Burger
+                new Product { Id = 76, Name = "Burger", ProductCategoryId = 4, IconName = "burger", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 77, Name = "Burger", ProductCategoryId = 4, IconName = "burger", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 78, Name = "Burger", ProductCategoryId = 4, IconName = "burger", IsOrganic = false, IsDiscountProduct = true, },
+                // Schwarzbrot
+                new Product { Id = 79, Name = "Schwarzbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 80, Name = "Schwarzbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 81, Name = "Schwarzbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = true, },
+                // Weißbrot
+                new Product { Id = 82, Name = "Weißbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 83, Name = "Weißbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 84, Name = "Weißbrot", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = true, },
+                // Toast
+                new Product { Id = 85, Name = "Toast", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 86, Name = "Toast", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 87, Name = "Toast", ProductCategoryId = 3, IconName = "bread-slice", IsOrganic = false, IsDiscountProduct = true, },
+                // Reis
+                new Product { Id = 88, Name = "Reis", ProductCategoryId = 3, IconName = "bowl-rice", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 89, Name = "Reis", ProductCategoryId = 3, IconName = "bowl-rice", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 90, Name = "Reis", ProductCategoryId = 3, IconName = "bowl-rice", IsOrganic = false, IsDiscountProduct = true, },
+                // Mineralwasser(still)
+                new Product { Id = 91, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 92, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 93, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                // Mineralwasser(mild)
+                new Product { Id = 94, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 95, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 96, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                // Mineralwasser(prickelnd)
+                new Product { Id = 97, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 98, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 99, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                // Speck
+                new Product { Id = 100, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 101, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 102, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = true, }
+
+            );
+            #endregion
 
 
+            #region BrandProducts
+            // Brand IDs = 1-9
+            // 1-3 Billa =
+            // Ja! Natürlich = 1,
+            // Billa = 2,
+            // Billa Corso = 3
 
+            // 4-6 Spar =
+            // Natur Pur = 4,
+            // S-Budget = 5,
+            // Spar Vital = 6
 
-            // Seed data for Obst Products
+            // 7-9 Hofer =
+            // Zurück zum Ursprung = 7,
+            // Hofer Bio = 8,
+            // Hofer Selection = 9
 
-            // IsOrganic = false and IsDiscountProduct = false than its BillaCorso, Spar Vital, Hofer Selection, Price is the highest
+            //modelBuilder.Entity<BrandProduct>().HasData(
+            //    new BrandProduct { BrandId = 1, ProductId = 1, Price =  },
+            //    );
 
-            // IsOrganic = true and IsDiscountProduct = false than its Ja! Natürlich, Natur Pur, Zurück zum Ursprung, Price is medium
-            // IsOrganic = false and IsDiscountProduct = true than its Billa, S - Budget, Hofer Bio, Price is the lowest
-
-            // Make Prices Truly Random
-
-            //modelBuilder.Entity<Product>().HasData(
-            //    new Product { Id = 1, Name = "Apfel", ProductCategoryId = 1, IconId = 1 },
-            //    new Product { Id = 2, Name = "Apfel", ProductCategoryId = 1, }
-
-            //);
+            #endregion
 
         }
 
@@ -211,5 +395,8 @@ namespace Trolley.API.Data
                 }
             }
         }
+
+
+
     }
 }
