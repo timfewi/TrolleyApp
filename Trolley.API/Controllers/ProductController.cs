@@ -53,5 +53,28 @@ namespace Trolley.API.Controllers
                 throw;
             }
         }
+
+
+        //GET: api/Product/Suche
+        //Get all products by name
+        [HttpGet("Suche")]
+        public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetProductsByName(string name)
+        {
+            try
+            {
+                var products = await _productService.GetProductsByNameAsync(name);
+                if (products == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw;
+            }
+        }
     }
 }
