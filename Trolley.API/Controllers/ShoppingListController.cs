@@ -106,5 +106,52 @@ namespace Trolley.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        // POST: api/ShoppingList/{id}/AddProduct
+        // Add a product to a shopping list
+        [HttpPost]
+        [Route("{id:int}/AddProduct")]
+        public async Task<ActionResult> AddProductToShoppingList(int id,
+            AddProductToShoppingListDto addProductToShoppingListDto)
+        {
+            try
+            {
+                var result = await _shoppingListService.AddProductToShoppingListAsync(
+                    id,
+                    addProductToShoppingListDto.ProductId,
+                    addProductToShoppingListDto.Amount);
+
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET: api/ShoppingList/{id}/Calculate
+        [HttpGet("{id}/Calculate")]
+        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListWithCalculations(int id)
+        {
+            try
+            {
+                var shoppingList = await _shoppingListService.GetShoppingListWithCalculationsAsync(id);
+                if (shoppingList == null)
+                {
+                    return NotFound();
+                }
+
+                var shoppingListReadDto = _mapper.Map<ShoppingListReadDto>(shoppingList);
+                return Ok(shoppingListReadDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

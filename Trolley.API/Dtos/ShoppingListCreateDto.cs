@@ -2,7 +2,5 @@
 {
     public class ShoppingListCreateDto
     {
-        public string Name { get; set; }
-
     }
 }

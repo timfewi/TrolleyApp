@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 using Trolley.API.Data;
+using Trolley.API.Dtos;
 
 namespace Trolley.API.Services
 {
-    public class ShoppingListService : BaseService, IShoppingListService
+    public class ShoppingListService : BaseService
     {
 
         public ShoppingListService(IServiceProvider serviceProvider) : base(serviceProvider)
@@ -78,40 +79,108 @@ namespace Trolley.API.Services
             }
         }
 
-        public async Task AddProductToShoppingListAsync(int shoppingListId, int productId)
-        {
-            var shoppingList = await _context.ShoppingLists.FindAsync(shoppingListId);
-            var product = await _context.Products.FindAsync(productId);
 
-            if (shoppingList == null || product == null)
+
+        public async Task<bool> AddProductToShoppingListAsync(int shoppingListId, int productId, int amount)
+        {
+            var shoppingList = await _context.ShoppingLists
+                .Include(sl => sl.ProductShoppingLists)
+                .FirstOrDefaultAsync(sl => sl.Id == shoppingListId);
+
+            if (shoppingList == null)
             {
-                throw new KeyNotFoundException(
-                    $"Couldn't find shopping list with id: {shoppingListId} or product with id: {productId}");
+                throw new KeyNotFoundException($"Couldn't find shopping list with id: {shoppingListId}");
             }
 
             var productShoppingList = new ProductShoppingList
             {
                 ProductId = productId,
-                ShoppingListId = shoppingListId
+                ShoppingListId = shoppingListId,
+                Amount = amount
             };
 
-            _context.ProductShoppingLists.Add(productShoppingList);
+            shoppingList.ProductShoppingLists.Add(productShoppingList);
             await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Market> CalculateShoppingListTotalPriceAsync(int shoppingListId)
+        public async Task<ShoppingListReadDto> GetShoppingListWithCalculationsAsync(int id)
         {
-            throw new NotImplementedException();
+            var shoppingList = await GetShoppingListByIdAsync(id);
+            if (shoppingList == null)
+            {
+                throw new KeyNotFoundException($"Couldn't find shopping list with id: {id}");
+            }
+
+            var shoppingListDto = _mapper.Map<ShoppingListReadDto>(shoppingList);
+
+            shoppingListDto.TotalPrice = CalculateTotalCost(shoppingList).Result;
+            shoppingListDto.CostPerMarket = CalculateCostPerMarket(shoppingList).Result;
+
+            return shoppingListDto;
         }
 
-        public Task<Market> CheapestMarketForShoppingListAsync(int shoppingListId)
+
+        private async Task<Double> CalculateTotalCost(ShoppingList shoppingList)
         {
-            throw new NotImplementedException();
+            var result = 0.0;
+
+            // Sammle alle Produkt-IDs aus der Einkaufsliste
+            var productIds = shoppingList.ProductShoppingLists.Select(psl => psl.ProductId).ToList();
+
+            // Hole alle Marktpreise für diese Produkte in einer Abfrage
+            var marketProducts = await _context.MarketProduct
+                .Include(mp => mp.Market)
+                .Where(mp => productIds.Contains(mp.ProductId))
+                .ToListAsync();
+
+            foreach (var productShoppingList in shoppingList.ProductShoppingLists)
+            {
+                // Finde die zugehörigen Marktpreise für jedes Produkt
+                var relevantMarketProducts = marketProducts.Where(mp => mp.ProductId == productShoppingList.ProductId);
+
+                foreach (var marketProduct in relevantMarketProducts)
+                {
+                    result += marketProduct.Price * productShoppingList.Amount;
+                }
+            }
+
+            return result;
         }
 
-        public Task RemoveProductFromShoppingListAsync(int shoppingListId, int productId)
+        private async Task<Dictionary<string, double>> CalculateCostPerMarket(ShoppingList shoppingList)
         {
-            throw new NotImplementedException();
+            var result = new Dictionary<string, double>();
+
+            // Sammle alle Produkt-IDs aus der Einkaufsliste
+            var productIds = shoppingList.ProductShoppingLists.Select(psl => psl.ProductId).ToList();
+
+            // Hole alle Marktpreise für diese Produkte in einer Abfrage
+            var marketProducts = await _context.MarketProduct
+                .Include(mp => mp.Market)
+                .Where(mp => productIds.Contains(mp.ProductId))
+                .ToListAsync();
+
+            foreach (var productShoppingList in shoppingList.ProductShoppingLists)
+            {
+                // Finde die zugehörigen Marktpreise für jedes Produkt
+                var relevantMarketProducts = marketProducts.Where(mp => mp.ProductId == productShoppingList.ProductId);
+
+                foreach (var marketProduct in relevantMarketProducts)
+                {
+                    if (result.ContainsKey(marketProduct.Market.Name))
+                    {
+                        result[marketProduct.Market.Name] += marketProduct.Price * productShoppingList.Amount;
+                    }
+                    else
+                    {
+                        result.Add(marketProduct.Market.Name, marketProduct.Price * productShoppingList.Amount);
+                    }
+                }
+            }
+
+            return result;
         }
+
     }
 }
