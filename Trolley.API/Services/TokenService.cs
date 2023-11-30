@@ -15,24 +15,27 @@ namespace Trolley.API.Services
             _configuration = configuration;
         }
 
-        public string CreateJWTToken(User user)
+
+        public string CreateJWTToken(IdentityUser user, IList<string> roles)
         {
-            var claims = new List<Claim>
+            //create claims details based on the user information
+            var claims = new List<Claim>();
+
+            foreach (var role in roles)
             {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            };
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Issuer"],
-                claims,
-                expires: DateTime.Now.AddMinutes(30), // Dauer des Tokens
-                signingCredentials: credentials
-            );
+                                    _configuration["Jwt:Issuer"],
+                                    _configuration["Jwt:Issuer"],
+                                          claims,
+                                          expires: DateTime.Now.AddMinutes(120),
+                                          signingCredentials: credentials
+                                    );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

@@ -2,10 +2,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Trolley.API.Data;
 using Trolley.API.Entities;
 using Trolley.API.Mapper;
 using Trolley.API.Services;
+using Trolley.API.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +28,12 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Adds Identity services to the services container
-builder.Services.AddIdentityCore<User>()
-    .AddRoles<IdentityRole<int>>()
-    .AddTokenProvider<DataProtectorTokenProvider<User>>("Trolley")
+// Adds Identity services to the services container
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("Trolley")
     .AddEntityFrameworkStores<TrolleyDbContext>()
     .AddDefaultTokenProviders();
-
 
 
 builder.Services.AddCors(options =>
@@ -68,11 +73,24 @@ builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<TokenService>();
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddIdentityCookies();
+
+
+// Register Authentication.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+
+        });
+
 builder.Services.AddAuthorization();
-
-
 // Add DbContext to the container.
 builder.Services.AddDbContext<TrolleyDbContext>(options =>
        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -83,9 +101,40 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Trolley.API", Version = "v1" });
+        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+            Scheme = JwtBearerDefaults.AuthenticationScheme,
 
+        });
+
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    },
+                    Scheme = "Oauth2",
+                    Name = JwtBearerDefaults.AuthenticationScheme,
+                    In = ParameterLocation.Header
+                },
+                new List<string>()
+            }
+        });
+    }
+);
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

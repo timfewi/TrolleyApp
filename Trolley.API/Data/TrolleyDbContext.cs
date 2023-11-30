@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
+using Trolley.API.Enums;
 using Trolley.API.Utils;
 
 namespace Trolley.API.Data
 {
-    public class TrolleyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+    public class TrolleyDbContext : IdentityDbContext<IdentityUser>
     {
         public TrolleyDbContext(DbContextOptions<TrolleyDbContext> options)
             : base(options)
@@ -24,7 +25,6 @@ namespace Trolley.API.Data
         public DbSet<ProductShoppingList> ProductShoppingLists { get; set; }
         public DbSet<ShoppingListUser> ShoppingListUsers { get; set; }
         public DbSet<User> User { get; set; }
-
 
 
         public List<MarketProduct> GenerateMarketProducts()
@@ -761,6 +761,34 @@ namespace Trolley.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // User and IdentityUser one-to-one relationship
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.IdentityUser)
+                .WithOne()
+                .HasForeignKey<User>(u => u.IdentityUserId);
+
+
+            //Roles Ids 
+            var adminRoleId = "1d6d60c8-ae2b-47c5-a7e8-50535cf5bfb8";
+            var userRoleId = "8f190010-c91a-489a-803e-1ed8540fc52f";
+            var guestRoleId = "a3d56e62-16a2-40e0-b96c-be0af8112880";
+            var shopOwnerRoleId = "4364556b-1c02-48b1-9395-4b6176022c0d";
+            var premiumUserRoleId = "134fd62b-aa5a-4119-8479-095e01483f07";
+
+            var roles = new List<IdentityRole>
+            {
+                new IdentityRole { Id = adminRoleId, ConcurrencyStamp = adminRoleId, Name = "Admin", NormalizedName = "Admin".ToUpper() },
+                new IdentityRole { Id = userRoleId, ConcurrencyStamp = userRoleId, Name = "User", NormalizedName = "User".ToUpper() },
+                new IdentityRole { Id = guestRoleId, ConcurrencyStamp = guestRoleId, Name = "Guest", NormalizedName = "Guest".ToUpper()},
+                new IdentityRole { Id = shopOwnerRoleId, ConcurrencyStamp = shopOwnerRoleId, Name = "ShopOwner", NormalizedName = "ShopOwner".ToUpper() },
+                new IdentityRole { Id = premiumUserRoleId, ConcurrencyStamp = premiumUserRoleId, Name = "PremiumUser", NormalizedName = "PremiumUser".ToUpper() }
+
+            };
+
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
+
+
+
             // MarketProduct
             modelBuilder.Entity<MarketProduct>()
                 .HasKey(mpp => new { mpp.MarketId, mpp.ProductId });
@@ -1016,17 +1044,17 @@ namespace Trolley.API.Data
                 new Product { Id = 89, Name = "Reis", ProductCategoryId = 3, IconName = "bowl-rice", IsOrganic = true, IsDiscountProduct = false, },
                 new Product { Id = 90, Name = "Reis", ProductCategoryId = 3, IconName = "bowl-rice", IsOrganic = false, IsDiscountProduct = true, },
                 // Mineralwasser(still)
-                new Product { Id = 91, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
-                new Product { Id = 92, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
-                new Product { Id = 93, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                new Product { Id = 91, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 92, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 93, Name = "Mineralwasser(still)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = true, },
                 // Mineralwasser(mild)
-                new Product { Id = 94, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
-                new Product { Id = 95, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
-                new Product { Id = 96, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                new Product { Id = 94, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 95, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 96, Name = "Mineralwasser(mild)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = true, },
                 // Mineralwasser(prickelnd)
-                new Product { Id = 97, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = false, },
-                new Product { Id = 98, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = true, IsDiscountProduct = false, },
-                new Product { Id = 99, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "water-bottle", IsOrganic = false, IsDiscountProduct = true, },
+                new Product { Id = 97, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 98, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 99, Name = "Mineralwasser(prickelnd)", ProductCategoryId = 9, IconName = "bottle-water", IsOrganic = false, IsDiscountProduct = true, },
                 // Speck
                 new Product { Id = 100, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = false, },
                 new Product { Id = 101, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = true, IsDiscountProduct = false, },

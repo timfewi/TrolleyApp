@@ -12,7 +12,7 @@ namespace Trolley.API.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly TokenService _tokenService;
         public AuthController(IServiceProvider serviceProvider, UserManager<IdentityUser> userManager, TokenService tokenService) : base(serviceProvider)
         {
@@ -20,67 +20,82 @@ namespace Trolley.API.Controllers
             _tokenService = tokenService;
         }
 
-
-        // POST: api/Auth/Register
-        // Register a new user
-        [HttpPost("Register")]
-        public async Task<ActionResult> Register([FromBody] RegisterRequestDto registerDto)
+        // POST: /api/Auth/Register
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            try
+            var identityUser = new IdentityUser
             {
-                var user = new IdentityUser
+                UserName = registerRequestDto.Username,
+                Email = registerRequestDto.Username
+            };
+            var identityResult = await _userManager.CreateAsync(identityUser, registerRequestDto.Password);
+
+            if (identityResult.Succeeded)
+            {
+                // Füge den benutzerdefinierten User zur Datenbank hinzu
+                var customUser = new User
                 {
-                    UserName = registerDto.Email,
-                    Email = registerDto.Email
+                    IdentityUserId = identityUser.Id
                 };
+                _context.User.Add(customUser);
+                await _context.SaveChangesAsync();
 
-                var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-                if (result.Succeeded)
+                // Füge Rollen zu diesem IdentityUser hinzu
+                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
                 {
-                    await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
-                    return Ok(new { Message = "User registered successfully" });
-                }
+                    // Hier verwenden wir das identityUser-Objekt
+                    identityResult = await _userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
 
-                return BadRequest(result.Errors);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                throw;
-            }
-        }
-
-
-        // POST: api/Auth/Login
-        // Login a user
-        [HttpPost("Login")]
-        public async Task<ActionResult> Login([FromBody] LoginRequestDto loginDto)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(loginDto.Email);
-                if (user != null && await _userManager.CheckPasswordAsync(user, loginDto.Password))
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var token = _tokenService.CreateJWTToken(new User
+                    if (identityResult.Succeeded)
                     {
-                        Email = user.Email,
-                        Role = Enum.Parse<UserRoles>(roles.FirstOrDefault())
-                    });
-
-                    return Ok(new LoginResponseDto { JwtToken = token });
+                        return Ok("User was registered! Please login.");
+                    }
+                    else
+                    {
+                        return BadRequest(identityResult.Errors);
+                    }
                 }
-
-                return Unauthorized();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                throw;
-            }
+            return Ok();
         }
 
+
+
+
+        // POST: /api/Auth/Login
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
+
+            if (user != null)
+            {
+                var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+                if (checkPasswordResult)
+                {
+                    //Roles
+
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles != null && roles.Any())
+                    {
+                        //Create Token
+                        var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
+                        var response = new LoginResponseDto
+                        {
+                            JwtToken = jwtToken
+                        };
+                        return Ok(response);
+                    }
+
+                }
+            }
+            return BadRequest("Invalid login attempt.");
+
+        }
 
     }
 
