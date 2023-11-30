@@ -22,6 +22,139 @@ namespace Trolley.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("Trolley.API.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -283,7 +416,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -292,7 +425,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -301,7 +434,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.5899999999999999
+                            Price = 5.3899999999999997
                         },
                         new
                         {
@@ -310,7 +443,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.6899999999999995
+                            Price = 6.3899999999999997
                         },
                         new
                         {
@@ -328,7 +461,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.79
+                            Price = 6.6899999999999995
                         },
                         new
                         {
@@ -337,7 +470,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 7.5899999999999999
+                            Price = 7.9900000000000002
                         },
                         new
                         {
@@ -355,7 +488,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.29
+                            Price = 7.29
                         },
                         new
                         {
@@ -364,7 +497,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 9.7899999999999991
+                            Price = 8.3900000000000006
                         },
                         new
                         {
@@ -373,7 +506,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.29
+                            Price = 5.4900000000000002
                         },
                         new
                         {
@@ -382,7 +515,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 7.3899999999999997
+                            Price = 6.29
                         },
                         new
                         {
@@ -391,7 +524,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 9.0899999999999999
+                            Price = 9.5899999999999999
                         },
                         new
                         {
@@ -400,7 +533,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.3899999999999997
                         },
                         new
                         {
@@ -409,120 +542,12 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.1899999999999999
                         },
                         new
                         {
                             MarketId = 1,
                             ProductId = 17,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.1899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 18,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.29
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 19,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 20,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.1899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 21,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.5900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 22,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 23,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 24,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.79
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 25,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.3900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 26,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.3899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 27,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.89000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 28,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 29,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
@@ -531,70 +556,16 @@ namespace Trolley.API.Migrations
                         new
                         {
                             MarketId = 1,
-                            ProductId = 30,
+                            ProductId = 18,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.6900000000000002
                         },
                         new
                         {
                             MarketId = 1,
-                            ProductId = 31,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.29
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 32,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 33,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.1900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 34,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 35,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.39000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 36,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.19
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 37,
+                            ProductId = 19,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
@@ -603,762 +574,6 @@ namespace Trolley.API.Migrations
                         new
                         {
                             MarketId = 1,
-                            ProductId = 38,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 39,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.0900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 40,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.6899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 41,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 4.9900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 42,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 43,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.78999999999999992
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 44,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.99
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 45,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 46,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 5.6899999999999995
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 47,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.6899999999999995
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 48,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 4.5899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 49,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 5.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 50,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.79
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 51,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 4.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 52,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.8900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 53,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.79
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 54,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.89000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 55,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 56,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.9899999999999998
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 57,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.49
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 58,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.89000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 59,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.5900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 60,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.39000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 61,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.78999999999999992
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 62,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.8900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 63,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 64,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.29
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 65,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 66,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.58999999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 67,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 68,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 69,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.5900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 70,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.6899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 71,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 72,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.1900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 73,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 74,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.39000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 75,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.19
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 76,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.8899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 77,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.3899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 78,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.99
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 79,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.68999999999999995
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 80,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.99
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 81,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.48999999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 82,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.89000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 83,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.0900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 84,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 85,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.98999999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 86,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.6900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 87,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.39000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 88,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.5900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 89,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.9899999999999998
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 90,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.89000000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 91,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.98999999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 92,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.3900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 93,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 94,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.68999999999999995
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 95,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.6900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 96,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 97,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.58999999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 98,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.5900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 99,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 0.29000000000000004
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 100,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 101,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.3899999999999997
-                        },
-                        new
-                        {
-                            MarketId = 1,
-                            ProductId = 102,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.1900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.79
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.1899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.3900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 4,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 5.79
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 5,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.9900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 6,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 4.6899999999999995
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 7,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.0899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 8,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 7.1899999999999995
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 9,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 4.6899999999999995
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 10,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.5899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 11,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 9.5899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 12,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 5.29
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 13,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.9900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 14,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 9.3900000000000006
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 15,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 6.4900000000000002
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 16,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.6899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 17,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 3.9899999999999998
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 18,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 1.0900000000000001
-                        },
-                        new
-                        {
-                            MarketId = 2,
-                            ProductId = 19,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = 0,
-                            Price = 2.5899999999999999
-                        },
-                        new
-                        {
-                            MarketId = 2,
                             ProductId = 20,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1367,16 +582,16 @@ namespace Trolley.API.Migrations
                         },
                         new
                         {
-                            MarketId = 2,
+                            MarketId = 1,
                             ProductId = 21,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.0900000000000001
                         },
                         new
                         {
-                            MarketId = 2,
+                            MarketId = 1,
                             ProductId = 22,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1385,12 +600,930 @@ namespace Trolley.API.Migrations
                         },
                         new
                         {
+                            MarketId = 1,
+                            ProductId = 23,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.9899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 24,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 25,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.8900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 26,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.8899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 27,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.98999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 28,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.6899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 29,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.5899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 30,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.1900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 31,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.3899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 32,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 33,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.5900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 34,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.29000000000000004
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 35,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.39000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 36,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.19
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 37,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.4899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 38,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.1899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 39,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.5900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 40,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.8899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 41,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 4.29
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 42,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 43,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.68999999999999995
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 44,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.8900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 45,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.48999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 46,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.3899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 47,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 6.9900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 48,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 4.4900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 49,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.1899999999999995
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 50,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 6.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 51,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 4.5899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 52,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.6900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 53,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.3899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 54,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.58999999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 55,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.4899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 56,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 57,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.99
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 58,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.89000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 59,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.1900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 60,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.29000000000000004
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 61,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.58999999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 62,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.6900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 63,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.48999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 64,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.49
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 65,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.6899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 66,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.98999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 67,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.8899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 68,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.6899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 69,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.5900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 70,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.4899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 71,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 72,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.49
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 73,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.29000000000000004
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 74,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.39000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 75,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.19
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 76,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.3899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 77,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 78,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.5900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 79,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.68999999999999995
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 80,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.29
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 81,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.39000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 82,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.58999999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 83,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.99
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 84,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.48999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 85,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.89000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 86,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 87,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.39000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 88,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 89,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.79
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 90,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.58999999999999997
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 91,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.98999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 92,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.99
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 93,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.48999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 94,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.78999999999999992
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 95,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.1900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 96,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.39000000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 97,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.68999999999999995
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 98,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.8900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 99,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 0.48999999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 100,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 101,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.1899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 1,
+                            ProductId = 102,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.99
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.8900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 3,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.1900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 4,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.1899999999999995
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 5,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 6.3899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 6,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 4.5899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 7,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 6.8899999999999997
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 8,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 7.4900000000000002
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 9,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.6899999999999995
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 10,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 6.79
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 11,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 8.6899999999999995
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 12,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 13,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 7.0899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 14,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 8.8900000000000006
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 15,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 5.6899999999999995
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 16,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.4899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 17,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.1899999999999999
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 18,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.49
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 19,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.79
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 20,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 3.9899999999999998
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 21,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 1.3900000000000001
+                        },
+                        new
+                        {
+                            MarketId = 2,
+                            ProductId = 22,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            Price = 2.0899999999999999
+                        },
+                        new
+                        {
                             MarketId = 2,
                             ProductId = 23,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -1399,7 +1532,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1408,7 +1541,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.29
                         },
                         new
                         {
@@ -1426,7 +1559,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -1435,7 +1568,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1444,7 +1577,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.5899999999999999
                         },
                         new
                         {
@@ -1453,7 +1586,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -1462,7 +1595,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -1471,7 +1604,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.8899999999999997
+                            Price = 3.6899999999999999
                         },
                         new
                         {
@@ -1480,7 +1613,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -1516,7 +1649,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -1525,7 +1658,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.5899999999999999
+                            Price = 3.79
                         },
                         new
                         {
@@ -1534,7 +1667,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1543,7 +1676,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.9899999999999998
                         },
                         new
                         {
@@ -1552,7 +1685,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.6899999999999995
+                            Price = 4.4900000000000002
                         },
                         new
                         {
@@ -1561,7 +1694,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1570,7 +1703,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1579,7 +1712,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1597,7 +1730,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.5899999999999999
+                            Price = 5.79
                         },
                         new
                         {
@@ -1606,7 +1739,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.79
+                            Price = 6.6899999999999995
                         },
                         new
                         {
@@ -1615,7 +1748,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.9900000000000002
+                            Price = 4.29
                         },
                         new
                         {
@@ -1624,7 +1757,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.8899999999999997
+                            Price = 5.6899999999999995
                         },
                         new
                         {
@@ -1633,7 +1766,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.3899999999999997
+                            Price = 6.6899999999999995
                         },
                         new
                         {
@@ -1642,7 +1775,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.9900000000000002
+                            Price = 4.4900000000000002
                         },
                         new
                         {
@@ -1660,7 +1793,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1669,7 +1802,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1678,7 +1811,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -1696,7 +1829,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -1705,7 +1838,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1714,7 +1847,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -1723,7 +1856,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1732,7 +1865,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1741,7 +1874,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -1750,7 +1883,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -1759,7 +1892,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -1768,7 +1901,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.0899999999999999
                         },
                         new
                         {
@@ -1777,7 +1910,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.68999999999999995
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1786,7 +1919,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -1795,7 +1928,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -1813,7 +1946,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1822,7 +1955,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -1831,7 +1964,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -1867,7 +2000,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.0899999999999999
                         },
                         new
                         {
@@ -1876,7 +2009,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.1899999999999999
+                            Price = 3.29
                         },
                         new
                         {
@@ -1885,7 +2018,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -1894,7 +2027,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1903,7 +2036,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1912,7 +2045,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1930,7 +2063,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.79
                         },
                         new
                         {
@@ -1939,7 +2072,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1948,7 +2081,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -1957,7 +2090,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -1975,7 +2108,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -1984,7 +2117,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.79
                         },
                         new
                         {
@@ -1993,7 +2126,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2002,7 +2135,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2011,7 +2144,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.29
                         },
                         new
                         {
@@ -2020,7 +2153,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2029,7 +2162,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2038,7 +2171,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.79
                         },
                         new
                         {
@@ -2056,7 +2189,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -2065,7 +2198,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2083,7 +2216,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2092,7 +2225,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.1899999999999999
+                            Price = 3.4899999999999998
                         },
                         new
                         {
@@ -2101,7 +2234,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2110,7 +2243,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2119,7 +2252,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.79
                         },
                         new
                         {
@@ -2128,7 +2261,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2137,7 +2270,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.1899999999999995
+                            Price = 5.6899999999999995
                         },
                         new
                         {
@@ -2146,7 +2279,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.9900000000000002
+                            Price = 6.5899999999999999
                         },
                         new
                         {
@@ -2155,7 +2288,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.4900000000000002
+                            Price = 4.8899999999999997
                         },
                         new
                         {
@@ -2164,7 +2297,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.29
                         },
                         new
                         {
@@ -2182,7 +2315,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.1899999999999995
+                            Price = 4.8899999999999997
                         },
                         new
                         {
@@ -2191,7 +2324,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.3899999999999997
+                            Price = 7.79
                         },
                         new
                         {
@@ -2200,7 +2333,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 8.8900000000000006
+                            Price = 9.6899999999999995
                         },
                         new
                         {
@@ -2209,7 +2342,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.3899999999999997
                         },
                         new
                         {
@@ -2218,7 +2351,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.1899999999999995
+                            Price = 7.6899999999999995
                         },
                         new
                         {
@@ -2227,7 +2360,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 9.5899999999999999
+                            Price = 8.6899999999999995
                         },
                         new
                         {
@@ -2236,7 +2369,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.3899999999999997
+                            Price = 6.4900000000000002
                         },
                         new
                         {
@@ -2245,7 +2378,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -2254,7 +2387,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.5899999999999999
+                            Price = 3.4899999999999998
                         },
                         new
                         {
@@ -2263,7 +2396,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.79
                         },
                         new
                         {
@@ -2272,7 +2405,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.0899999999999999
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2281,7 +2414,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.1899999999999999
+                            Price = 3.4899999999999998
                         },
                         new
                         {
@@ -2290,7 +2423,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.99
                         },
                         new
                         {
@@ -2299,7 +2432,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -2308,7 +2441,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.29
+                            Price = 3.9899999999999998
                         },
                         new
                         {
@@ -2317,7 +2450,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2326,7 +2459,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2335,7 +2468,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.1899999999999999
+                            Price = 2.79
                         },
                         new
                         {
@@ -2344,7 +2477,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -2353,7 +2486,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.0899999999999999
                         },
                         new
                         {
@@ -2362,7 +2495,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -2371,7 +2504,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2389,7 +2522,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.9899999999999998
                         },
                         new
                         {
@@ -2398,7 +2531,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.49
                         },
                         new
                         {
@@ -2434,7 +2567,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.79
                         },
                         new
                         {
@@ -2443,7 +2576,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.0899999999999999
                         },
                         new
                         {
@@ -2452,7 +2585,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2461,7 +2594,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -2470,7 +2603,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.9900000000000002
+                            Price = 4.0899999999999999
                         },
                         new
                         {
@@ -2479,7 +2612,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.0899999999999999
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -2497,7 +2630,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.29
                         },
                         new
                         {
@@ -2524,7 +2657,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.1899999999999995
                         },
                         new
                         {
@@ -2533,7 +2666,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.6899999999999995
+                            Price = 4.29
                         },
                         new
                         {
@@ -2542,7 +2675,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.6899999999999995
+                            Price = 5.9900000000000002
                         },
                         new
                         {
@@ -2551,7 +2684,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.4900000000000002
+                            Price = 6.3899999999999997
                         },
                         new
                         {
@@ -2560,7 +2693,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.79
+                            Price = 4.6899999999999995
                         },
                         new
                         {
@@ -2569,7 +2702,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.49
                         },
                         new
                         {
@@ -2596,7 +2729,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2605,7 +2738,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.79
                         },
                         new
                         {
@@ -2614,7 +2747,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2623,7 +2756,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -2632,7 +2765,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -2641,7 +2774,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2659,7 +2792,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -2677,7 +2810,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2686,7 +2819,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -2695,7 +2828,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2704,7 +2837,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.29
                         },
                         new
                         {
@@ -2713,7 +2846,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.79
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -2722,7 +2855,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -2731,7 +2864,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -2740,7 +2873,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.9899999999999998
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -2749,7 +2882,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2785,7 +2918,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -2794,7 +2927,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.79
+                            Price = 3.29
                         },
                         new
                         {
@@ -2803,7 +2936,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -2812,7 +2945,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2821,7 +2954,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2830,7 +2963,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2839,7 +2972,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2848,7 +2981,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.99
                         },
                         new
                         {
@@ -2857,7 +2990,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -2866,7 +2999,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2875,7 +3008,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.49
                         },
                         new
                         {
@@ -2884,7 +3017,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2893,7 +3026,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -2902,7 +3035,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2911,7 +3044,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2920,7 +3053,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2929,7 +3062,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -2947,7 +3080,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2956,7 +3089,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.29
                         },
                         new
                         {
@@ -2965,7 +3098,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -2974,7 +3107,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -2983,7 +3116,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -2992,7 +3125,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -3001,7 +3134,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -3010,7 +3143,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.79
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -3019,7 +3152,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.3900000000000001
                         });
                 });
 
@@ -4448,8 +4581,15 @@ namespace Trolley.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("AccessToken")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -4462,8 +4602,11 @@ namespace Trolley.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -4473,25 +4616,107 @@ namespace Trolley.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("Trolley.API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("Trolley.API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trolley.API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("Trolley.API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trolley.API.Entities.BrandProduct", b =>

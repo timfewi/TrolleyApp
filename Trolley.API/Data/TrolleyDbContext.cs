@@ -1,12 +1,19 @@
 ﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 using Trolley.API.Utils;
 
 namespace Trolley.API.Data
 {
-    public class TrolleyDbContext : DbContext
+    public class TrolleyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
+        public TrolleyDbContext(DbContextOptions<TrolleyDbContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Market> Markets { get; set; }
@@ -19,9 +26,6 @@ namespace Trolley.API.Data
         public DbSet<User> User { get; set; }
 
 
-        public TrolleyDbContext(DbContextOptions<TrolleyDbContext> options) : base(options)
-        {
-        }
 
         public List<MarketProduct> GenerateMarketProducts()
         {
@@ -755,7 +759,7 @@ namespace Trolley.API.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            base.OnModelCreating(modelBuilder);
 
             // MarketProduct
             modelBuilder.Entity<MarketProduct>()
