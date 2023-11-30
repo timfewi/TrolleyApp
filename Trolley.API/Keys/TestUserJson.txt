@@ -1,4 +1,6 @@
-﻿{
+﻿register:
+
+{
   "firstName": "Tim",
   "lastName": "Witter",
   "username": "tim@trolley.com",
@@ -17,4 +19,12 @@
   "roles": [
     "ADMIN"
   ]
+}
+
+
+login:
+
+{
+  "username": "tim@trolley.com",
+  "password": "test123"
 }

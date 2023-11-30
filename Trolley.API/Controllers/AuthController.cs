@@ -34,18 +34,10 @@ namespace Trolley.API.Controllers
 
             if (identityResult.Succeeded)
             {
-                // Füge den benutzerdefinierten User zur Datenbank hinzu
-                var customUser = new User
-                {
-                    IdentityUserId = identityUser.Id
-                };
-                _context.User.Add(customUser);
-                await _context.SaveChangesAsync();
 
-                // Füge Rollen zu diesem IdentityUser hinzu
-                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
+                //TODO: fix this method
+                if (registerRequestDto.Roles != null || registerRequestDto.Roles.Any())
                 {
-                    // Hier verwenden wir das identityUser-Objekt
                     identityResult = await _userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
 
                     if (identityResult.Succeeded)
@@ -69,32 +61,42 @@ namespace Trolley.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
-
-            if (user != null)
+            try
             {
-                var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+                var user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
 
-                if (checkPasswordResult)
+                if (user != null)
                 {
-                    //Roles
+                    var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
-                    var roles = await _userManager.GetRolesAsync(user);
-                    if (roles != null && roles.Any())
+                    if (checkPasswordResult)
                     {
-                        //Create Token
-                        var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
-                        var response = new LoginResponseDto
+                        //Roles
+                        var roles = await _userManager.GetRolesAsync(user);
+                        if (roles != null || roles.Any())
                         {
-                            JwtToken = jwtToken
-                        };
-                        return Ok(response);
+                            //Create Token
+                            var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
+                            var response = new LoginResponseDto
+                            {
+                                JwtToken = jwtToken
+                            };
+
+                            return Ok(new
+                            {
+                                Message = "Login successful",
+                                JwtToken = jwtToken
+                            });
+                        }
                     }
 
                 }
             }
-            return BadRequest("Invalid login attempt.");
-
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            return BadRequest("Failed to login");
         }
 
     }
