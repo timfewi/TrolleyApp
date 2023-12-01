@@ -13,10 +13,10 @@ namespace Trolley.API.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly TokenService _tokenService;
 
-        public AuthController(IServiceProvider serviceProvider, UserManager<IdentityUser> userManager, TokenService tokenService)
+        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, TokenService tokenService)
             : base(serviceProvider)
         {
             _userManager = userManager;
@@ -28,12 +28,12 @@ namespace Trolley.API.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var identityUser = new IdentityUser
+            var appUser = new AppUser
             {
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Username
             };
-            var identityResult = await _userManager.CreateAsync(identityUser, registerRequestDto.Password);
+            var identityResult = await _userManager.CreateAsync(appUser, registerRequestDto.Password);
 
             if (!identityResult.Succeeded)
             {

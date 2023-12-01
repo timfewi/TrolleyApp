@@ -10,7 +10,8 @@ namespace Trolley.API.Entities
 
         // Navigation properties
         public ICollection<ProductShoppingList> ProductShoppingLists { get; set; }
-        public ICollection<ShoppingListUser> ShoppingListUsers { get; set; }
-
+        public virtual ICollection<UserShoppingList> UserShoppingLists { get; set; }
     }
+
 }
+

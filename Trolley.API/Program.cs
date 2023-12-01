@@ -29,9 +29,9 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Adds Identity services to the services container
 // Adds Identity services to the services container
-builder.Services.AddIdentityCore<IdentityUser>()
+builder.Services.AddIdentityCore<AppUser>()
     .AddRoles<IdentityRole>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("Trolley")
+    .AddTokenProvider<DataProtectorTokenProvider<AppUser>>("Trolley")
     .AddEntityFrameworkStores<TrolleyDbContext>()
     .AddDefaultTokenProviders();
 

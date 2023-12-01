@@ -34,8 +34,8 @@ namespace Trolley.API.Services
                 else
                 {
                     var shoppingLists = await _context.ShoppingLists
-                        .Include(sl => sl.ShoppingListUsers)
-                        .ThenInclude(slu => slu.User)
+                        .Include(sl => sl.UserShoppingLists)
+                        .ThenInclude(slu => slu.AppUser)
                         .Include(sl => sl.ProductShoppingLists)
                         .ThenInclude(sli => sli.Product)
                         .FirstOrDefaultAsync(sl => sl.Id == id);

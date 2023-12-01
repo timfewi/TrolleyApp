@@ -8,7 +8,7 @@ using Trolley.API.Utils;
 
 namespace Trolley.API.Data
 {
-    public class TrolleyDbContext : IdentityDbContext<IdentityUser>
+    public class TrolleyDbContext : IdentityDbContext<AppUser>
     {
         public TrolleyDbContext(DbContextOptions<TrolleyDbContext> options)
             : base(options)
@@ -23,8 +23,9 @@ namespace Trolley.API.Data
         public DbSet<BrandProduct> BrandProducts { get; set; }
         public DbSet<MarketProduct> MarketProduct { get; set; }
         public DbSet<ProductShoppingList> ProductShoppingLists { get; set; }
-        public DbSet<ShoppingListUser> ShoppingListUsers { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<UserShoppingList> UserShoppingLists { get; set; }
+        public DbSet<BlockedMarket> BlockedMarkets { get; set; }
+
 
 
         public List<MarketProduct> GenerateMarketProducts()
@@ -761,11 +762,6 @@ namespace Trolley.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //// User and IdentityUser one-to-one relationship
-            //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.IdentityUser)
-            //    .WithOne()
-            //    .HasForeignKey<User>(u => u.IdentityUserId);
 
 
             //Roles Ids 
@@ -788,6 +784,26 @@ namespace Trolley.API.Data
             modelBuilder.Entity<IdentityRole>().HasData(roles);
 
 
+            // UserShoppingList
+            modelBuilder.Entity<UserShoppingList>()
+                .HasKey(usl => new { usl.AppUserId, usl.ShoppingListId });
+
+            modelBuilder.Entity<UserShoppingList>()
+                .HasOne(usl => usl.AppUser)
+                .WithMany(u => u.UserShoppingLists)
+                .HasForeignKey(usl => usl.AppUserId);
+
+
+            // BlocketMarket
+            modelBuilder.Entity<BlockedMarket>()
+                .HasOne(bm => bm.AppUser)
+                .WithMany(u => u.BlockedMarkets)
+                .HasForeignKey(bm => bm.AppUserId);
+
+            modelBuilder.Entity<BlockedMarket>()
+                .HasOne(bm => bm.Market)
+                .WithMany() // Falls 'Market' keine Rückbeziehung zu 'BlockedMarket' hat
+                .HasForeignKey(bm => bm.MarketId);
 
             // MarketProduct
             modelBuilder.Entity<MarketProduct>()
@@ -800,7 +816,6 @@ namespace Trolley.API.Data
                 .HasOne(mpp => mpp.Product)
                 .WithMany(p => p.MarketProducts)
                 .HasForeignKey(mpp => mpp.ProductId);
-
 
 
             // ProductShoppingList
@@ -816,18 +831,7 @@ namespace Trolley.API.Data
                 .HasForeignKey(psl => psl.ShoppingListId);
 
 
-
-            // ShoppingListUser
-            modelBuilder.Entity<ShoppingListUser>()
-                .HasKey(slu => new { slu.ShoppingListId, slu.UserId });
-            modelBuilder.Entity<ShoppingListUser>()
-                .HasOne(slu => slu.ShoppingList)
-                .WithMany(sl => sl.ShoppingListUsers)
-                .HasForeignKey(slu => slu.ShoppingListId);
-            modelBuilder.Entity<ShoppingListUser>()
-                .HasOne(slu => slu.User)
-                .WithMany(u => u.ShoppingListUsers)
-                .HasForeignKey(slu => slu.UserId);
+            //UserShoppingList
 
 
             //BrandProduct
