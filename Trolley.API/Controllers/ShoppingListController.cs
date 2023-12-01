@@ -108,17 +108,19 @@ namespace Trolley.API.Controllers
         }
 
 
+
+        //TODO: CHANGE PARAMETER TO ONLY DTO
         // POST: api/ShoppingList/{id}/AddProduct
         // Add a product to a shopping list
         [HttpPost]
-        [Route("{id:int}/AddProduct")]
-        public async Task<ActionResult> AddProductToShoppingList(int id,
+        [Route("{shoppingListId:int}/AddProduct")]
+        public async Task<ActionResult> AddProductToShoppingList(int shoppingListId,
             AddProductToShoppingListDto addProductToShoppingListDto)
         {
             try
             {
                 var result = await _shoppingListService.AddProductToShoppingListAsync(
-                    id,
+                    shoppingListId,
                     addProductToShoppingListDto.ProductId,
                     addProductToShoppingListDto.Amount);
 
@@ -190,5 +192,46 @@ namespace Trolley.API.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("{shoppingListId:int}/CheapestShoppingListOverall")]
+        public async Task<ActionResult<ShoppingListDetailDto>> GetShoppingListDetailCheapestOverall(int shoppingListId)
+        {
+            try
+            {
+                var details = await _shoppingListService.GetShoppingListDetailsAsync(shoppingListId);
+                return Ok(details);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting shopping list details.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
+            }
+        }
+
+
+        [HttpGet]
+        [Route("{shoppingListId:int}/CheapestShoppingListPerMarket")]
+        public async Task<ActionResult<ShoppingListDetailDto>> GetShoppingListDetailsCheapestMarket(int shoppingListId)
+        {
+            try
+            {
+                var details = await _shoppingListService.GetConsistentMarketShoppingListDetailsAsync(shoppingListId);
+                return Ok(details);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting shopping list details.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
+            }
+        }
     }
 }

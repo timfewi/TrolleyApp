@@ -22,6 +22,114 @@ namespace Trolley.API.Services
             return shoppingList;
         }
 
+        //TODO : Prüfen warum Kategorie null ist
+        public async Task<ShoppingListDetailDto> GetShoppingListDetailsAsync(int shoppingListId)
+        {
+            var shoppingList = await _context.ShoppingLists
+                .Include(sl => sl.ProductShoppingLists)
+                .ThenInclude(psl => psl.Product)
+                .ThenInclude(p => p.MarketProducts)
+                .ThenInclude(mp => mp.Market)
+                .FirstOrDefaultAsync(sl => sl.Id == shoppingListId);
+
+            if (shoppingList == null)
+            {
+                throw new KeyNotFoundException("Shopping list not found.");
+            }
+
+            var dto = new ShoppingListDetailDto
+            {
+                Id = shoppingList.Id,
+                Products = new List<ProductDetailDto>(),
+                TotalPrice = 0
+            };
+
+            foreach (var psl in shoppingList.ProductShoppingLists)
+            {
+                var product = psl.Product;
+                var cheapestMarketProduct = product.MarketProducts
+                    .OrderBy(mp => mp.Price)
+                    .FirstOrDefault();
+
+                if (cheapestMarketProduct != null)
+                {
+                    dto.Products.Add(new ProductDetailDto
+                    {
+                        ProductName = product.Name,
+                        ProductCategory = product.ProductCategory?.Name,
+                        ProductPrice = cheapestMarketProduct.Price,
+                        MarketName = cheapestMarketProduct.Market.Name
+                    });
+
+                    dto.TotalPrice += cheapestMarketProduct.Price;
+                }
+            }
+
+            return dto;
+        }
+
+        //TODO : Prüfen warum Kategorie null ist
+        public async Task<ShoppingListDetailDto> GetConsistentMarketShoppingListDetailsAsync(int shoppingListId)
+        {
+            var shoppingList = await _context.ShoppingLists
+                .Include(sl => sl.ProductShoppingLists)
+                    .ThenInclude(psl => psl.Product)
+                    .ThenInclude(p => p.MarketProducts)
+                    .ThenInclude(mp => mp.Market)
+                .FirstOrDefaultAsync(sl => sl.Id == shoppingListId);
+
+            if (shoppingList == null)
+            {
+                throw new KeyNotFoundException("Shopping list not found.");
+            }
+
+            // Berechne den Gesamtpreis für jeden Markt
+            var marketPrices = new Dictionary<string, double>();
+            foreach (var productShoppingList in shoppingList.ProductShoppingLists)
+            {
+                foreach (var marketProduct in productShoppingList.Product.MarketProducts)
+                {
+                    if (!marketPrices.ContainsKey(marketProduct.Market.Name))
+                    {
+                        marketPrices[marketProduct.Market.Name] = 0;
+                    }
+
+                    marketPrices[marketProduct.Market.Name] += marketProduct.Price;
+                }
+            }
+
+            // Finde den Markt mit dem niedrigsten Gesamtpreis
+            var cheapestMarket = marketPrices.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+
+            // Baue das DTO basierend auf dem günstigsten Markt auf
+            var dto = new ShoppingListDetailDto
+            {
+                Id = shoppingList.Id,
+                Products = new List<ProductDetailDto>(),
+                TotalPrice = marketPrices[cheapestMarket]
+            };
+
+            foreach (var psl in shoppingList.ProductShoppingLists)
+            {
+                var marketProduct = psl.Product.MarketProducts
+                    .FirstOrDefault(mp => mp.Market.Name == cheapestMarket);
+
+                if (marketProduct != null)
+                {
+                    dto.Products.Add(new ProductDetailDto
+                    {
+                        ProductName = psl.Product.Name,
+                        ProductCategory = psl.Product.ProductCategory?.Name,
+                        ProductPrice = marketProduct.Price,
+                        MarketName = marketProduct.Market.Name
+                    });
+                }
+            }
+
+            return dto;
+        }
+
+
 
         public async Task<ShoppingList> GetShoppingListByIdAsync(int id)
         {
