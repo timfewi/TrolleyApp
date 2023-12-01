@@ -761,11 +761,11 @@ namespace Trolley.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // User and IdentityUser one-to-one relationship
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.IdentityUser)
-                .WithOne()
-                .HasForeignKey<User>(u => u.IdentityUserId);
+            //// User and IdentityUser one-to-one relationship
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.IdentityUser)
+            //    .WithOne()
+            //    .HasForeignKey<User>(u => u.IdentityUserId);
 
 
             //Roles Ids 

@@ -9,8 +9,7 @@ namespace Trolley.API.Entities
 
         // Navigation Properties
 
-        public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser { get; set; }
+
         public ICollection<ShoppingListUser> ShoppingListUsers { get; set; }
     }
 }

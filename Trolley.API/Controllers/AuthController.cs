@@ -5,6 +5,7 @@ using Trolley.API.Dtos;
 using Trolley.API.Entities;
 using Trolley.API.Enums;
 using Trolley.API.Services;
+using System.Threading.Tasks;
 
 namespace Trolley.API.Controllers
 {
@@ -14,7 +15,9 @@ namespace Trolley.API.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly TokenService _tokenService;
-        public AuthController(IServiceProvider serviceProvider, UserManager<IdentityUser> userManager, TokenService tokenService) : base(serviceProvider)
+
+        public AuthController(IServiceProvider serviceProvider, UserManager<IdentityUser> userManager, TokenService tokenService)
+            : base(serviceProvider)
         {
             _userManager = userManager;
             _tokenService = tokenService;
@@ -32,29 +35,24 @@ namespace Trolley.API.Controllers
             };
             var identityResult = await _userManager.CreateAsync(identityUser, registerRequestDto.Password);
 
-            if (identityResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
+                return BadRequest(identityResult.Errors);
+            }
 
-                //TODO: fix this method
-                if (registerRequestDto.Roles != null || registerRequestDto.Roles.Any())
+            if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
+            {
+                var createdUser = await _userManager.FindByNameAsync(registerRequestDto.Username);
+                identityResult = await _userManager.AddToRolesAsync(createdUser, registerRequestDto.Roles);
+
+                if (!identityResult.Succeeded)
                 {
-                    identityResult = await _userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
-
-                    if (identityResult.Succeeded)
-                    {
-                        return Ok("User was registered! Please login.");
-                    }
-                    else
-                    {
-                        return BadRequest(identityResult.Errors);
-                    }
+                    return BadRequest(identityResult.Errors);
                 }
             }
-            return Ok();
+
+            return Ok("User was registered! Please login.");
         }
-
-
-
 
         // POST: /api/Auth/Login
         [HttpPost]
@@ -65,41 +63,37 @@ namespace Trolley.API.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
 
-                if (user != null)
+                if (user == null)
                 {
-                    var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
-
-                    if (checkPasswordResult)
-                    {
-                        //Roles
-                        var roles = await _userManager.GetRolesAsync(user);
-                        if (roles != null || roles.Any())
-                        {
-                            //Create Token
-                            var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
-                            var response = new LoginResponseDto
-                            {
-                                JwtToken = jwtToken
-                            };
-
-                            return Ok(new
-                            {
-                                Message = "Login successful",
-                                JwtToken = jwtToken
-                            });
-                        }
-                    }
-
+                    return BadRequest("Failed to login");
                 }
+
+                var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+                if (!checkPasswordResult)
+                {
+                    return BadRequest("Failed to login");
+                }
+
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (roles == null || !roles.Any())
+                {
+                    return BadRequest("Failed to login");
+                }
+
+                var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
+
+                return Ok(new
+                {
+                    Message = "Login successful",
+                    JwtToken = jwtToken
+                });
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            return BadRequest("Failed to login");
         }
-
     }
-
-
 }
