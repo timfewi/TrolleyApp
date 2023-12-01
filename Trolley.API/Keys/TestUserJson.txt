@@ -6,7 +6,7 @@
   "username": "tim@trolley.com",
   "password": "test123",
   "roles": [
-    "ADMIN"
+    "Admin"
   ]
 }
 
@@ -17,7 +17,7 @@
   "username": "stefan@trolley.com",
   "password": "test123",
   "roles": [
-    "ADMIN"
+    "Admin"
   ]
 }
 

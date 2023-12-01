@@ -9,9 +9,10 @@ namespace Trolley.API.Services
     public class ShoppingListService : BaseService
     {
 
-        public ShoppingListService(IServiceProvider serviceProvider) : base(serviceProvider)
+        private readonly MarketService _marketService;
+        public ShoppingListService(IServiceProvider serviceProvider, MarketService marketService) : base(serviceProvider)
         {
-
+            _marketService = marketService;
         }
 
         public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList)
@@ -104,35 +105,35 @@ namespace Trolley.API.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
-        public async Task<ShoppingListReadDto> GetShoppingListWithCalculationsAsync(int id)
+        public async Task<ShoppingListReadDto> GetShoppingListWithCalculationsAsync(ShoppingListCalculationRequestDto requestDto)
         {
-            var shoppingList = await GetShoppingListByIdAsync(id);
+            var blockedMarkets = await _marketService.GetBlockedMarketsForUserAsync(requestDto.UserId);
+            var shoppingList = await GetShoppingListByIdAsync(requestDto.ShoppingListId);
             if (shoppingList == null)
             {
-                throw new KeyNotFoundException($"Couldn't find shopping list with id: {id}");
+                throw new KeyNotFoundException($"Couldn't find shopping list with id: {requestDto.ShoppingListId}");
             }
 
             var shoppingListDto = _mapper.Map<ShoppingListReadDto>(shoppingList);
 
-            shoppingListDto.TotalPrice = CalculateTotalCost(shoppingList).Result;
-            shoppingListDto.CostPerMarket = CalculateCostPerMarket(shoppingList).Result;
+            shoppingListDto.TotalPrice = await CalculateTotalCost(shoppingList);
+            shoppingListDto.CostPerMarket = await CalculateCostPerMarket(shoppingList, blockedMarkets);
 
             return shoppingListDto;
         }
 
-        public async Task<KeyValuePair<string, double>> CalculateCheapestMarketForShoppingListAsync(int shoppingListId)
+        public async Task<KeyValuePair<string, double>> CalculateCheapestMarketForShoppingListAsync(CheapestMarketCalculationRequestDto requestDto)
         {
-            var shoppingList = await GetShoppingListByIdAsync(shoppingListId);
+            var blockedMarkets = await _marketService.GetBlockedMarketsForUserAsync(requestDto.UserId);
+            var shoppingList = await GetShoppingListByIdAsync(requestDto.ShoppingListId);
             if (shoppingList == null)
             {
-                throw new KeyNotFoundException($"Einkaufsliste mit ID {shoppingListId} nicht gefunden.");
+                throw new KeyNotFoundException($"Einkaufsliste mit ID {requestDto.ShoppingListId} nicht gefunden.");
             }
 
-            var costPerMarket = await CalculateCostPerMarket(shoppingList);
+            var costPerMarket = await CalculateCostPerMarket(shoppingList, blockedMarkets);
             return FindCheapestMarket(costPerMarket);
         }
-
 
 
 
@@ -164,7 +165,7 @@ namespace Trolley.API.Services
             return result;
         }
 
-        private async Task<Dictionary<string, double>> CalculateCostPerMarket(ShoppingList shoppingList)
+        private async Task<Dictionary<string, double>> CalculateCostPerMarket(ShoppingList shoppingList, List<string> blockedMarkets)
         {
             var result = new Dictionary<string, double>();
 
@@ -184,6 +185,11 @@ namespace Trolley.API.Services
 
                 foreach (var marketProduct in relevantMarketProducts)
                 {
+                    if (blockedMarkets.Contains(marketProduct.Market.Name))
+                    {
+                        continue;
+                    }
+
                     if (result.ContainsKey(marketProduct.Market.Name))
                     {
                         result[marketProduct.Market.Name] += marketProduct.Price * productShoppingList.Amount;

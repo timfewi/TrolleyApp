@@ -13,9 +13,9 @@ namespace Trolley.API.Controllers
         private readonly ShoppingListService _shoppingListService;
         private readonly ILogger<ShoppingListController> _logger;
 
-        public ShoppingListController(IServiceProvider serviceProvider, ILogger<ShoppingListController> logger) : base(serviceProvider)
+        public ShoppingListController(IServiceProvider serviceProvider, ILogger<ShoppingListController> logger, ShoppingListService shoppingListService) : base(serviceProvider)
         {
-            _shoppingListService = new ShoppingListService(serviceProvider);
+            _shoppingListService = shoppingListService;
             _logger = logger;
         }
 
@@ -132,13 +132,18 @@ namespace Trolley.API.Controllers
             }
         }
 
-        // GET: api/ShoppingList/{id}/Calculate
         [HttpGet("{id}/Calculate")]
-        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListWithCalculations(int id)
+        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListWithCalculations([FromRoute] int id, [FromQuery] string userId)
         {
             try
             {
-                var shoppingList = await _shoppingListService.GetShoppingListWithCalculationsAsync(id);
+                var requestDto = new ShoppingListCalculationRequestDto
+                {
+                    ShoppingListId = id,
+                    UserId = userId
+                };
+
+                var shoppingList = await _shoppingListService.GetShoppingListWithCalculationsAsync(requestDto);
                 if (shoppingList == null)
                 {
                     return NotFound();
@@ -155,11 +160,17 @@ namespace Trolley.API.Controllers
         }
 
         [HttpGet("{id}/CheapestMarket")]
-        public async Task<ActionResult> GetCheapestMarketForShoppingList(int id)
+        public async Task<ActionResult> GetCheapestMarketForShoppingList([FromRoute] int id, [FromQuery] string userId)
         {
             try
             {
-                var cheapestMarket = await _shoppingListService.CalculateCheapestMarketForShoppingListAsync(id);
+                var requestDto = new CheapestMarketCalculationRequestDto
+                {
+                    ShoppingListId = id,
+                    UserId = userId
+                };
+
+                var cheapestMarket = await _shoppingListService.CalculateCheapestMarketForShoppingListAsync(requestDto);
 
                 return Ok(new
                 {

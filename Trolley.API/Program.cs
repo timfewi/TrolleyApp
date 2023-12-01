@@ -71,6 +71,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 // Register Services.
 builder.Services.AddScoped<ShoppingListService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<MarketService>();
 builder.Services.AddScoped<TokenService>();
 
 
