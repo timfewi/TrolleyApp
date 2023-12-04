@@ -8,7 +8,7 @@ namespace Trolley.API.Dtos
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
         [MaxLength(100, ErrorMessage = "Email has to be a max of 100 characters")]
         [DataType(DataType.EmailAddress)]
-        public string Username { get; set; }
+        public string Email { get; set; }
 
 
 

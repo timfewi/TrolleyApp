@@ -6,6 +6,7 @@ using Trolley.API.Entities;
 using Trolley.API.Enums;
 using Trolley.API.Services;
 using System.Threading.Tasks;
+using iText.Kernel.Pdf.Tagutils;
 
 namespace Trolley.API.Controllers
 {
@@ -14,12 +15,14 @@ namespace Trolley.API.Controllers
     public class AuthController : BaseController
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly TokenService _tokenService;
 
-        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, TokenService tokenService)
+        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, TokenService tokenService)
             : base(serviceProvider)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _tokenService = tokenService;
         }
 
@@ -28,11 +31,21 @@ namespace Trolley.API.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
+            // Überprüfen, ob der Benutzer bereits existiert
+            var existingUser = await _userManager.FindByNameAsync(registerRequestDto.Username);
+
+            if (existingUser != null)
+            {
+                return BadRequest("Ein Benutzer mit diesem Benutzernamen oder E-Mail existiert bereits.");
+            }
+
             var appUser = new AppUser
             {
+
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Username
             };
+
             var identityResult = await _userManager.CreateAsync(appUser, registerRequestDto.Password);
 
             if (!identityResult.Succeeded)
@@ -40,18 +53,16 @@ namespace Trolley.API.Controllers
                 return BadRequest(identityResult.Errors);
             }
 
-            if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
-            {
-                var createdUser = await _userManager.FindByNameAsync(registerRequestDto.Username);
-                identityResult = await _userManager.AddToRolesAsync(createdUser, registerRequestDto.Roles);
+            // Automatisch die Rolle "User" zuweisen
+            var defaultRole = "User";
+            var roleResult = await _userManager.AddToRoleAsync(appUser, defaultRole);
 
-                if (!identityResult.Succeeded)
-                {
-                    return BadRequest(identityResult.Errors);
-                }
+            if (!roleResult.Succeeded)
+            {
+                return BadRequest(roleResult.Errors);
             }
 
-            return Ok("User was registered! Please login.");
+            return Ok("Benutzer erfolgreich registriert. Bitte einloggen.");
         }
 
         // POST: /api/Auth/Login
@@ -61,7 +72,7 @@ namespace Trolley.API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(loginRequestDto.Username);
+                var user = await _userManager.FindByEmailAsync(loginRequestDto.Email);
 
                 if (user == null)
                 {
@@ -92,6 +103,7 @@ namespace Trolley.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to login");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

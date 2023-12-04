@@ -36,7 +36,7 @@ namespace Trolley.API.Services
                                           expires: DateTime.Now.AddMinutes(120),
                                           signingCredentials: credentials
                                     );
-
+            _logger.LogInformation($"User {user.UserName} logged in at {DateTime.Now}");
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
