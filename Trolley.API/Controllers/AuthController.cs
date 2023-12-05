@@ -76,7 +76,7 @@ namespace Trolley.API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(loginRequestDto.Email);
+                var user = await _userManager.FindByEmailAsync(loginRequestDto.UserName);
 
                 if (user == null)
                 {
