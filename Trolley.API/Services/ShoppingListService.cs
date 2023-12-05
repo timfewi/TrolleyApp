@@ -245,6 +245,7 @@ namespace Trolley.API.Services
 
 
 
+
         #region Logic for ShoppingListReadDto calculations
         private async Task<Double> CalculateTotalCost(ShoppingList shoppingList)
         {
@@ -311,6 +312,7 @@ namespace Trolley.API.Services
 
             return result;
         }
+
 
 
 

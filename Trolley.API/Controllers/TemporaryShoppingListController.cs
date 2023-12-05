@@ -24,7 +24,13 @@ namespace Trolley.API.Controllers
             return Ok(marketCosts);
         }
 
-
+        //POST : /api/TemporaryShoppingList/AddProductList
+        [HttpPost("AddProductAndCalculateList")]
+        public async Task<ActionResult<List<TempMarketCostDto>>> AddProductAndCalculateCostsPerMarket(TempShoppingListDto productsListDto)
+        {
+            var marketCosts = await _temporaryShoppingListService.AddProductAndCalculateCostsPerMarketAsync(productsListDto);
+            return Ok(marketCosts);
+        }
 
         // GET: /api/TemporaryShoppingList/GetTemporaryShoppingList
         [HttpGet("GetTemporaryShoppingList")]
@@ -33,6 +39,9 @@ namespace Trolley.API.Controllers
             var (tempList, marketCosts) = await _temporaryShoppingListService.GetTemporaryShoppingListWithCostsAsync(uniqueToken);
             return Ok(new { TempList = tempList, MarketCosts = marketCosts });
         }
+
+
+
 
     }
 }

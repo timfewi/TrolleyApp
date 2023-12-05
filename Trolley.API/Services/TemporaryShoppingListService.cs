@@ -99,6 +99,16 @@ namespace Trolley.API.Services
             return (tempListDto, marketCosts);
         }
 
+        public async Task<List<TempMarketCostDto>> AddProductAndCalculateCostsPerMarketAsync(TempShoppingListDto productsListDto)
+        {
+            var tempList = productsListDto.Items
+                .Select(p => new ProductShoppingList { ProductId = p.ProductId, Amount = p.Amount })
+                .ToList();
+
+            var marketCosts = await CalculateCostsPerMarketAsync(tempList);
+            return marketCosts.Select(mc => new TempMarketCostDto { MarketName = mc.Key, TotalPrice = mc.Value }).ToList();
+        }
+
 
     }
 }
