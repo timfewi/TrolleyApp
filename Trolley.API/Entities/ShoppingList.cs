@@ -6,7 +6,7 @@ namespace Trolley.API.Entities
     [Table(nameof(ShoppingList))]
     public class ShoppingList : BaseEntity
     {
-        public bool IsCheapest { get; set; }
+        public string Name { get; set; }
 
         // Navigation properties
         public ICollection<ProductShoppingList> ProductShoppingLists { get; set; }

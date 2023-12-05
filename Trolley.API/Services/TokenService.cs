@@ -18,8 +18,10 @@ namespace Trolley.API.Services
 
         public string CreateJWTToken(IdentityUser user, IList<string> roles)
         {
-            //create claims details based on the user information
-            var claims = new List<Claim>();
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id) // Fügen Sie die Benutzer-ID als Claim hinzu
+            };
 
             foreach (var role in roles)
             {
@@ -30,15 +32,17 @@ namespace Trolley.API.Services
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                                    _configuration["Jwt:Issuer"],
-                                    _configuration["Jwt:Issuer"],
-                                          claims,
-                                          expires: DateTime.Now.AddMinutes(120),
-                                          signingCredentials: credentials
-                                    );
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials
+            );
+
             _logger.LogInformation($"User {user.UserName} logged in at {DateTime.Now}");
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
     }
 }

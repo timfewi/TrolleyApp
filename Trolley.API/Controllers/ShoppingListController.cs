@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Trolley.API.Data;
 using Trolley.API.Dtos;
 using Trolley.API.Entities;
@@ -12,226 +14,232 @@ namespace Trolley.API.Controllers
     {
         private readonly ShoppingListService _shoppingListService;
         private readonly ILogger<ShoppingListController> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ShoppingListController(IServiceProvider serviceProvider, ILogger<ShoppingListController> logger, ShoppingListService shoppingListService) : base(serviceProvider)
+        public ShoppingListController(IServiceProvider serviceProvider, ILogger<ShoppingListController> logger,
+            ShoppingListService shoppingListService, UserManager<AppUser> userManager) : base(serviceProvider)
         {
             _shoppingListService = shoppingListService;
+            _userManager = userManager;
             _logger = logger;
         }
 
+        #region CRUD
         // Post: api/ShoppingList
-        // Create a shopping list
         [HttpPost]
-        public async Task<ActionResult<ShoppingListCreateDto>> CreateShoppingList(ShoppingListCreateDto shoppingListCreateDto)
+        [Authorize]
+        [Route("Create")]
+        public async Task<IActionResult> CreateShoppingList([FromBody] ShoppingListCreateDto createDto)
         {
-            try
-            {
-                var shoppingList = _mapper.Map<ShoppingList>(shoppingListCreateDto);
-                var createdList = await _shoppingListService.CreateShoppingListAsync(shoppingList);
-                var shoppingListReadDto = _mapper.Map<ShoppingListReadDto>(createdList);
-
-                _logger.LogInformation($"Shopping list with id: {shoppingListReadDto.Id} was created.");
-
-                return CreatedAtAction(nameof(GetShoppingListById),
-                    new { id = shoppingListReadDto.Id },
-                    shoppingListReadDto);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                throw;
-            }
+            var userId = _userManager.GetUserId(User); // Extrahiert die UserId aus dem Authentifizierungstoken
+            var shoppingList = await _shoppingListService.CreateShoppingListAsync(userId, createDto);
+            return Ok(shoppingList);
         }
-        // GET: api/ShoppingList/{id}
-        // Get a shopping list by id
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListById(int id)
+
+
+        // GET: api/ShoppingList/shoppingListId
+        [HttpGet("{shoppingListId}")]
+        [Authorize]
+        public async Task<IActionResult> GetShoppingList(int shoppingListId)
         {
+            var userId = _userManager.GetUserId(User);
+
             try
             {
-                var shoppingList = await _shoppingListService.GetShoppingListByIdAsync(id);
-                if (shoppingList == null)
+                var shoppingListDto = await _shoppingListService.GetShoppingListByIdAsync(userId, shoppingListId);
+                var totalCost =
+                    await _shoppingListService.CalculateShoppingListCostPerMarketWithProductDetailPrice(shoppingListId,
+                        userId);
+
+                if (shoppingListDto == null)
                 {
                     return NotFound();
                 }
-                var shoppingListReadDto = _mapper.Map<ShoppingListReadDto>(shoppingList);
-                return Ok(shoppingList);
+
+                return Ok(new { ShoppingList = shoppingListDto, TotalCostPerMarket = totalCost });
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving shopping list with ID {ShoppingListId}", shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving shopping list");
             }
         }
 
-        // PUT: api/ShoppingList/{id}
-        // Update a shopping list
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<ActionResult<ShoppingListUpdateDto>> UpdateShoppingList(int id, ShoppingListUpdateDto shoppingListUpdateDto)
+        // GET: api/ShoppingList
+        [HttpGet]
+        [Authorize]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAllShoppingLists()
         {
+            // Benutzer-ID aus dem Authentifizierungskontext extrahieren
+            var userId = _userManager.GetUserId(User);
+
             try
             {
-                if (id != shoppingListUpdateDto.Id)
+                var shoppingListsDtos = await _shoppingListService.GetAllShoppingListsByUserAsync(userId);
+                var totalCostsPerList = new Dictionary<int, Dictionary<string, double>>();
+
+                foreach (var list in shoppingListsDtos)
                 {
-                    return BadRequest();
+                    totalCostsPerList[list.Id] = await _shoppingListService.CalculateTotalCostPerMarketAsync(list.Id);
                 }
 
-                var shoppingList = _mapper.Map<ShoppingList>(shoppingListUpdateDto);
-                var updatedList = await _shoppingListService.UpdateShoppingListAsync(shoppingList);
-                var shoppingListReadDto = _mapper.Map<ShoppingListReadDto>(updatedList);
-                return Ok(shoppingListReadDto);
+                return Ok(new { ShoppingLists = shoppingListsDtos, TotalCostsPerList = totalCostsPerList });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                // Fehlerbehandlung
+                _logger.LogError(ex, "Error retrieving shopping lists for user with ID {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving shopping lists");
             }
         }
 
-        // DELETE: api/ShoppingList/{id}
-        // Delete a shopping list
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<ActionResult> DeleteShoppingList(int id)
+
+        // PUT: api/ShoppingList/{shoppingListId}
+        [HttpPut("{shoppingListId}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateShoppingList(int shoppingListId,
+            [FromBody] ShoppingListUpdateDto updateDto)
         {
+            var userId = _userManager.GetUserId(User);
             try
             {
-                await _shoppingListService.DeleteShoppingListAsync(id);
+                var updatedShoppingList = await _shoppingListService.UpdateShoppingListAsync(shoppingListId, userId, updateDto);
+
+                if (updatedShoppingList == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(updatedShoppingList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating shopping list with ID {ShoppingListId}", shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating shopping list");
+            }
+        }
+
+
+        // DELETE: api/ShoppingList/{shoppingListId}
+        [HttpDelete("{shoppingListId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteShoppingList(int shoppingListId)
+        {
+            var userId = _userManager.GetUserId(User);
+            try
+            {
+                await _shoppingListService.DeleteShoppingListAsync(shoppingListId, userId);
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error deleting shopping list with ID {ShoppingListId}", shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting shopping list");
             }
         }
 
+        #endregion
 
 
-        //TODO: CHANGE PARAMETER TO ONLY DTO
-        // POST: api/ShoppingList/{id}/AddProduct
-        // Add a product to a shopping list
-        [HttpPost]
-        [Route("{shoppingListId:int}/AddProduct")]
-        public async Task<ActionResult> AddProductToShoppingList(int shoppingListId,
-            AddProductToShoppingListDto addProductToShoppingListDto)
+        #region Add/Remove Products
+
+        //POST: api/ShoppingList/{shoppingListId}/AddProduct
+        [HttpPost("{shoppingListId}/AddProduct")]
+        [Authorize]
+        public async Task<IActionResult> AddProductToShoppingList(int shoppingListId,
+           [FromBody] AddProductToShoppingListDto addProductToShoppingListDto)
         {
+            var userId = _userManager.GetUserId(User);
             try
             {
-                var result = await _shoppingListService.AddProductToShoppingListAsync(
-                    shoppingListId,
+                await _shoppingListService.AddProductToShoppingListAsync(
+                   shoppingListId,
                     addProductToShoppingListDto.ProductId,
-                    addProductToShoppingListDto.Amount);
+                    addProductToShoppingListDto.Amount,
+                    userId);
 
 
-                return Ok(result);
+                var shoppingListCostDto =
+                    await _shoppingListService.CalculateShoppingListCostPerMarketWithProductDetailPrice(shoppingListId, userId);
+
+                return Ok(shoppingListCostDto);
             }
-            catch (Exception ex)
+            catch (KeyNotFoundException ex)
             {
-                _logger.LogError(ex, ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
                 return BadRequest(ex.Message);
             }
-        }
-
-        [HttpGet("{id}/Calculate")]
-        public async Task<ActionResult<ShoppingListReadDto>> GetShoppingListWithCalculations([FromRoute] int id, [FromQuery] string userId)
-        {
-            try
-            {
-                var requestDto = new ShoppingListCalculationRequestDto
-                {
-                    ShoppingListId = id,
-                    UserId = userId
-                };
-
-                var shoppingList = await _shoppingListService.GetShoppingListWithCalculationsAsync(requestDto);
-                if (shoppingList == null)
-                {
-                    return NotFound();
-                }
-
-                var shoppingListReadDto = _mapper.Map<ShoppingListReadDto>(shoppingList);
-                return Ok(shoppingListReadDto);
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, "Error adding product to shopping list");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error adding product to shopping list");
+            }
+        }
+
+
+        // LIST OF PRODUCTS
+        // POST: api/ShoppingList/{shoppingListId}/AddProducts
+        [HttpPost("{shoppingListId}/AddProducts")]
+        [Authorize]
+        public async Task<IActionResult> AddProductsToShoppingList(int shoppingListId, [FromBody] List<ProductToAddDto> products)
+        {
+            var userId = _userManager.GetUserId(User);
+
+            try
+            {
+                await _shoppingListService.AddProductsToShoppingListAsync(shoppingListId, products, userId);
+                var totalCostPerMarket = await _shoppingListService.CalculateTotalCostPerMarketAsync(shoppingListId);
+                return Ok(new { Message = "Products added successfully.", TotalCostPerMarket = totalCostPerMarket });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
                 return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding products to shopping list with ID {ShoppingListId}", shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error adding products to shopping list");
+            }
         }
 
-        [HttpGet("{id}/CheapestMarket")]
-        public async Task<ActionResult> GetCheapestMarketForShoppingList([FromRoute] int id, [FromQuery] string userId)
+
+        // DELETE: api/ShoppingList/{shoppingListId}/RemoveProduct/{productId}
+        [HttpDelete("{shoppingListId}/RemoveProduct/{productId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveProductFromShoppingList(int shoppingListId, int productId)
         {
+            var userId = _userManager.GetUserId(User);
             try
             {
-                var requestDto = new CheapestMarketCalculationRequestDto
-                {
-                    ShoppingListId = id,
-                    UserId = userId
-                };
+                await _shoppingListService.RemoveProductFromShoppingListAsync(shoppingListId, productId, userId);
+                var shoppingListCostDto = await _shoppingListService.CalculateShoppingListCostPerMarketWithProductDetailPrice(shoppingListId, userId);
 
-                var cheapestMarket = await _shoppingListService.CalculateCheapestMarketForShoppingListAsync(requestDto);
-
-                return Ok(new
-                {
-                    CheapestMarket = cheapestMarket.Key,
-                    TotalPrice = cheapestMarket.Value
-                });
+                return Ok(shoppingListCostDto);
             }
-            catch (KeyNotFoundException knfEx)
+            catch (KeyNotFoundException ex)
             {
-                _logger.LogError(knfEx, knfEx.Message);
-                return NotFound(knfEx.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error removing product with ID {ProductId} from shopping list with ID {ShoppingListId}", productId, shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error removing product from shopping list");
             }
         }
 
 
-        [HttpGet]
-        [Route("{shoppingListId:int}/CheapestShoppingListOverall")]
-        public async Task<ActionResult<ShoppingListDetailDto>> GetShoppingListDetailCheapestOverall(int shoppingListId)
-        {
-            try
-            {
-                var details = await _shoppingListService.GetShoppingListDetailsAsync(shoppingListId);
-                return Ok(details);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting shopping list details.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
-            }
-        }
+        #endregion
 
 
-        [HttpGet]
-        [Route("{shoppingListId:int}/CheapestShoppingListPerMarket")]
-        public async Task<ActionResult<ShoppingListDetailDto>> GetShoppingListDetailsCheapestMarket(int shoppingListId)
-        {
-            try
-            {
-                var details = await _shoppingListService.GetConsistentMarketShoppingListDetailsAsync(shoppingListId);
-                return Ok(details);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting shopping list details.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
-            }
-        }
+
     }
 }

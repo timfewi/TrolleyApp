@@ -1,30 +1,8 @@
-﻿register:
-
-{
-  "firstName": "Tim",
-  "lastName": "Witter",
-  "username": "tim@trolley.com",
-  "password": "test123",
-  "roles": [
-    "Admin"
-  ]
+﻿{
+  "userName": "user@example.com",
+  "password": "string"
 }
 
 
-{
-  "firstName": "Stefan",
-  "lastName": "Matzner",
-  "username": "stefan@trolley.com",
-  "password": "test123",
-  "roles": [
-    "Admin"
-  ]
-}
 
-
-login:
-
-{
-  "username": "tim@trolley.com",
-  "password": "test123"
-}
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNjQwOGM2OC00NzE4LTRjMDYtOTUwYS00NTBlMGY1OGNlNDEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzAxODE5MTY1LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTI0LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcxMjQvIn0.2znKI1H_zIP2ivDasd52imXMea8va40GCAV7PGay6BU
