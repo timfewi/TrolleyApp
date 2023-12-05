@@ -27,6 +27,10 @@ builder.Logging.AddSerilog(logger);
 // Register AutoMapper.
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
+
+//Add IMemoryCache
+builder.Services.AddMemoryCache();
+
 // Adds Identity services to the services container
 // Adds Identity services to the services container
 builder.Services.AddIdentityCore<AppUser>()
@@ -68,8 +72,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 
+
+
 // Register Services.
 builder.Services.AddScoped<ShoppingListService>();
+builder.Services.AddScoped<TemporaryShoppingListService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MarketService>();
 builder.Services.AddScoped<TokenService>();

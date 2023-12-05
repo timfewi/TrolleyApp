@@ -33,7 +33,6 @@ namespace Trolley.API.Controllers
         {
             // Überprüfen, ob der Benutzer bereits existiert
             var existingUser = await _userManager.FindByNameAsync(registerRequestDto.Username);
-
             if (existingUser != null)
             {
                 return BadRequest("Ein Benutzer mit diesem Benutzernamen oder E-Mail existiert bereits.");
@@ -41,22 +40,26 @@ namespace Trolley.API.Controllers
 
             var appUser = new AppUser
             {
-
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Username
             };
 
             var identityResult = await _userManager.CreateAsync(appUser, registerRequestDto.Password);
-
             if (!identityResult.Succeeded)
             {
                 return BadRequest(identityResult.Errors);
             }
 
+            // Benutzer erneut abrufen, um Anhängeprobleme zu vermeiden
+            var newUser = await _userManager.FindByIdAsync(appUser.Id);
+            if (newUser == null)
+            {
+                return BadRequest("Benutzer konnte nach der Erstellung nicht gefunden werden.");
+            }
+
             // Automatisch die Rolle "User" zuweisen
             var defaultRole = "User";
-            var roleResult = await _userManager.AddToRoleAsync(appUser, defaultRole);
-
+            var roleResult = await _userManager.AddToRoleAsync(newUser, defaultRole);
             if (!roleResult.Succeeded)
             {
                 return BadRequest(roleResult.Errors);
@@ -64,6 +67,7 @@ namespace Trolley.API.Controllers
 
             return Ok("Benutzer erfolgreich registriert. Bitte einloggen.");
         }
+
 
         // POST: /api/Auth/Login
         [HttpPost]
