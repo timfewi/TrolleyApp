@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Trolley.API.Dtos;
+using Trolley.API.Entities;
 using Trolley.API.Services;
 
 namespace Trolley.API.Controllers
@@ -9,38 +12,41 @@ namespace Trolley.API.Controllers
     public class TemporaryShoppingListController : BaseController
     {
         private readonly TemporaryShoppingListService _temporaryShoppingListService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public TemporaryShoppingListController(IServiceProvider serviceProvider, TemporaryShoppingListService temporaryShoppingListService) : base(serviceProvider)
+        public TemporaryShoppingListController(IServiceProvider serviceProvider, TemporaryShoppingListService temporaryShoppingListService,
+            UserManager<AppUser> userManager) : base(serviceProvider)
         {
             _temporaryShoppingListService = temporaryShoppingListService;
-        }
-
-        //Frontend-Integration: Die Logik zur Generierung und Speicherung der eindeutigen Kennung muss im Frontend implementiert werden.
-        // POST: /api/TemporaryShoppingList/AddProduct
-        [HttpPost("AddProductAndCalculate")]
-        public async Task<ActionResult<List<TempMarketCostDto>>> AddProductAndCalculateCostsPerMarket(TempProductToAddDto productToAdd, [FromHeader] string uniqueToken)
-        {
-            var marketCosts = await _temporaryShoppingListService.AddProductAndCalculateCostsPerMarketAsync(productToAdd, uniqueToken);
-            return Ok(marketCosts);
+            _userManager = userManager;
         }
 
         //POST : /api/TemporaryShoppingList/AddProductList
         [HttpPost("AddProductAndCalculateList")]
-        public async Task<ActionResult<List<TempMarketCostDto>>> AddProductAndCalculateCostsPerMarket(TempShoppingListDto productsListDto)
+        public async Task<ActionResult<List<TempMarketCostDto>>> AddProductAndCalculateCostsPerMarket([FromBody] List<TempProductItemDto> productListDto)
         {
-            var marketCosts = await _temporaryShoppingListService.AddProductAndCalculateCostsPerMarketAsync(productsListDto);
+            var marketCosts = await _temporaryShoppingListService.AddProductAndCalculateCostsPerMarketAsync(productListDto);
             return Ok(marketCosts);
         }
 
-        // GET: /api/TemporaryShoppingList/GetTemporaryShoppingList
-        [HttpGet("GetTemporaryShoppingList")]
-        public async Task<ActionResult> GetTemporaryListWithCosts([FromHeader] string uniqueToken)
+
+        //POST : /api/TemporaryShoppingList/ConvertToPermanent
+        [HttpPost("ConvertToPermanent")]
+        [Authorize]
+        public async Task<IActionResult> ConvertTempListToPermanent([FromBody] List<TempProductItemDto> tempListDto)
         {
-            var (tempList, marketCosts) = await _temporaryShoppingListService.GetTemporaryShoppingListWithCostsAsync(uniqueToken);
-            return Ok(new { TempList = tempList, MarketCosts = marketCosts });
+            var userId = _userManager.GetUserId(User);
+            try
+            {
+                var permanentList = await _temporaryShoppingListService.ConvertTemplistToPermanentListAsync(tempListDto, userId);
+                return Ok(permanentList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error converting temporary list to permanent.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error converting list");
+            }
         }
-
-
 
 
     }

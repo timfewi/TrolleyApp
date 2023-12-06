@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Routing;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Trolley.API.Dtos;
@@ -9,25 +10,11 @@ namespace Trolley.API.Services
     public class TemporaryShoppingListService : BaseService
     {
         private readonly IMemoryCache _cache;
-        public TemporaryShoppingListService(IServiceProvider serviceProvider, IMemoryCache cache) : base(serviceProvider)
+
+        public TemporaryShoppingListService(IServiceProvider serviceProvider, IMemoryCache cache) : base(
+            serviceProvider)
         {
             _cache = cache;
-        }
-
-        public async Task<List<TempMarketCostDto>> AddProductAndCalculateCostsPerMarketAsync(TempProductToAddDto tempProductToAddDto, string uniqueToken)
-        {
-            var cacheKey = $"TempShoppingList_{uniqueToken}";
-
-            if (!_cache.TryGetValue(cacheKey, out List<ProductShoppingList> tempList))
-            {
-                tempList = new List<ProductShoppingList>();
-            }
-
-            tempList.Add(new ProductShoppingList { ProductId = tempProductToAddDto.ProductId, Amount = tempProductToAddDto.Amount });
-            _cache.Set(cacheKey, tempList);
-
-            var marketCosts = await CalculateCostsPerMarketAsync(tempList);
-            return marketCosts.Select(mc => new TempMarketCostDto { MarketName = mc.Key, TotalPrice = mc.Value }).ToList();
         }
 
 
@@ -75,39 +62,60 @@ namespace Trolley.API.Services
         }
 
 
-
-        public async Task<(TempShoppingListDto, Dictionary<string, double>)> GetTemporaryShoppingListWithCostsAsync(string uniqueToken)
+        public async Task<List<TempMarketCostDto>> AddProductAndCalculateCostsPerMarketAsync(
+            List<TempProductItemDto> productListDto)
         {
-            var cacheKey = $"TempShoppingList_{uniqueToken}";
-
-            if (!_cache.TryGetValue(cacheKey, out List<ProductShoppingList> tempList))
-            {
-                // Wenn keine Liste im Cache vorhanden ist, gib eine leere Liste zurück
-                return (new TempShoppingListDto { Items = new List<TempProductItemDto>() }, new Dictionary<string, double>());
-            }
-
-            // Filtere Einträge mit null ProductId heraus
-            var filteredTempList = tempList.Where(psl => psl.ProductId.HasValue).ToList();
-
-            // Konvertiere die gefilterte Liste in TempShoppingListDto
-            var tempListDto = new TempShoppingListDto
-            {
-                Items = filteredTempList.Select(psl => new TempProductItemDto { ProductId = psl.ProductId.Value, Amount = psl.Amount }).ToList()
-            };
-
-            var marketCosts = await CalculateCostsPerMarketAsync(filteredTempList);
-            return (tempListDto, marketCosts);
-        }
-
-        public async Task<List<TempMarketCostDto>> AddProductAndCalculateCostsPerMarketAsync(TempShoppingListDto productsListDto)
-        {
-            var tempList = productsListDto.Items
+            var tempList = productListDto
                 .Select(p => new ProductShoppingList { ProductId = p.ProductId, Amount = p.Amount })
                 .ToList();
 
             var marketCosts = await CalculateCostsPerMarketAsync(tempList);
-            return marketCosts.Select(mc => new TempMarketCostDto { MarketName = mc.Key, TotalPrice = mc.Value }).ToList();
+            return marketCosts.Select(mc => new TempMarketCostDto { MarketName = mc.Key, TotalPrice = mc.Value })
+                .ToList();
         }
+
+
+        public async Task<ConvertedShoppingListDtoResponse> ConvertTemplistToPermanentListAsync(List<TempProductItemDto> tempProductItemDtos, string userId)
+        {
+            try
+            {
+                var shoppingList = new ShoppingList
+                {
+                    Name = "Personal List",
+                    UserShoppingLists = new List<UserShoppingList>
+                    {
+                        new UserShoppingList { AppUserId = userId }
+                    },
+                    ProductShoppingLists = tempProductItemDtos.Select(p => new ProductShoppingList
+                    {
+                        ProductId = p.ProductId,
+                        Amount = p.Amount
+                    }).ToList()
+                };
+
+                _context.ShoppingLists.Add(shoppingList);
+                await _context.SaveChangesAsync();
+
+                var marketCosts = await CalculateCostsPerMarketAsync(shoppingList.ProductShoppingLists.ToList());
+
+
+                return new ConvertedShoppingListDtoResponse
+                {
+                    Id = shoppingList.Id,
+                    Name = shoppingList.Name,
+                    CostPerMarket = marketCosts,
+                    DateCreated = shoppingList.DateCreated,
+                    DateModified = shoppingList.DateModified
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Fehler beim Konvertieren der temporären Liste in eine permanente Liste für Benutzer {UserId}", userId);
+                throw;
+            }
+        }
+
+
 
 
     }

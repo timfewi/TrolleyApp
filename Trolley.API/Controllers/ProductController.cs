@@ -57,7 +57,7 @@ namespace Trolley.API.Controllers
 
         //GET: api/Product/Suche
         //Get all products by name
-        [HttpGet("Suche")]
+        [HttpGet("Search")]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetProductsByName(string name)
         {
             try

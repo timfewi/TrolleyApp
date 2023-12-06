@@ -7,7 +7,7 @@ namespace Trolley.API.Entities
     public class ShoppingList : BaseEntity
     {
         public string Name { get; set; }
-
+        public string? ShareLink { get; set; }
         // Navigation properties
         public ICollection<ProductShoppingList> ProductShoppingLists { get; set; }
         public virtual ICollection<UserShoppingList> UserShoppingLists { get; set; }
