@@ -12,9 +12,11 @@ namespace Trolley.API.Services
     {
 
         private readonly MarketService _marketService;
+        private readonly ILogger<ShoppingListService> _logger;
         public ShoppingListService(IServiceProvider serviceProvider, MarketService marketService) : base(serviceProvider)
         {
             _marketService = marketService;
+            _logger = serviceProvider.GetRequiredService<ILogger<ShoppingListService>>();
         }
 
         #region CRUD Operations
@@ -241,6 +243,64 @@ namespace Trolley.API.Services
             await _context.SaveChangesAsync();
         }
 
+        // UPDATE AMOUNT OF PRODUCT ON SHOPPING LIST
+        public async Task UpdateProductAmountInShoppingListAsync(int shoppingListId, ProductAmountUpdateDto updateDto, string userId)
+        {
+            var productShoppingList = await _context.ProductShoppingLists
+                .FirstOrDefaultAsync(psl => psl.ProductId == updateDto.ProductId && psl.ShoppingListId == shoppingListId);
+
+            if (productShoppingList == null)
+            {
+                _logger.LogWarning($"Product with ID {updateDto.ProductId} not found on shopping list with ID {shoppingListId}.");
+                throw new KeyNotFoundException("Product not found in shopping list.");
+            }
+
+            // Prüfen, ob der Benutzer zur Shoppingliste berechtigt ist
+            var isUserAuthorized = await _context.UserShoppingLists.AnyAsync(usl => usl.AppUserId == userId && usl.ShoppingListId == shoppingListId);
+            if (!isUserAuthorized)
+            {
+                _logger.LogWarning($"User with ID {userId} is not authorized to update shopping list with ID {shoppingListId}.");
+                throw new UnauthorizedAccessException("User is not authorized to update this shopping list.");
+            }
+
+            if (updateDto.NewAmount <= 0)
+            {
+                throw new ArgumentException("Amount must be greater than 0.");
+            }
+
+            productShoppingList.Amount = updateDto.NewAmount;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"ProductShoppingList with ID {productShoppingList.Id} updated.");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                HandleConcurrencyException(ex, productShoppingList);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void HandleConcurrencyException(DbUpdateConcurrencyException ex, ProductShoppingList conflictedEntity)
+        {
+            foreach (var entry in ex.Entries)
+            {
+                if (entry.Entity is ProductShoppingList)
+                {
+                    var databaseValues = entry.GetDatabaseValues();
+
+                    // Überschreiben der Datenbankwerte mit den Werten des Clients
+                    entry.OriginalValues.SetValues(databaseValues);
+                    entry.CurrentValues.SetValues(conflictedEntity);
+
+                    _logger.LogWarning($"Concurrency conflict resolved for ProductShoppingList with ID {conflictedEntity.Id}. Client values have been saved.");
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region Calculate Cheapest Market For ShoppingList
@@ -260,7 +320,6 @@ namespace Trolley.API.Services
 
             var costPerMarket = await CalculateCostPerMarket(shoppingList, new List<string>()); // Ohne gesperrte Märkte
 
-            // Erstelle eine Liste von DTOs, die die Kosten für jeden Markt zeigen
             var shoppingListMarketCosts = costPerMarket.Select(marketCost => new ShoppingListMarketCostDto
             {
                 MarketName = marketCost.Key,
@@ -294,6 +353,35 @@ namespace Trolley.API.Services
             return await CalculateCostPerMarket(shoppingList, new List<string>());
         }
 
+        // CALCULATE TOTAL COST FOR SHOPPING LIST FOR EACH MARKET WITH PRODUCT ID AND AMOUNT
+        public async Task<ShoppingListItemsMarketTotalPricesDto> GetShoppingListWithMarketTotalPricesAsync(int shoppingListId)
+        {
+            var shoppingList = await _context.ShoppingLists
+                .Include(sl => sl.ProductShoppingLists).ThenInclude(psl => psl.Product).ThenInclude(p => p.MarketProducts)
+                .FirstOrDefaultAsync(sl => sl.Id == shoppingListId);
+
+            if (shoppingList == null)
+            {
+                throw new KeyNotFoundException("Shopping list not found.");
+            }
+
+            var marketTotalPrices = await CalculateCostPerMarket(shoppingList, new List<string>());
+            var items = shoppingList.ProductShoppingLists.Select(psl => new ProductAmountDto
+            {
+                ProductId = psl.ProductId,
+                Amount = psl.Amount
+            }).ToList();
+
+            return new ShoppingListItemsMarketTotalPricesDto()
+            {
+                MarketTotalPrices = marketTotalPrices.Select(mtp => new MarketTotalPriceDto
+                {
+                    MarketName = mtp.Key,
+                    TotalPrice = mtp.Value
+                }).ToList(),
+                Items = items
+            };
+        }
 
 
         // CALCULATE CHEAPEST MARKET FOR SHOPPING LIST

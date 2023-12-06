@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Entities
@@ -11,5 +12,6 @@ namespace Trolley.API.Entities
         public Product Product { get; set; }
         public int? ShoppingListId { get; set; }
         public ShoppingList ShoppingList { get; set; }
+
     }
 }

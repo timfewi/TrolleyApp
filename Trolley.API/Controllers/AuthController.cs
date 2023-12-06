@@ -102,7 +102,7 @@ namespace Trolley.API.Controllers
                 return Ok(new
                 {
                     Message = "Login successful",
-                    JwtToken = jwtToken
+                    JwtToken = $"Bearer {jwtToken}"
                 });
             }
             catch (Exception ex)

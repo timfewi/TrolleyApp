@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Data;
 using Trolley.API.Dtos;
 using Trolley.API.Entities;
@@ -94,6 +95,7 @@ namespace Trolley.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving shopping lists");
             }
         }
+
 
 
         // PUT: api/ShoppingList/{shoppingListId}
@@ -193,7 +195,7 @@ namespace Trolley.API.Controllers
             try
             {
                 await _shoppingListService.AddProductsToShoppingListAsync(shoppingListId, products, userId);
-                var totalCostPerMarket = await _shoppingListService.CalculateTotalCostPerMarketAsync(shoppingListId);
+                var totalCostPerMarket = await _shoppingListService.GetShoppingListWithMarketTotalPricesAsync(shoppingListId);
                 return Ok(new { Message = "Products added successfully.", TotalCostPerMarket = totalCostPerMarket });
             }
             catch (KeyNotFoundException ex)
@@ -233,6 +235,39 @@ namespace Trolley.API.Controllers
             {
                 _logger.LogError(ex, "Error removing product with ID {ProductId} from shopping list with ID {ShoppingListId}", productId, shoppingListId);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error removing product from shopping list");
+            }
+        }
+
+
+        // PUT: api/ShoppingList/{shoppingListId}/UpdateProductAmount
+        [HttpPut("{shoppingListId}/UpdateProductAmount")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProductAmount(int shoppingListId, [FromBody] ProductAmountUpdateDto productAmountUpdateDto)
+        {
+            var userId = _userManager.GetUserId(User);
+            try
+            {
+                await _shoppingListService.UpdateProductAmountInShoppingListAsync(shoppingListId, productAmountUpdateDto, userId);
+                var totalCostPerMarket = await _shoppingListService.GetShoppingListWithMarketTotalPricesAsync(shoppingListId);
+                return Ok(new { Message = "Product amount updated successfully.", TotalCostPerMarket = totalCostPerMarket });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Database update error in UpdateProductAmount.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while updating the product amount." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating product amount in shopping list with ID {ShoppingListId}", shoppingListId);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Unexpected error occurred." });
             }
         }
 
