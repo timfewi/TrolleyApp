@@ -241,6 +241,7 @@ namespace Trolley.API.Controllers
 
         // PUT: api/ShoppingList/{shoppingListId}/UpdateProductAmount
         [HttpPut("{shoppingListId}/UpdateProductAmount")]
+
         [Authorize]
         public async Task<IActionResult> UpdateProductAmount(int shoppingListId, [FromBody] ProductAmountUpdateDto productAmountUpdateDto)
         {

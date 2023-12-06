@@ -11,6 +11,8 @@ using Trolley.API.Entities;
 using Trolley.API.Mapper;
 using Trolley.API.Services;
 using Trolley.API.Utils;
+using Trolley.API.Middlewares;
+using Trolley.API.Utils.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,12 @@ builder.Logging.AddSerilog(logger);
 
 // Register AutoMapper.
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+// Global Exception Handling
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalExceptionsFilter>();
+});
 
 
 //Add IMemoryCache
@@ -151,6 +159,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 // CORS-Middleware verwenden
