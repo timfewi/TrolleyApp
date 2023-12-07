@@ -7,6 +7,7 @@ using Trolley.API.Enums;
 using Trolley.API.Services;
 using System.Threading.Tasks;
 using iText.Kernel.Pdf.Tagutils;
+using System.Data;
 
 namespace Trolley.API.Controllers
 {
@@ -64,6 +65,14 @@ namespace Trolley.API.Controllers
             {
                 return BadRequest(roleResult.Errors);
             }
+
+            var jwtToken = _tokenService.CreateJWTToken(appUser);
+
+            return Ok(new
+            {
+                Message = "Registration successful",
+                JwtToken = $"Bearer {jwtToken}"
+            });
 
             return Ok("Benutzer erfolgreich registriert. Bitte einloggen.");
         }

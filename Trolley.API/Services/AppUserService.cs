@@ -1,12 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Services
 {
     public class AppUserService : BaseService
     {
-        public AppUserService(IServiceProvider serviceProvider) : base(serviceProvider)
+        private readonly UserManager<AppUser> _userManager;
+        public AppUserService(IServiceProvider serviceProvider, UserManager<AppUser> userManager) : base(serviceProvider)
         {
+            _userManager = userManager;
+
         }
 
         public async Task<List<AppUser>> GetUsersAsync()
@@ -25,5 +30,8 @@ namespace Trolley.API.Services
                 throw new Exception($"Couldn't find users", ex);
             }
         }
+
+
+
     }
 }

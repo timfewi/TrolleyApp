@@ -88,6 +88,7 @@ builder.Services.AddScoped<TemporaryShoppingListService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MarketService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<AppUserService>();
 
 
 

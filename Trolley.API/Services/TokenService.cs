@@ -43,6 +43,28 @@ namespace Trolley.API.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public string CreateJWTToken(IdentityUser user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id) // Fügen Sie die Benutzer-ID als Claim hinzu
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials
+            );
+
+            _logger.LogInformation($"User {user.UserName} logged in at {DateTime.Now}");
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
 
     }
 }

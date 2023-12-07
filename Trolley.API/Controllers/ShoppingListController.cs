@@ -190,6 +190,8 @@ namespace Trolley.API.Controllers
         [Authorize]
         public async Task<IActionResult> AddProductsToShoppingList(int shoppingListId, [FromBody] List<ProductToAddDto> products)
         {
+
+
             var userId = _userManager.GetUserId(User);
 
             try
@@ -248,6 +250,7 @@ namespace Trolley.API.Controllers
             var userId = _userManager.GetUserId(User);
             try
             {
+
                 await _shoppingListService.UpdateProductAmountInShoppingListAsync(shoppingListId, productAmountUpdateDto, userId);
                 var totalCostPerMarket = await _shoppingListService.GetShoppingListWithMarketTotalPricesAsync(shoppingListId);
                 return Ok(new { Message = "Product amount updated successfully.", TotalCostPerMarket = totalCostPerMarket });
