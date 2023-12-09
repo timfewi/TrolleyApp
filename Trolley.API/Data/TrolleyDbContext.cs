@@ -784,6 +784,7 @@ namespace Trolley.API.Data
             modelBuilder.Entity<IdentityRole>().HasData(roles);
 
 
+
             // UserShoppingList
             modelBuilder.Entity<UserShoppingList>()
                 .HasKey(usl => new { usl.AppUserId, usl.ShoppingListId });
@@ -831,7 +832,7 @@ namespace Trolley.API.Data
                 .HasForeignKey(psl => psl.ShoppingListId);
 
 
-            //UserShoppingList
+
 
 
             //BrandProduct
@@ -1091,9 +1092,45 @@ namespace Trolley.API.Data
             #endregion
 
 
+
+
+
             var marketProducts = GenerateMarketProducts();
             modelBuilder.Entity<MarketProduct>().HasData(marketProducts.ToArray());
+
+
+
+
+            // Seed Admin User
+
+            var adminUserId = "2d6d60c8-ae2b-47c5-a7e8-50535cf5bfb8";
+            var adminUser = new AppUser
+            {
+                Id = adminUserId,
+                UserName = "admin@example.com",
+                NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                Email = "admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                EmailConfirmed = true,
+            };
+
+            // Password Hash
+            var passwordHasher = new PasswordHasher<AppUser>();
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "string");
+
+            modelBuilder.Entity<AppUser>().HasData(adminUser);
+
+            // Seed Admin User Role
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                               new IdentityUserRole<string>
+                               {
+                                   RoleId = adminRoleId,
+                                   UserId = adminUserId
+                               }
+                                          );
+
         }
+
 
 
 

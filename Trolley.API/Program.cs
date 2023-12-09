@@ -89,6 +89,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MarketService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AppUserService>();
+builder.Services.AddScoped<AdminService>();
 
 
 
@@ -152,7 +153,6 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -174,3 +174,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+

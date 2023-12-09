@@ -1,12 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Services
 {
     public class MarketService : BaseService
     {
-        public MarketService(IServiceProvider serviceProvider) : base(serviceProvider)
+        protected readonly DbException _dbException;
+        public MarketService(IServiceProvider serviceProvider, DbException dbException) : base(serviceProvider)
         {
+            _dbException = dbException;
+        }
+
+
+        public async Task<List<Market>> GetMarketsAsync()
+        {
+            try
+            {
+                var markets = await _context.Markets.ToListAsync();
+                return markets;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogError($"Couldn't find markets", ex);
+                throw new KeyNotFoundException("Couldn't find markets", ex);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't find markets", ex);
+                throw new Exception("Couldn't find markets", ex);
+            }
         }
 
         public async Task<List<string>> GetBlockedMarketsForUserAsync(string userId)

@@ -282,6 +282,8 @@ namespace Trolley.API.Services
             }
         }
 
+
+        // HANDLE CONCURRENCY EXCEPTION FOR PRODUCTSHOPPINGLIST
         private void HandleConcurrencyException(DbUpdateConcurrencyException ex, ProductShoppingList conflictedEntity)
         {
             foreach (var entry in ex.Entries)

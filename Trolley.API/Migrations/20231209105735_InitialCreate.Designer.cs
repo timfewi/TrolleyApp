@@ -12,7 +12,7 @@ using Trolley.API.Data;
 namespace Trolley.API.Migrations
 {
     [DbContext(typeof(TrolleyDbContext))]
-    [Migration("20231206125323_InitialCreate")]
+    [Migration("20231209105735_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -174,6 +174,13 @@ namespace Trolley.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "2d6d60c8-ae2b-47c5-a7e8-50535cf5bfb8",
+                            RoleId = "1d6d60c8-ae2b-47c5-a7e8-50535cf5bfb8"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -258,6 +265,24 @@ namespace Trolley.API.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2d6d60c8-ae2b-47c5-a7e8-50535cf5bfb8",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fecb07ec-6758-4e9d-bde8-1eadf6738cec",
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENgu0UrHDiFKaommd4Ghj4t3FZfbPWWD9HIVT2byA+SuGLflY5lCVpl1miVZ5b1jXA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "88d89e54-3ebc-48f6-9993-0807b5f5a4c7",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@example.com"
+                        });
                 });
 
             modelBuilder.Entity("Trolley.API.Entities.BlockedMarket", b =>
@@ -536,7 +561,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -545,7 +570,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -554,7 +579,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -563,7 +588,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.29
+                            Price = 5.79
                         },
                         new
                         {
@@ -572,7 +597,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.1899999999999995
+                            Price = 6.9900000000000002
                         },
                         new
                         {
@@ -581,7 +606,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.29
+                            Price = 4.3899999999999997
                         },
                         new
                         {
@@ -599,7 +624,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 7.6899999999999995
+                            Price = 7.29
                         },
                         new
                         {
@@ -608,7 +633,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.6899999999999995
+                            Price = 4.4900000000000002
                         },
                         new
                         {
@@ -626,7 +651,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 8.4900000000000002
+                            Price = 9.0899999999999999
                         },
                         new
                         {
@@ -635,7 +660,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.6899999999999995
+                            Price = 5.79
                         },
                         new
                         {
@@ -644,7 +669,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.8899999999999997
+                            Price = 7.4900000000000002
                         },
                         new
                         {
@@ -653,7 +678,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 8.7899999999999991
+                            Price = 8.6899999999999995
                         },
                         new
                         {
@@ -662,7 +687,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 5.4900000000000002
                         },
                         new
                         {
@@ -680,7 +705,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.29
+                            Price = 3.5899999999999999
                         },
                         new
                         {
@@ -689,7 +714,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.29
                         },
                         new
                         {
@@ -698,7 +723,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -707,7 +732,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.29
                         },
                         new
                         {
@@ -716,7 +741,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -725,7 +750,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.29
                         },
                         new
                         {
@@ -734,7 +759,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.5899999999999999
+                            Price = 3.1899999999999999
                         },
                         new
                         {
@@ -743,7 +768,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -752,7 +777,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -761,7 +786,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.29
                         },
                         new
                         {
@@ -770,7 +795,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.68999999999999995
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -779,7 +804,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -788,7 +813,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.1899999999999999
                         },
                         new
                         {
@@ -806,7 +831,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.1899999999999999
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -815,7 +840,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.29
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -824,7 +849,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -860,7 +885,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.79
                         },
                         new
                         {
@@ -869,7 +894,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -878,7 +903,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -887,7 +912,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.29
+                            Price = 3.1899999999999999
                         },
                         new
                         {
@@ -896,7 +921,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.9900000000000002
+                            Price = 4.0899999999999999
                         },
                         new
                         {
@@ -905,7 +930,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.1899999999999999
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -914,7 +939,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.68999999999999995
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -923,7 +948,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.99
                         },
                         new
                         {
@@ -932,7 +957,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -941,7 +966,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.0899999999999999
+                            Price = 5.9900000000000002
                         },
                         new
                         {
@@ -950,7 +975,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.9900000000000002
+                            Price = 6.29
                         },
                         new
                         {
@@ -959,7 +984,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.79
+                            Price = 4.9900000000000002
                         },
                         new
                         {
@@ -968,7 +993,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.8899999999999997
+                            Price = 5.6899999999999995
                         },
                         new
                         {
@@ -977,7 +1002,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.3899999999999997
+                            Price = 6.6899999999999995
                         },
                         new
                         {
@@ -986,7 +1011,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.29
+                            Price = 4.79
                         },
                         new
                         {
@@ -1004,7 +1029,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.79
                         },
                         new
                         {
@@ -1022,7 +1047,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -1031,7 +1056,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.4899999999999998
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -1040,7 +1065,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.79
                         },
                         new
                         {
@@ -1049,7 +1074,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.68999999999999995
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -1058,7 +1083,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.99
                         },
                         new
                         {
@@ -1067,7 +1092,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1076,7 +1101,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.89000000000000001
                         },
                         new
                         {
@@ -1103,7 +1128,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.49
                         },
                         new
                         {
@@ -1112,7 +1137,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.8899999999999997
                         },
                         new
                         {
@@ -1130,7 +1155,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -1139,7 +1164,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.1899999999999999
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -1148,7 +1173,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.49
                         },
                         new
                         {
@@ -1157,7 +1182,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -1175,7 +1200,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -1211,7 +1236,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -1229,7 +1254,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -1238,7 +1263,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1247,7 +1272,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -1256,7 +1281,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1265,7 +1290,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -1292,7 +1317,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1301,7 +1326,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -1310,7 +1335,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -1319,7 +1344,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -1328,7 +1353,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -1337,7 +1362,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1346,7 +1371,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -1364,7 +1389,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -1373,7 +1398,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1382,7 +1407,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.49
                         },
                         new
                         {
@@ -1400,7 +1425,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -1409,7 +1434,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1418,7 +1443,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -1427,7 +1452,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.29
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -1436,7 +1461,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.8899999999999997
+                            Price = 3.6899999999999999
                         },
                         new
                         {
@@ -1445,7 +1470,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -1454,7 +1479,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -1463,7 +1488,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.79
                         },
                         new
                         {
@@ -1472,7 +1497,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -1490,7 +1515,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.8899999999999997
+                            Price = 6.3899999999999997
                         },
                         new
                         {
@@ -1499,7 +1524,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.8899999999999997
+                            Price = 4.3899999999999997
                         },
                         new
                         {
@@ -1508,7 +1533,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.79
                         },
                         new
                         {
@@ -1526,7 +1551,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.4900000000000002
+                            Price = 5.8899999999999997
                         },
                         new
                         {
@@ -1535,7 +1560,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.5899999999999999
+                            Price = 7.1899999999999995
                         },
                         new
                         {
@@ -1544,7 +1569,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 9.6899999999999995
+                            Price = 9.4900000000000002
                         },
                         new
                         {
@@ -1553,7 +1578,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.4900000000000002
+                            Price = 6.1899999999999995
                         },
                         new
                         {
@@ -1562,7 +1587,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.9900000000000002
+                            Price = 7.3899999999999997
                         },
                         new
                         {
@@ -1571,7 +1596,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 8.6899999999999995
+                            Price = 8.1899999999999995
                         },
                         new
                         {
@@ -1580,7 +1605,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.6899999999999995
+                            Price = 6.79
                         },
                         new
                         {
@@ -1589,7 +1614,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -1598,7 +1623,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.0899999999999999
                         },
                         new
                         {
@@ -1616,7 +1641,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.79
                         },
                         new
                         {
@@ -1625,7 +1650,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.79
                         },
                         new
                         {
@@ -1634,7 +1659,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -1643,7 +1668,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1652,7 +1677,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -1661,7 +1686,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -1670,7 +1695,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.99
                         },
                         new
                         {
@@ -1679,7 +1704,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -1697,7 +1722,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -1715,7 +1740,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1724,7 +1749,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1733,7 +1758,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.0899999999999999
                         },
                         new
                         {
@@ -1742,7 +1767,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.49
                         },
                         new
                         {
@@ -1778,7 +1803,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -1787,7 +1812,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.6899999999999999
+                            Price = 3.9899999999999998
                         },
                         new
                         {
@@ -1796,7 +1821,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -1805,7 +1830,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.29
                         },
                         new
                         {
@@ -1814,7 +1839,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.4900000000000002
+                            Price = 4.6899999999999995
                         },
                         new
                         {
@@ -1823,7 +1848,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -1832,7 +1857,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1841,7 +1866,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -1850,7 +1875,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -1859,7 +1884,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.9900000000000002
+                            Price = 5.0899999999999999
                         },
                         new
                         {
@@ -1868,7 +1893,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.5899999999999999
+                            Price = 6.1899999999999995
                         },
                         new
                         {
@@ -1877,7 +1902,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.4900000000000002
+                            Price = 4.3899999999999997
                         },
                         new
                         {
@@ -1886,7 +1911,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.9900000000000002
+                            Price = 5.3899999999999997
                         },
                         new
                         {
@@ -1895,7 +1920,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.1899999999999995
+                            Price = 6.5899999999999999
                         },
                         new
                         {
@@ -1904,7 +1929,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.9900000000000002
+                            Price = 4.3899999999999997
                         },
                         new
                         {
@@ -1913,7 +1938,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -1922,7 +1947,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.0899999999999999
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -1931,7 +1956,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -1940,7 +1965,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -1949,7 +1974,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.79
+                            Price = 3.29
                         },
                         new
                         {
@@ -1958,7 +1983,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -1967,7 +1992,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -1976,7 +2001,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -1985,7 +2010,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -1994,7 +2019,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -2003,7 +2028,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -2012,7 +2037,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2030,7 +2055,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.1899999999999999
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -2039,7 +2064,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2048,7 +2073,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2057,7 +2082,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.79
                         },
                         new
                         {
@@ -2066,7 +2091,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2075,7 +2100,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2093,7 +2118,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2129,7 +2154,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.0899999999999999
                         },
                         new
                         {
@@ -2138,7 +2163,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.79
                         },
                         new
                         {
@@ -2147,7 +2172,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -2156,7 +2181,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2165,7 +2190,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.49
                         },
                         new
                         {
@@ -2183,7 +2208,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2201,7 +2226,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2219,7 +2244,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.99
                         },
                         new
                         {
@@ -2228,7 +2253,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2237,7 +2262,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -2246,7 +2271,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2264,7 +2289,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2273,7 +2298,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.49
                         },
                         new
                         {
@@ -2282,7 +2307,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -2300,7 +2325,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2309,7 +2334,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2318,7 +2343,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2327,7 +2352,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2336,7 +2361,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.29000000000000004
                         },
                         new
                         {
@@ -2345,7 +2370,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2354,7 +2379,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.5899999999999999
                         },
                         new
                         {
@@ -2363,7 +2388,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.1900000000000002
                         },
                         new
                         {
@@ -2372,7 +2397,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.99
                         },
                         new
                         {
@@ -2381,7 +2406,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2390,7 +2415,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -2399,7 +2424,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.5899999999999999
+                            Price = 5.1899999999999995
                         },
                         new
                         {
@@ -2408,7 +2433,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.0899999999999999
+                            Price = 6.79
                         },
                         new
                         {
@@ -2417,7 +2442,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.8899999999999997
+                            Price = 4.29
                         },
                         new
                         {
@@ -2426,7 +2451,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.6899999999999995
+                            Price = 6.9900000000000002
                         },
                         new
                         {
@@ -2435,7 +2460,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 7.9900000000000002
+                            Price = 7.4900000000000002
                         },
                         new
                         {
@@ -2444,7 +2469,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.29
+                            Price = 5.5899999999999999
                         },
                         new
                         {
@@ -2453,7 +2478,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.9900000000000002
+                            Price = 7.8899999999999997
                         },
                         new
                         {
@@ -2462,7 +2487,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 9.4900000000000002
+                            Price = 8.8900000000000006
                         },
                         new
                         {
@@ -2471,7 +2496,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.79
+                            Price = 5.8899999999999997
                         },
                         new
                         {
@@ -2480,7 +2505,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 7.5899999999999999
+                            Price = 6.8899999999999997
                         },
                         new
                         {
@@ -2489,7 +2514,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 8.1899999999999995
+                            Price = 9.8900000000000006
                         },
                         new
                         {
@@ -2498,7 +2523,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.4900000000000002
+                            Price = 6.79
                         },
                         new
                         {
@@ -2507,7 +2532,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -2516,7 +2541,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.8899999999999997
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -2525,7 +2550,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -2543,7 +2568,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.9899999999999998
+                            Price = 3.29
                         },
                         new
                         {
@@ -2552,7 +2577,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -2561,7 +2586,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2579,7 +2604,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -2588,7 +2613,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.29
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2597,7 +2622,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2606,7 +2631,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -2615,7 +2640,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2624,7 +2649,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.8899999999999997
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -2633,7 +2658,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -2642,7 +2667,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2651,7 +2676,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.4899999999999998
                         },
                         new
                         {
@@ -2660,7 +2685,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -2696,7 +2721,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.79
+                            Price = 2.4899999999999998
                         },
                         new
                         {
@@ -2714,7 +2739,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -2723,7 +2748,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.9899999999999998
+                            Price = 3.6899999999999999
                         },
                         new
                         {
@@ -2732,7 +2757,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.0899999999999999
+                            Price = 4.5899999999999999
                         },
                         new
                         {
@@ -2741,7 +2766,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.5899999999999999
+                            Price = 2.6899999999999999
                         },
                         new
                         {
@@ -2750,7 +2775,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.98999999999999999
                         },
                         new
                         {
@@ -2759,7 +2784,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.99
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -2777,7 +2802,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.0899999999999999
+                            Price = 5.9900000000000002
                         },
                         new
                         {
@@ -2786,7 +2811,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.5899999999999999
+                            Price = 6.6899999999999995
                         },
                         new
                         {
@@ -2804,7 +2829,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 5.29
+                            Price = 5.3899999999999997
                         },
                         new
                         {
@@ -2813,7 +2838,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 6.8899999999999997
+                            Price = 6.1899999999999995
                         },
                         new
                         {
@@ -2822,7 +2847,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 4.79
+                            Price = 4.9900000000000002
                         },
                         new
                         {
@@ -2831,7 +2856,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.29
                         },
                         new
                         {
@@ -2840,7 +2865,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2849,7 +2874,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -2858,7 +2883,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.3899999999999997
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -2876,7 +2901,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.8900000000000001
                         },
                         new
                         {
@@ -2885,7 +2910,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -2894,7 +2919,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.6900000000000002
+                            Price = 1.3900000000000001
                         },
                         new
                         {
@@ -2912,7 +2937,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.58999999999999997
                         },
                         new
                         {
@@ -2921,7 +2946,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.29
                         },
                         new
                         {
@@ -2930,7 +2955,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -2939,7 +2964,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.5900000000000001
                         },
                         new
                         {
@@ -2948,7 +2973,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2966,7 +2991,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.4899999999999998
+                            Price = 2.1899999999999999
                         },
                         new
                         {
@@ -2975,7 +3000,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.0899999999999999
+                            Price = 3.9899999999999998
                         },
                         new
                         {
@@ -2984,7 +3009,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -3002,7 +3027,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.3899999999999997
+                            Price = 3.8899999999999997
                         },
                         new
                         {
@@ -3011,7 +3036,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.6900000000000002
                         },
                         new
                         {
@@ -3047,7 +3072,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.8899999999999997
+                            Price = 2.5899999999999999
                         },
                         new
                         {
@@ -3056,7 +3081,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.6899999999999999
+                            Price = 3.0899999999999999
                         },
                         new
                         {
@@ -3074,7 +3099,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.78999999999999992
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -3083,7 +3108,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.8900000000000001
+                            Price = 1.99
                         },
                         new
                         {
@@ -3110,7 +3135,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.79
+                            Price = 1.0900000000000001
                         },
                         new
                         {
@@ -3119,7 +3144,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.48999999999999999
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -3128,7 +3153,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.68999999999999995
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -3137,7 +3162,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.79
                         },
                         new
                         {
@@ -3146,7 +3171,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.39000000000000001
+                            Price = 0.48999999999999999
                         },
                         new
                         {
@@ -3155,7 +3180,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.5900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -3164,7 +3189,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.6899999999999999
+                            Price = 2.9899999999999998
                         },
                         new
                         {
@@ -3173,7 +3198,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.78999999999999992
                         },
                         new
                         {
@@ -3182,7 +3207,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.58999999999999997
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -3191,7 +3216,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.0900000000000001
+                            Price = 1.49
                         },
                         new
                         {
@@ -3209,7 +3234,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.98999999999999999
+                            Price = 0.89000000000000001
                         },
                         new
                         {
@@ -3218,7 +3243,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.1900000000000002
+                            Price = 1.29
                         },
                         new
                         {
@@ -3236,7 +3261,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.89000000000000001
+                            Price = 0.68999999999999995
                         },
                         new
                         {
@@ -3245,7 +3270,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.3900000000000001
+                            Price = 1.79
                         },
                         new
                         {
@@ -3254,7 +3279,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 0.29000000000000004
+                            Price = 0.39000000000000001
                         },
                         new
                         {
@@ -3263,7 +3288,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 2.9899999999999998
+                            Price = 2.3899999999999997
                         },
                         new
                         {
@@ -3272,7 +3297,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 3.9899999999999998
+                            Price = 3.3899999999999997
                         },
                         new
                         {
@@ -3281,7 +3306,7 @@ namespace Trolley.API.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Id = 0,
-                            Price = 1.49
+                            Price = 1.0900000000000001
                         });
                 });
 

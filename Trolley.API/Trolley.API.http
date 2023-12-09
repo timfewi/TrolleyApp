@@ -1,6 +1,6 @@
-@Trolley.API_HostAddress = http://localhost:5194
+@Trolley.API_HostAddress = https://localhost:7124
 
-GET {{Trolley.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
+GET {{Trolley.API_HostAddress}}/api/appuser
 
 ###

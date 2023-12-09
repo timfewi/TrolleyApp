@@ -22,9 +22,9 @@ namespace Trolley.API.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/AppUser
+        // GET: api/AppUser/GetAll
         // Get all users
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<List<AppUser>>> GetUsers()
         {
             try
