@@ -6,10 +6,10 @@ namespace Trolley.API.Services
 {
     public class MarketService : BaseService
     {
-        protected readonly DbException _dbException;
-        public MarketService(IServiceProvider serviceProvider, DbException dbException) : base(serviceProvider)
+
+        public MarketService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _dbException = dbException;
+
         }
 
 

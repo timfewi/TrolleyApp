@@ -22,6 +22,7 @@ namespace Trolley.API.Controllers
             _userManager = userManager;
         }
 
+
         // GET: api/AppUser/GetAll
         // Get all users
         [HttpGet("GetAll")]

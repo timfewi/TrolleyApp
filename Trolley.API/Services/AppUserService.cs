@@ -13,7 +13,7 @@ namespace Trolley.API.Services
             _userManager = userManager;
 
         }
-
+        //Get all users
         public async Task<List<AppUser>> GetUsersAsync()
         {
             try
@@ -28,6 +28,21 @@ namespace Trolley.API.Services
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't find users", ex);
+            }
+        }
+
+        //Get user by id
+        public async Task<AppUser> GetUserByIdAsync(string userId)
+        {
+
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't find user with id: {userId}", ex);
             }
         }
 

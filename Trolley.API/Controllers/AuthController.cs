@@ -8,6 +8,8 @@ using Trolley.API.Services;
 using System.Threading.Tasks;
 using iText.Kernel.Pdf.Tagutils;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Trolley.API.Controllers
 {
@@ -112,6 +114,7 @@ namespace Trolley.API.Controllers
                 {
                     Message = "Login successful",
                     JwtToken = $"Bearer {jwtToken}"
+                    //JwtToken = jwtToken
                 });
             }
             catch (Exception ex)
@@ -120,6 +123,7 @@ namespace Trolley.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
 
     }
 }
