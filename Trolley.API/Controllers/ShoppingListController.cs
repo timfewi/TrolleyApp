@@ -272,6 +272,26 @@ namespace Trolley.API.Controllers
 
         #endregion
 
+        // Create ShoppingList and Add a List of Products to ShoppingList in one request
+        // POST: api/ShoppingList/CreateWithProducts
+        [HttpPost("CreateWithProducts")]
+        [Authorize]
+        public async Task<IActionResult> CreateShoppingListWithProducts([FromBody] CreateShoppingListAndAddListOfProductsDto createDto)
+        {
+            try
+            {
+                var userId = _userManager.GetUserId(User);
+
+                await _shoppingListService.CreateAndAddListOfProductsToShoppingListAsync(userId, createDto.Name, createDto.Products);
+
+                return Ok(new { Message = "Shopping list created successfully with products." });
+            }
+            catch (Exception ex)
+            {
+                // Fehlerbehandlung
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
 
     }

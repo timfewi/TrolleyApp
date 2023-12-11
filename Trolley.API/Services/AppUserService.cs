@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Mozilla;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Services
@@ -45,7 +46,6 @@ namespace Trolley.API.Services
                 throw new Exception($"Couldn't find user with id: {userId}", ex);
             }
         }
-
 
 
     }

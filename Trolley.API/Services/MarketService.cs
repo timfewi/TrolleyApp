@@ -81,8 +81,11 @@ namespace Trolley.API.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Couldn't unblock market with id: {marketId} for user with id: {userId}", ex);
+                Console.WriteLine($"Couldn't unblock market with id: {marketId} for user with id: {userId}");
                 throw new Exception($"Couldn't unblock market with id: {marketId} for user with id: {userId}", ex);
             }
+
         }
     }
 }

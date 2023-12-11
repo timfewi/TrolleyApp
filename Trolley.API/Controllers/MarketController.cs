@@ -60,6 +60,7 @@ namespace Trolley.API.Controllers
             catch (Exception ex)
             {
                 // Log exception and handle errors
+                _logger.LogError($"Couldn't unblock market with id {dto.MarketId}", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

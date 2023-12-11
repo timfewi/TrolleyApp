@@ -337,6 +337,92 @@ namespace Trolley.API.Services
 
         #endregion
 
+        #region CreateAndAddListOfProductsToShoppingList
+        /// <summary>
+        /// Creates a new shopping list and adds the given products to it. 
+        /// In case of an error, the shopping list will be deleted.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="createDto"></param>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public async Task CreateAndAddListOfProductsToShoppingListAsync(string userId, string name, List<ProductItemDto> products)
+        {
+            try
+            {
+                var shoppingList = new ShoppingList
+                {
+
+                    Name = name,
+
+                };
+
+                try
+                {
+                    var userShoppingList = new UserShoppingList
+                    {
+                        AppUserId = userId,
+                        ShoppingList = shoppingList
+                    };
+                    _context.UserShoppingLists.Add(userShoppingList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error while creating shopping list: {ex.Message}");
+                    throw;
+                }
+
+                try
+                {
+                    var shoppingListId = shoppingList.Id;
+
+                    foreach (var productToAdd in products)
+                    {
+                        if (productToAdd.Amount <= 0)
+                        {
+                            throw new ArgumentException($"Amount of product (ID: {productToAdd.ProductId}) must be greater than 0.");
+                        }
+
+                        var product = await _context.Products.FindAsync(productToAdd.ProductId);
+                        if (product == null)
+                        {
+                            throw new KeyNotFoundException($"Product (ID: {productToAdd.ProductId}) not found.");
+                        }
+
+                        var productShoppingList = new ProductShoppingList
+                        {
+                            ProductId = productToAdd.ProductId,
+                            ShoppingListId = shoppingListId,
+                            Amount = productToAdd.Amount
+                        };
+
+                        _context.ProductShoppingLists.Add(productShoppingList);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error while adding products to shopping list: {ex.Message}");
+                    _context.ShoppingLists.Remove(shoppingList);
+                    await _context.SaveChangesAsync();
+                    throw;
+                }
+
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while creating shopping list with products: {ex.Message}");
+                throw;
+            }
+
+        }
+
+        #endregion
+
         #region Calculate Cheapest Market For ShoppingList
 
         // CALCULATE TOTAL COST FOR SHOPPING LIST FOR EACH MARKET WITH PRODUCT DETAIL PRICE
@@ -442,8 +528,6 @@ namespace Trolley.API.Services
 
         #endregion
 
-
-
         #region Get Shopping List Details
 
         // GET SHOPPING LIST DETAILS
@@ -492,10 +576,6 @@ namespace Trolley.API.Services
         }
 
         #endregion
-
-
-
-
 
         #region Logic for ShoppingListReadDto calculations
         private async Task<Double> CalculateTotalCost(ShoppingList shoppingList)
@@ -582,6 +662,10 @@ namespace Trolley.API.Services
 
 
         #endregion
+
+
+
+
 
 
     }
