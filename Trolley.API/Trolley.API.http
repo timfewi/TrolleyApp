@@ -1,6 +1,24 @@
 @Trolley.API_HostAddress = https://localhost:7124
 
 
-GET {{Trolley.API_HostAddress}}/api/appuser
+DELETE {{Trolley.API_HostAddress}}/api/appuser/Delete
+
+###
+
+POST {{Trolley.API_HostAddress}}/api/appuser/UpdateEmail
+Content-Type: application/json
+
+{
+  //UpdateEmailDto
+}
+
+###
+
+POST {{Trolley.API_HostAddress}}/api/appuser/UpdatePassword
+Content-Type: application/json
+
+{
+  //UpdatePasswordDto
+}
 
 ###
