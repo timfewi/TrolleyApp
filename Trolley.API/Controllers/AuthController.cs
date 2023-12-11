@@ -19,9 +19,9 @@ namespace Trolley.API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly TokenService _tokenService;
+        private readonly JwtTokenService _tokenService;
 
-        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, TokenService tokenService)
+        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, JwtTokenService tokenService)
             : base(serviceProvider)
         {
             _userManager = userManager;

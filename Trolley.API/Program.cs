@@ -13,8 +13,11 @@ using Trolley.API.Services;
 using Trolley.API.Utils;
 using Trolley.API.Middlewares;
 using Trolley.API.Utils.Exceptions;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // Add Logger.
 var logger = new LoggerConfiguration()
@@ -55,6 +58,11 @@ builder.Services.AddCors(options =>
         {
             builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
         });
+
+    //options.AddDefaultPolicy(builder =>
+    //{
+    //    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    //});
 });
 
 //Identity Options
@@ -85,9 +93,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 // Register Services.
 builder.Services.AddScoped<ShoppingListService>();
 builder.Services.AddScoped<TemporaryShoppingListService>();
+builder.Services.AddScoped<ProductsService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MarketService>();
-builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddScoped<AppUserService>();
 builder.Services.AddScoped<AdminService>();
 

@@ -4,9 +4,9 @@ using Trolley.API.Entities;
 
 namespace Trolley.API.Services
 {
-    public class ProductService : BaseService
+    public class ProductsService : BaseService
     {
-        public ProductService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public ProductsService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
 
         }

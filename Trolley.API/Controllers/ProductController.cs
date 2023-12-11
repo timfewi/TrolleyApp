@@ -9,8 +9,8 @@ namespace Trolley.API.Controllers
     [Route("api/[controller]")]
     public class ProductController : BaseController
     {
-        private readonly ProductService _productService;
-        public ProductController(IServiceProvider serviceProvider, ProductService productService) : base(serviceProvider)
+        private readonly ProductsService _productService;
+        public ProductController(IServiceProvider serviceProvider, ProductsService productService) : base(serviceProvider)
         {
             _productService = productService;
         }

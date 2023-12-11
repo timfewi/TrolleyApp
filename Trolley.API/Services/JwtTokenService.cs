@@ -7,10 +7,10 @@ using Trolley.API.Entities;
 
 namespace Trolley.API.Services
 {
-    public class TokenService : BaseService
+    public class JwtTokenService : BaseService
     {
         private readonly IConfiguration _configuration;
-        public TokenService(IServiceProvider serviceProvider, IConfiguration configuration) : base(serviceProvider)
+        public JwtTokenService(IServiceProvider serviceProvider, IConfiguration configuration) : base(serviceProvider)
         {
             _configuration = configuration;
         }

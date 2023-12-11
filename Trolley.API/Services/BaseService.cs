@@ -9,6 +9,8 @@ namespace Trolley.API.Services
         protected readonly TrolleyDbContext _context;
         protected readonly IMapper _mapper;
         protected readonly ILogger _logger;
+        protected readonly IConfiguration _configuration;
+
 
 
         public BaseService(IServiceProvider serviceProvider)
@@ -17,8 +19,8 @@ namespace Trolley.API.Services
             _context = serviceProvider.GetRequiredService(typeof(TrolleyDbContext)) as TrolleyDbContext;
             _mapper = serviceProvider.GetRequiredService(typeof(IMapper)) as IMapper;
             _logger = serviceProvider.GetRequiredService(typeof(ILogger<BaseService>)) as ILogger<BaseService>;
+            _configuration = serviceProvider.GetRequiredService(typeof(IConfiguration)) as IConfiguration;
 
-            // envtl bug 
         }
     }
 

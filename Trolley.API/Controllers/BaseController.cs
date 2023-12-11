@@ -10,6 +10,7 @@ namespace Trolley.API.Controllers
         private readonly IServiceProvider _serviceProvider;
         protected readonly IMapper _mapper;
         protected readonly ILogger<BaseController> _logger;
+        protected readonly IConfiguration _configuration;
 
 
 
@@ -20,6 +21,7 @@ namespace Trolley.API.Controllers
             _context = _serviceProvider.GetRequiredService(typeof(TrolleyDbContext)) as TrolleyDbContext;
             _mapper = _serviceProvider.GetRequiredService(typeof(IMapper)) as IMapper;
             _logger = _serviceProvider.GetRequiredService(typeof(ILogger<BaseController>)) as ILogger<BaseController>;
+            _configuration = _serviceProvider.GetRequiredService(typeof(IConfiguration)) as IConfiguration;
         }
     }
 }
