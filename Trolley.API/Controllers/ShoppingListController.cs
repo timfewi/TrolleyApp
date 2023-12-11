@@ -67,7 +67,7 @@ namespace Trolley.API.Controllers
             }
         }
 
-        // GET: api/ShoppingList
+        // GET: api/ShoppingList/GetAll
         [HttpGet]
         [Authorize]
         [Route("GetAll")]
@@ -79,14 +79,8 @@ namespace Trolley.API.Controllers
             try
             {
                 var shoppingListsDtos = await _shoppingListService.GetAllShoppingListsByUserAsync(userId);
-                var totalCostsPerList = new Dictionary<int, Dictionary<string, double>>();
 
-                foreach (var list in shoppingListsDtos)
-                {
-                    totalCostsPerList[list.Id] = await _shoppingListService.CalculateTotalCostPerMarketAsync(list.Id);
-                }
-
-                return Ok(new { ShoppingLists = shoppingListsDtos, TotalCostsPerList = totalCostsPerList });
+                return Ok(new { ShoppingLists = shoppingListsDtos });
             }
             catch (Exception ex)
             {

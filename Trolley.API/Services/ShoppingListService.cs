@@ -60,15 +60,47 @@ namespace Trolley.API.Services
         }
 
         //GET ALL SHOPPING LISTS
-        public async Task<IEnumerable<ShoppingListReadDto>> GetAllShoppingListsByUserAsync(string userId)
+        public async Task<IEnumerable<ShoppingListGetAllDto>> GetAllShoppingListsByUserAsync(string userId)
         {
-            var shoppingLists = await _context.UserShoppingLists
+            // Zuerst die ShoppingList-Instanzen mit den nötigen Includes laden
+            var shoppingListEntities = await _context.UserShoppingLists
                 .Where(usl => usl.AppUserId == userId)
-                .Select(usl => usl.ShoppingList)
+                .Select(usl => usl.ShoppingListId)
                 .ToListAsync();
 
-            return shoppingLists.Select(sl => _mapper.Map<ShoppingListReadDto>(sl));
+            var shoppingLists = await _context.ShoppingLists
+                .Where(sl => shoppingListEntities.Contains(sl.Id))
+                .Include(sl => sl.ProductShoppingLists)
+                .ThenInclude(psl => psl.Product)
+                .ToListAsync();
+
+            var userBlockedMarkets = await _marketService.GetBlockedMarketsForUserAsync(userId);
+
+            // ShoppingList-Entitäten in DTOs umwandeln
+            var shoppingListsDtos = shoppingLists.Select(sl =>
+            {
+                var costPerMarket = CalculateCostPerMarket(sl, userBlockedMarkets).Result;
+
+                return new ShoppingListGetAllDto
+                {
+                    Id = sl.Id,
+                    Name = sl.Name,
+                    CostPerMarket = costPerMarket,
+                    Items = sl.ProductShoppingLists.Select(psl => new ProductItemDto
+                    {
+                        ProductId = psl.ProductId,
+                        Amount = psl.Amount
+                    }).ToList(),
+                    DateCreated = sl.DateCreated,
+                    DateModified = sl.DateModified
+                };
+            });
+
+            return shoppingListsDtos;
         }
+
+
+
 
 
         // UPDATE SHOPPING LIST
@@ -493,12 +525,15 @@ namespace Trolley.API.Services
             return result;
         }
 
-        private async Task<Dictionary<string, double>> CalculateCostPerMarket(ShoppingList shoppingList, List<string> blockedMarkets)
+        private async Task<Dictionary<string, double>> CalculateCostPerMarket(ShoppingList shoppingList,
+            List<string> blockedMarkets)
         {
             var result = new Dictionary<string, double>();
 
             // Sammle alle Produkt-IDs aus der Einkaufsliste
-            var productIds = shoppingList.ProductShoppingLists.Select(psl => psl.ProductId).ToList();
+            var productIds = shoppingList.ProductShoppingLists
+                .Select(psl => psl.ProductId)
+                .ToList();
 
             // Hole alle Marktpreise für diese Produkte in einer Abfrage
             var marketProducts = await _context.MarketProduct
@@ -509,7 +544,8 @@ namespace Trolley.API.Services
             foreach (var productShoppingList in shoppingList.ProductShoppingLists)
             {
                 // Finde die zugehörigen Marktpreise für jedes Produkt
-                var relevantMarketProducts = marketProducts.Where(mp => mp.ProductId == productShoppingList.ProductId);
+                var relevantMarketProducts = marketProducts
+                    .Where(mp => mp.ProductId == productShoppingList.ProductId);
 
                 foreach (var marketProduct in relevantMarketProducts)
                 {
@@ -528,7 +564,6 @@ namespace Trolley.API.Services
                     }
                 }
             }
-
             return result;
         }
 
