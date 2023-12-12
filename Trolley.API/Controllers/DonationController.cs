@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Identity;
@@ -14,95 +15,63 @@ namespace Trolley.API.Controllers
     [Route("api/[controller]")]
     public class DonationController : BaseController
     {
-        private static string clientURL = string.Empty;
+        private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager;
 
-        public DonationController(IServiceProvider serviceProvider) : base(serviceProvider)
+        public DonationController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, IConfiguration configuration)
+            : base(serviceProvider)
         {
+            _userManager = userManager;
+            StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
+            _configuration = configuration;
         }
 
         [HttpPost]
         [Route("CreateDonation")]
-        public async Task<IActionResult> CreateDonation([FromBody] CreateDonationDto dto, [FromServices] IServiceProvider serviceProvider)
-        {
-            var referer = Request.Headers.Referer;
-            clientURL = referer[0];
-
-            var server = serviceProvider.GetRequiredService<IServer>();
-            var serverAddressesFeature = server.Features.Get<IServerAddressesFeature>();
-            string? thisApiUrl = null;
-
-            if (serverAddressesFeature != null)
-            {
-                thisApiUrl = serverAddressesFeature.Addresses.FirstOrDefault();
-            }
-
-            if (thisApiUrl is not null)
-            {
-                var sessionId = await Checkout(dto, thisApiUrl);
-                var pubKey = _configuration["Stripe:PubKey"];
-
-                var createDonationResponse = new CreateDonationResponseDto
-                {
-                    SessionId = sessionId,
-                    PubKey = pubKey,
-                };
-
-                return Ok(createDonationResponse);
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server address not found.");
-            }
-        }
-
-        [NonAction]
-        private async Task<string> Checkout(CreateDonationDto dto, string thisApiUrl)
+        [Authorize]
+        public async Task<IActionResult> CreateDonation([FromBody] CreateDonationDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            if (string.IsNullOrEmpty(userId))
             {
-                _logger.LogError($"Couldn't find user with id {userId}");
-                return "Couldn't find user.";
+                return Unauthorized("Benutzer ist nicht authentifiziert.");
             }
 
-            var options = new SessionCreateOptions
+            var frontendBaseUrl = _configuration["FrontendBaseUrl"];
+            try
             {
-                PaymentMethodTypes = new List<string>
+                var options = new SessionCreateOptions
                 {
-                    "card",
-                },
-                LineItems = new List<SessionLineItemOptions>
-                {
-                    new SessionLineItemOptions
+                    PaymentMethodTypes = new List<string> { "card" },
+                    LineItems = new List<SessionLineItemOptions>
                     {
-                        PriceData = new SessionLineItemPriceDataOptions
+                        new SessionLineItemOptions
                         {
-                            UnitAmount = dto.Amount,
-                            Currency = "EUR",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            PriceData = new SessionLineItemPriceDataOptions
                             {
-                                Name = "Donation",
+                                UnitAmount = dto.Amount,
+                                Currency = "EUR",
+                                ProductData = new SessionLineItemPriceDataProductDataOptions { Name = "Donation" },
                             },
+                            Quantity = 1,
                         },
-                        Quantity = 1,
                     },
-                },
-                Mode = "payment",
-                SuccessUrl = $"{clientURL}/donation/success?session_id={{CHECKOUT_SESSION_ID}}",
-                CancelUrl = $"{clientURL}/donation/cancel",
-            };
+                    Mode = "payment",
+                    SuccessUrl = $"{frontendBaseUrl}donation/success?session_id={{CHECKOUT_SESSION_ID}}",
+                    CancelUrl = $"{frontendBaseUrl}donation/cancel",
 
-            var service = new SessionService();
-            var session = await service.CreateAsync(options);
+                };
 
-            var customerId = session.CustomerId;
+                var service = new SessionService();
+                var session = await service.CreateAsync(options);
 
-            Console.WriteLine("Customer ID: " + customerId);
-
-
-            return session.Id;
+                return Ok(new CreateDonationResponseDto { SessionId = session.Id, PubKey = _configuration["Stripe:PubKey"], Amount = dto.Amount });
+            }
+            catch (StripeException ex)
+            {
+                _logger.LogError($"Fehler beim Erstellen der Stripe-Sitzung: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Fehler beim Verbinden mit Stripe");
+            }
         }
 
         [HttpGet("success")]
@@ -142,10 +111,11 @@ namespace Trolley.API.Controllers
                 PaymentDate = paymentIntent.Created,
             };
 
+            var frontendBaseUrl = _configuration["FrontendBaseUrl"];
             _context.Donations.Add(donation);
             await _context.SaveChangesAsync();
 
-            return Redirect($"{clientURL}/donation/success?session_id={sessionId}");
+            return Redirect($"{frontendBaseUrl}/donation/success?session_id={sessionId}");
         }
     }
 }
