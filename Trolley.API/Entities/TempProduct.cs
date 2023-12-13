@@ -8,5 +8,6 @@
         public bool IsDiscountProduct { get; set; }
         public double Price { get; set; }
         public string IconName { get; set; }
+        public int ProductCategoryId { get; set; }
     }
 }

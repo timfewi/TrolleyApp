@@ -14,7 +14,9 @@ namespace Trolley.API.Utils.Exceptions
             {
                 Status = 500,
                 Title = "Ein interner Serverfehler ist aufgetreten",
-                Detail = context.Exception.Message
+                Detail = context.Exception.Message,
+                Instance = context.HttpContext.Request.Path,
+
             };
 
 

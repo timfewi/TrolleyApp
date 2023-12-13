@@ -144,6 +144,24 @@ namespace Trolley.API.Controllers
             }
         }
 
+        // DELETE: api/Admin/DeleteTempProducts
+        [HttpDelete("DeleteTempProducts")]
+        public async Task<IActionResult> DeleteTempProducts()
+        {
+            try
+            {
+                var tempProducts = _context.TempProducts.ToList();
+                _context.TempProducts.RemoveRange(tempProducts);
+                await _context.SaveChangesAsync();
+                return Ok($"TempProducts deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't delete TempProducts", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         // POST: api/Admin/ApproveProduct
         [HttpPost("ApproveProducts")]
@@ -157,19 +175,31 @@ namespace Trolley.API.Controllers
                 var marketId = FindOrCreateMarket(tempProduct.MarketName);
                 var productId = FindOrCreateProduct(tempProduct);
 
-                // Neues MarketProduct erstellen
-                var marketProduct = new MarketProduct
-                {
-                    MarketId = marketId,
-                    ProductId = productId,
-                    Price = tempProduct.Price
-                    // Weitere Felder nach Bedarf
-                };
+                var existingMarketProduct = _context.MarketProduct
+                    .FirstOrDefault(mp => mp.MarketId == marketId && mp.ProductId == productId);
 
-                _context.MarketProduct.Add(marketProduct);
+                if (existingMarketProduct == null)
+                {
+                    // Neues MarketProduct erstellen
+                    var marketProduct = new MarketProduct
+                    {
+                        MarketId = marketId,
+                        ProductId = productId,
+                        Price = tempProduct.Price
+                        // Weitere Felder nach Bedarf
+                    };
+
+                    _context.MarketProduct.Add(marketProduct);
+                }
+                else
+                {
+                    // MarketProduct aktualisieren
+                    existingMarketProduct.Price = tempProduct.Price;
+                    // Weitere Felder nach Bedarf
+                }
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
 
             // Temporäre Produkte löschen
             _context.TempProducts.RemoveRange(tempProducts);
@@ -190,12 +220,30 @@ namespace Trolley.API.Controllers
                 return existingProduct.Id;
             }
 
+            // Überprüfen, ob die Kategorie existiert
+            var category = _context.ProductCategories
+                .FirstOrDefault(c => c.Id == tempProduct.ProductCategoryId);
+
+            // Falls die Kategorie nicht existiert, Standardkategorie zuweisen
+            if (category == null)
+            {
+                category = _context.ProductCategories.FirstOrDefault(c => c.Name == "Standardkategorie");
+                if (category == null)
+                {
+                    // Neue Standardkategorie erstellen, falls noch nicht vorhanden
+                    category = new ProductCategory { Name = "Standardkategorie" };
+                    _context.ProductCategories.Add(category);
+                    _context.SaveChanges();
+                }
+            }
+
             var newProduct = new Product
             {
                 Name = tempProduct.ProductName,
                 IsOrganic = tempProduct.IsOrganic,
                 IsDiscountProduct = tempProduct.IsDiscountProduct,
-                // Setzen Sie hier weitere relevante Eigenschaften
+                IconName = tempProduct.IconName,
+                ProductCategoryId = category.Id
             };
 
             _context.Products.Add(newProduct);
@@ -203,6 +251,7 @@ namespace Trolley.API.Controllers
 
             return newProduct.Id;
         }
+
 
 
         private int FindOrCreateMarket(string marketName)
