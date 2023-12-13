@@ -77,11 +77,8 @@ namespace Trolley.API.Services
                 })
                 .ToListAsync();
         }
-        public async Task<Product> CreateProductAsync(Product product)
-        {
-            await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
-            return product;
-        }
+
+
+
     }
 }

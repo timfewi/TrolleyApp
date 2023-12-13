@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Trolley.API.Dtos;
+using Trolley.API.Entities;
+using Trolley.API.Enums;
 using Trolley.API.Services;
 
 namespace Trolley.API.Controllers
@@ -140,6 +143,90 @@ namespace Trolley.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
+        // POST: api/Admin/ApproveProduct
+        [HttpPost("ApproveProducts")]
+        public async Task<IActionResult> ApproveProducts()
+        {
+            var tempProducts = _context.TempProducts.ToList();
+
+            foreach (var tempProduct in tempProducts)
+            {
+                // Produkt-ID und Markt-ID basierend auf Namen finden oder erstellen
+                var marketId = FindOrCreateMarket(tempProduct.MarketName);
+                var productId = FindOrCreateProduct(tempProduct);
+
+                // Neues MarketProduct erstellen
+                var marketProduct = new MarketProduct
+                {
+                    MarketId = marketId,
+                    ProductId = productId,
+                    Price = tempProduct.Price
+                    // Weitere Felder nach Bedarf
+                };
+
+                _context.MarketProduct.Add(marketProduct);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Temporäre Produkte löschen
+            _context.TempProducts.RemoveRange(tempProducts);
+            await _context.SaveChangesAsync();
+
+            return Ok("Produkte erfolgreich genehmigt und gespeichert.");
+        }
+
+        private int FindOrCreateProduct(TempProduct tempProduct)
+        {
+            var existingProduct = _context.Products.FirstOrDefault(p =>
+                p.Name == tempProduct.ProductName &&
+                p.IsOrganic == tempProduct.IsOrganic &&
+                p.IsDiscountProduct == tempProduct.IsDiscountProduct);
+
+            if (existingProduct != null)
+            {
+                return existingProduct.Id;
+            }
+
+            var newProduct = new Product
+            {
+                Name = tempProduct.ProductName,
+                IsOrganic = tempProduct.IsOrganic,
+                IsDiscountProduct = tempProduct.IsDiscountProduct,
+                // Setzen Sie hier weitere relevante Eigenschaften
+            };
+
+            _context.Products.Add(newProduct);
+            _context.SaveChanges();
+
+            return newProduct.Id;
+        }
+
+
+        private int FindOrCreateMarket(string marketName)
+        {
+            var existingMarket = _context.Markets.FirstOrDefault(m => m.Name == marketName);
+
+            if (existingMarket != null)
+            {
+                return existingMarket.Id;
+            }
+
+            var newMarket = new Market
+            {
+                Name = marketName,
+                MarketCategory = MarketCategory.Supermarket
+            };
+
+            _context.Markets.Add(newMarket);
+            _context.SaveChanges();
+
+            return newMarket.Id;
+        }
+
+
 
     }
 }
