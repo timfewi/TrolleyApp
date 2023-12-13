@@ -1,7 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
@@ -80,6 +78,7 @@ namespace Trolley.API.Controllers
             var sessionService = new SessionService();
             var session = await sessionService.GetAsync(sessionId);
 
+            //TODO: use invoice service to get invoice
             var invoiceService = new InvoiceService();
             var invoiceOptions = new InvoiceListOptions
             {
@@ -115,7 +114,15 @@ namespace Trolley.API.Controllers
             _context.Donations.Add(donation);
             await _context.SaveChangesAsync();
 
-            return Redirect($"{frontendBaseUrl}/donation/success?session_id={sessionId}");
+
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, "PremiumUser");
+            if (!addToRoleResult.Succeeded)
+            {
+                _logger.LogError($"Couldn't add role PremiumUser to user with id {userId}");
+                return BadRequest($"Couldn't add role PremiumUser to user with id {userId}");
+            }
+
+            return Redirect($"{frontendBaseUrl}donation/success?session_id={sessionId}");
         }
     }
 }
