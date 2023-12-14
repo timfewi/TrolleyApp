@@ -82,6 +82,7 @@ namespace Trolley.API.Controllers
 
         // POST: /api/Auth/Login
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
@@ -91,14 +92,14 @@ namespace Trolley.API.Controllers
 
                 if (user == null)
                 {
-                    return BadRequest("Failed to login");
+                    return StatusCode(StatusCodes.Status404NotFound, "User not found");
                 }
 
                 var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
                 if (!checkPasswordResult)
                 {
-                    return BadRequest("Failed to login");
+                    return StatusCode(StatusCodes.Status401Unauthorized, "Failed to Login");
                 }
 
                 var roles = await _userManager.GetRolesAsync(user);

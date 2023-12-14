@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Trolley.API.Dtos;
 using Trolley.API.Entities;
 
 namespace Trolley.API.Services
@@ -44,6 +45,68 @@ namespace Trolley.API.Services
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't find roles for user with id {userId}", ex);
+            }
+        }
+
+        // Get User with roles
+        public async Task<List<UserWithRolesDto>> GetAllUsersWithRolesAsync()
+        {
+            try
+            {
+                var usersWithRoles = new List<UserWithRolesDto>();
+
+                var users = await _userManager.Users.ToListAsync();
+                foreach (var user in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    usersWithRoles.Add(new UserWithRolesDto
+                    {
+                        User = user,
+                        Roles = roles.ToList()
+                    });
+                }
+
+                return usersWithRoles;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't find users with roles", ex);
+            }
+        }
+
+        // Update User roles
+        public async Task<bool> UpdateUserRolesAsync(string userId, string roleName)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    _logger.LogError($"Couldn't find user with id {userId}");
+                    return false;
+                }
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var result = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                if (!result.Succeeded)
+                {
+                    _logger.LogError($"Couldn't remove roles from user {user.UserName}");
+                    return false;
+                }
+
+                result = await _userManager.AddToRoleAsync(user, roleName);
+                if (!result.Succeeded)
+                {
+                    _logger.LogError($"Couldn't add role to user {user.UserName}");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't update roles for user with id {userId}", ex);
+                return false;
             }
         }
 

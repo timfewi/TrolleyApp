@@ -52,6 +52,47 @@ namespace Trolley.API.Controllers
             }
         }
 
+        // GET: api/AppUser/GetAllUsersWithRoles
+        // Get all users with roles
+        [HttpGet("GetAllUsersWithRoles")]
+        public async Task<IActionResult> GetAllUsersWithRoles()
+        {
+            try
+            {
+                var usersWithRoles = await _adminService.GetAllUsersWithRolesAsync();
+                return Ok(usersWithRoles);
+            }
+            catch (Exception ex)
+            {
+                // Log exception and handle errors
+                _logger.LogError($"Couldn't find users with roles", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("UpdateRole")]
+        public async Task<IActionResult> UpdateRole([FromBody] UserRoleUpdateDto userRoleUpdate)
+        {
+            try
+            {
+                var result = await _adminService.UpdateUserRolesAsync(userRoleUpdate.UserId, userRoleUpdate.RoleName);
+                if (result)
+                {
+                    return Ok($"Role for user with id {userRoleUpdate.UserId} updated successfully");
+                }
+                else
+                {
+                    return BadRequest($"Couldn't update role for user with id {userRoleUpdate.UserId}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't update role for user with id {userRoleUpdate.UserId}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
         // POST: api/Admin/AddRoleToUser
         [HttpPost("AddRoleToUser")]
         public async Task<IActionResult> AddRoleToUser(string userId, string roleName)
