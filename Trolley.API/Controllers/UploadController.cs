@@ -10,6 +10,7 @@ namespace Trolley.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "ShopOwner,Admin")]
     public class UploadController : BaseController
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -26,7 +27,7 @@ namespace Trolley.API.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("Datei ist leer oder nicht vorhanden.");
 
-            var tempProducts = new List<TemporaryProductDto>();
+            var tempProducts = new List<TempCsvUploadDto>();
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -35,13 +36,14 @@ namespace Trolley.API.Controllers
             using (var stream = new StreamReader(file.OpenReadStream()))
             using (var csv = new CsvReader(stream, config))
             {
-                tempProducts = csv.GetRecords<TemporaryProductDto>().ToList();
+                tempProducts = csv.GetRecords<TempCsvUploadDto>().ToList();
             }
 
             foreach (var tempProduct in tempProducts)
             {
-                var tempEntity = new TempProduct
+                var tempEntity = new TempCsvUpload
                 {
+                    UserName = tempProduct.UserName,
                     MarketName = tempProduct.MarketName,
                     ProductName = tempProduct.ProductName,
                     IsOrganic = tempProduct.IsOrganic,
@@ -50,7 +52,7 @@ namespace Trolley.API.Controllers
                     IconName = tempProduct.IconName
                 };
 
-                _context.TempProducts.Add(tempEntity);
+                _context.TempCsvUploads.Add(tempEntity);
             }
 
             await _context.SaveChangesAsync();

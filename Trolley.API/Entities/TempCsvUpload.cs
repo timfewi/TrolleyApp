@@ -1,7 +1,8 @@
 ﻿namespace Trolley.API.Entities
 {
-    public class TempProduct : BaseEntity
+    public class TempCsvUpload : BaseEntity
     {
+        public string UserName { get; set; }
         public string MarketName { get; set; }
         public string ProductName { get; set; }
         public bool IsOrganic { get; set; }

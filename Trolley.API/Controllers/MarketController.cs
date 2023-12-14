@@ -65,7 +65,7 @@ namespace Trolley.API.Controllers
             }
         }
 
-        // GET: api/Markets/GetAll
+        // GET: api/Markets/GetAllBlockedMarkets
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllBlockedMarkets(string userId)
         {

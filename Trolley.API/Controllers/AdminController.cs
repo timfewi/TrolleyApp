@@ -150,10 +150,10 @@ namespace Trolley.API.Controllers
         {
             try
             {
-                var tempProducts = _context.TempProducts.ToList();
-                _context.TempProducts.RemoveRange(tempProducts);
+                var tempProducts = _context.TempCsvUploads.ToList();
+                _context.TempCsvUploads.RemoveRange(tempProducts);
                 await _context.SaveChangesAsync();
-                return Ok($"TempProducts deleted successfully");
+                return Ok($"TempProducts deTempCsvUploadsleted successfully");
             }
             catch (Exception ex)
             {
@@ -162,12 +162,112 @@ namespace Trolley.API.Controllers
             }
         }
 
+        // GET: api/Admin/GetTempProducts
+        [HttpGet("GetTempProducts")]
+        public async Task<IActionResult> GetTempProducts()
+        {
+            try
+            {
+                var tempProducts = _context.TempCsvUploads.ToList();
+                return Ok(tempProducts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't find TempProducts", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        // GET: api/Admin/Get1TempProduct
+        [HttpGet("Get1TempProduct")]
+        public async Task<IActionResult> Get1TempProduct(int tempProductId)
+        {
+            try
+            {
+                var tempProduct = _context.TempCsvUploads.FirstOrDefault(tp => tp.Id == tempProductId);
+                if (tempProduct == null)
+                {
+                    _logger.LogError($"TempProduct with id {tempProductId} not found");
+                    return NotFound($"TempProduct with id {tempProductId} not found");
+                }
+                // Oder DTO verwenden mit beliebigen Feldern
+                return Ok(tempProduct);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't find TempProduct with id {tempProductId}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        // POST: api/Admin/Approve1Product
+        [HttpPost("Approve1Product")]
+        public async Task<IActionResult> Approve1Product(int tempProductId)
+        {
+            try
+            {
+                var tempProduct = _context.TempCsvUploads.FirstOrDefault(tp => tp.Id == tempProductId);
+                if (tempProduct == null)
+                {
+                    _logger.LogError($"TempProduct with id {tempProductId} not found");
+                    return NotFound($"TempProduct with id {tempProductId} not found");
+                }
+
+                // Produkt-ID und Markt-ID basierend auf Namen finden oder erstellen
+                var marketId = FindOrCreateMarket(tempProduct.MarketName);
+                var productId = FindOrCreateProduct(tempProduct);
+
+                var existingMarketProduct = _context.MarketProduct
+                    .FirstOrDefault(mp => mp.MarketId == marketId && mp.ProductId == productId);
+
+                if (existingMarketProduct == null)
+                {
+                    // Neues MarketProduct erstellen
+                    var marketProduct = new MarketProduct
+                    {
+                        MarketId = marketId,
+                        ProductId = productId,
+                        Price = tempProduct.Price
+                    };
+
+                    _context.MarketProduct.Add(marketProduct);
+                }
+                else
+                {
+                    // MarketProduct aktualisieren
+                    existingMarketProduct.Price = tempProduct.Price;
+                }
+                await _context.SaveChangesAsync();
+
+                // Temporäres Produkt löschen
+                _context.TempCsvUploads.Remove(tempProduct);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    Message = "Produkt erfolgreich genehmigt und gespeichert.",
+                    ApprovedProduct = new
+                    {
+                        MarketName = tempProduct.MarketName,
+                        ProductName = tempProduct.ProductName,
+                        Price = tempProduct.Price
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't approve product with id {tempProductId}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
         // POST: api/Admin/ApproveProduct
         [HttpPost("ApproveProducts")]
         public async Task<IActionResult> ApproveProducts()
         {
-            var tempProducts = _context.TempProducts.ToList();
+            var tempProducts = _context.TempCsvUploads.ToList();
 
             foreach (var tempProduct in tempProducts)
             {
@@ -202,13 +302,13 @@ namespace Trolley.API.Controllers
 
 
             // Temporäre Produkte löschen
-            _context.TempProducts.RemoveRange(tempProducts);
+            _context.TempCsvUploads.RemoveRange(tempProducts);
             await _context.SaveChangesAsync();
 
             return Ok("Produkte erfolgreich genehmigt und gespeichert.");
         }
 
-        private int FindOrCreateProduct(TempProduct tempProduct)
+        private int FindOrCreateProduct(TempCsvUpload tempProduct)
         {
             var existingProduct = _context.Products.FirstOrDefault(p =>
                 p.Name == tempProduct.ProductName &&
@@ -253,7 +353,6 @@ namespace Trolley.API.Controllers
         }
 
 
-
         private int FindOrCreateMarket(string marketName)
         {
             var existingMarket = _context.Markets.FirstOrDefault(m => m.Name == marketName);
@@ -274,6 +373,8 @@ namespace Trolley.API.Controllers
 
             return newMarket.Id;
         }
+
+
 
 
 
