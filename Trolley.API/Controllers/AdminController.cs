@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Dtos;
 using Trolley.API.Entities;
 using Trolley.API.Enums;
@@ -71,26 +72,41 @@ namespace Trolley.API.Controllers
         }
 
         [HttpPut("UpdateRole")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateRole([FromBody] UserRoleUpdateDto userRoleUpdate)
         {
             try
             {
-                var result = await _adminService.UpdateUserRolesAsync(userRoleUpdate.UserId, userRoleUpdate.RoleName);
+                var result = await _adminService.UpdateUserRolesAsync(userRoleUpdate.UserId, new List<string> { userRoleUpdate.RoleName });
+
                 if (result)
                 {
                     return Ok($"Role for user with id {userRoleUpdate.UserId} updated successfully");
                 }
                 else
                 {
-                    return BadRequest($"Couldn't update role for user with id {userRoleUpdate.UserId}");
+                    return NotFound($"Couldn't find user with id {userRoleUpdate.UserId} or role name {userRoleUpdate.RoleName}");
                 }
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound($"Couldn't find user with id {userRoleUpdate.UserId}");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex, $"Concurrency issue encountered while updating role for user {userRoleUpdate.UserId}");
+                return Conflict($"Concurrency issue: Couldn't update role for user with id {userRoleUpdate.UserId}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't update role for user with id {userRoleUpdate.UserId}", ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                _logger.LogError(ex, $"Couldn't update role for user with id {userRoleUpdate.UserId}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
         }
+
 
 
         // POST: api/Admin/AddRoleToUser
@@ -349,6 +365,34 @@ namespace Trolley.API.Controllers
             return Ok("Produkte erfolgreich genehmigt und gespeichert.");
         }
 
+
+        // DELETE: api/Admin/Remove1TempProduct
+        [HttpDelete("Remove1TempProduct")]
+        public async Task<IActionResult> Remove1TempProduct(int tempProductId)
+        {
+            try
+            {
+                var tempProduct = _context.TempCsvUploads.FirstOrDefault(tp => tp.Id == tempProductId);
+                if (tempProduct == null)
+                {
+                    _logger.LogError($"TempProduct with id {tempProductId} not found");
+                    return NotFound($"TempProduct with id {tempProductId} not found");
+                }
+
+                _context.TempCsvUploads.Remove(tempProduct);
+                await _context.SaveChangesAsync();
+
+                return Ok($"TempProduct with id {tempProductId} deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't delete TempProduct with id {tempProductId}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+
         private int FindOrCreateProduct(TempCsvUpload tempProduct)
         {
             var existingProduct = _context.Products.FirstOrDefault(p =>
@@ -414,6 +458,7 @@ namespace Trolley.API.Controllers
 
             return newMarket.Id;
         }
+
 
 
 

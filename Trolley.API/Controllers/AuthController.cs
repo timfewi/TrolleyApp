@@ -125,6 +125,54 @@ namespace Trolley.API.Controllers
             }
         }
 
+        // GET: /api/Auth
+        // Updates the jwt token and outputs the user data of the logged in user
+        [HttpGet]
+        [Route("Get")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetUserData()
+        {
+            try
+            {
+                // Extrahiere Benutzer-ID aus dem JWT-Token
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("Invalid token");
+                }
+
+                // Benutzerdaten aus der Datenbank abrufen
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                // Rollen des Benutzers abrufen
+                var roles = await _userManager.GetRolesAsync(user);
+
+                // Neues JWT-Token erstellen
+                var jwtToken = _tokenService.CreateJWTToken(user, roles.ToList());
+
+                // Antwort zusammenstellen
+                return StatusCode(StatusCodes.Status200OK, new
+                {
+                    Email = user.Email,
+                    Roles = roles[0],
+                    JwtToken = $"Bearer {jwtToken}"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get user data");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
     }
 }

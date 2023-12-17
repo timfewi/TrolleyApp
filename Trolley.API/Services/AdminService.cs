@@ -74,38 +74,75 @@ namespace Trolley.API.Services
             }
         }
 
-        // Update User roles
-        public async Task<bool> UpdateUserRolesAsync(string userId, string roleName)
+        #region Update User roles with UserManger
+        //// Update User roles with UserManger
+        //public async Task<bool> UpdateUserRolesAsync(string userId, string roleName)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByIdAsync(userId);
+
+
+        //        if (user == null)
+        //        {
+        //            _logger.LogError($"Couldn't find user with id {userId}");
+        //            return false;
+        //        }
+
+        //        var userRoles = await _userManager.GetRolesAsync(user);
+        //        var result = await _userManager.RemoveFromRolesAsync(user, userRoles);
+        //        if (!result.Succeeded)
+        //        {
+        //            _logger.LogError($"Couldn't remove roles from user {user.UserName}");
+        //            return false;
+        //        }
+
+        //        result = await _userManager.AddToRoleAsync(user, roleName);
+        //        if (!result.Succeeded)
+        //        {
+        //            _logger.LogError($"Couldn't add role to user {user.UserName}");
+        //            return false;
+        //        }
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Couldn't update roles for user with id {userId}", ex);
+        //        return false;
+        //    }
+        //}
+
+        #endregion
+
+
+        //Directly update User roles with DbContext
+        public async Task<bool> UpdateUserRolesAsync(string userId, List<string> roleNames)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user == null)
+                // Hole alle aktuellen Rollen des Benutzers
+                var currentRoles = await _context.UserRoles.Where(ur => ur.UserId == userId).ToListAsync();
+
+                // Entferne alle aktuellen Rollen
+                _context.UserRoles.RemoveRange(currentRoles);
+
+                // Füge neue Rollen hinzu
+                foreach (var roleName in roleNames)
                 {
-                    _logger.LogError($"Couldn't find user with id {userId}");
-                    return false;
+                    var role = await _context.Roles.SingleOrDefaultAsync(r => r.Name == roleName);
+                    if (role != null)
+                    {
+                        _context.UserRoles.Add(new IdentityUserRole<string> { UserId = userId, RoleId = role.Id });
+                    }
                 }
 
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var result = await _userManager.RemoveFromRolesAsync(user, userRoles);
-                if (!result.Succeeded)
-                {
-                    _logger.LogError($"Couldn't remove roles from user {user.UserName}");
-                    return false;
-                }
-
-                result = await _userManager.AddToRoleAsync(user, roleName);
-                if (!result.Succeeded)
-                {
-                    _logger.LogError($"Couldn't add role to user {user.UserName}");
-                    return false;
-                }
-
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't update roles for user with id {userId}", ex);
+                _logger.LogError($"Error updating roles for user {userId}: {ex}");
                 return false;
             }
         }
