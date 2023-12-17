@@ -21,7 +21,8 @@ namespace Trolley.API.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtTokenService _tokenService;
 
-        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, JwtTokenService tokenService)
+        public AuthController(IServiceProvider serviceProvider, UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager, JwtTokenService tokenService)
             : base(serviceProvider)
         {
             _userManager = userManager;
@@ -72,8 +73,13 @@ namespace Trolley.API.Controllers
 
             return Ok(new
             {
-                Message = "Registration successful",
-                JwtToken = $"Bearer {jwtToken}"
+                JwtToken = $"Bearer {jwtToken}",
+                User = new
+                {
+                    newUser.Id,
+                    newUser.Email,
+                    role = defaultRole
+                }
             });
 
             return Ok("Benutzer erfolgreich registriert. Bitte einloggen.");
@@ -113,8 +119,13 @@ namespace Trolley.API.Controllers
 
                 return Ok(new
                 {
-                    Message = "Login successful",
-                    JwtToken = $"Bearer {jwtToken}"
+                    JwtToken = $"Bearer {jwtToken}",
+                    user = new
+                    {
+                        user.Id,
+                        user.Email,
+                        role = roles[0]
+                    }
                     //JwtToken = jwtToken
                 });
             }
@@ -162,9 +173,13 @@ namespace Trolley.API.Controllers
                 // Antwort zusammenstellen
                 return StatusCode(StatusCodes.Status200OK, new
                 {
-                    Email = user.Email,
-                    Roles = roles[0],
-                    JwtToken = $"Bearer {jwtToken}"
+                    JwtToken = $"Bearer {jwtToken}",
+                    user = new
+                    {
+                        user.Id,
+                        user.Email,
+                        Role = roles[0],
+                    }
                 });
             }
             catch (Exception ex)
@@ -173,6 +188,5 @@ namespace Trolley.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
     }
 }
