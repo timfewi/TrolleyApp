@@ -140,7 +140,6 @@ namespace Trolley.API.Controllers
         // Updates the jwt token and outputs the user data of the logged in user
         [HttpGet]
         [Route("Get")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

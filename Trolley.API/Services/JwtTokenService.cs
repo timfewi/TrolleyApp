@@ -35,7 +35,7 @@ namespace Trolley.API.Services
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(120),
+                expires: DateTime.Now.AddMonths(6),
                 signingCredentials: credentials
             );
 
