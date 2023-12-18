@@ -4,7 +4,7 @@ namespace Trolley.API.Dtos
 {
     public class TempCsvUploadDto
     {
-        public string UserName { get; set; }
+        public string UserId { get; set; }
         public string MarketName { get; set; }
         public string ProductName { get; set; }
         public bool IsOrganic { get; set; }

@@ -22,7 +22,7 @@ namespace Trolley.API.Controllers
 
         // POST: api/Upload/Csv
         [HttpPost("Csv")]
-        public async Task<IActionResult> UploadCsv(IFormFile file)
+        public async Task<IActionResult> UploadCsv(IFormFile file, [FromForm] string userId, [FromForm] string marketName)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("Datei ist leer oder nicht vorhanden.");
@@ -43,13 +43,14 @@ namespace Trolley.API.Controllers
             {
                 var tempEntity = new TempCsvUpload
                 {
-                    UserName = tempProduct.UserName,
-                    MarketName = tempProduct.MarketName,
+                    UserId = userId,
+                    MarketName = marketName,
                     ProductName = tempProduct.ProductName,
                     IsOrganic = tempProduct.IsOrganic,
                     IsDiscountProduct = tempProduct.IsDiscountProduct,
                     Price = tempProduct.Price,
-                    IconName = tempProduct.IconName
+                    IconName = tempProduct.IconName,
+                    ProductCategoryId = tempProduct.ProductCategoryId
                 };
 
                 _context.TempCsvUploads.Add(tempEntity);
@@ -58,8 +59,13 @@ namespace Trolley.API.Controllers
             await _context.SaveChangesAsync();
 
 
-            return Ok("CSV-Datei erfolgreich verarbeitet.");
-        }
+            return Ok(
+                new
+                {
+                    status = 200,
+                    message = "Datei erfolgreich hochgeladen."
 
+                });
+        }
     }
 }
