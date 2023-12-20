@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Trolley.API.Dtos;
 using Trolley.API.Entities;
 using Trolley.API.Services;
@@ -17,11 +18,13 @@ namespace Trolley.API.Controllers
         private readonly JwtTokenService _tokenService;
         private readonly UserManager<AppUser> _userManager;
         private readonly AppUserService _appUserService;
-        public AppUserController(IServiceProvider serviceProvider, AppUserService appUserService, UserManager<AppUser> userManager, JwtTokenService tokenService) : base(serviceProvider)
+        private readonly AdminService _adminService;
+        public AppUserController(IServiceProvider serviceProvider, AppUserService appUserService, UserManager<AppUser> userManager, JwtTokenService tokenService, AdminService adminService) : base(serviceProvider)
         {
             _appUserService = appUserService;
             _userManager = userManager;
             _tokenService = tokenService;
+            _adminService = adminService;
         }
 
 
@@ -203,7 +206,42 @@ namespace Trolley.API.Controllers
             }
         }
 
+        [HttpPut("UpdateRole")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
+        public async Task<IActionResult> UpdateRole([FromBody] UserRoleUpdateDto userRoleUpdate)
+        {
+            try
+            {
+                var result = await _adminService.UpdateUserRolesAsync(userRoleUpdate.UserId, new List<string> { userRoleUpdate.RoleName });
 
+                if (result)
+                {
+                    return Ok($"Role for user with id {userRoleUpdate.UserId} updated successfully");
+                }
+                else
+                {
+                    return NotFound($"Couldn't find user with id {userRoleUpdate.UserId} or role name {userRoleUpdate.RoleName}");
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound($"Couldn't find user with id {userRoleUpdate.UserId}");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex, $"Concurrency issue encountered while updating role for user {userRoleUpdate.UserId}");
+                return Conflict($"Concurrency issue: Couldn't update role for user with id {userRoleUpdate.UserId}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Couldn't update role for user with id {userRoleUpdate.UserId}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
 
     }
 }
