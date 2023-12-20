@@ -755,6 +755,29 @@ namespace Trolley.API.Data
                     ProductId = 102,
                     MarketId = i
                 });
+
+                // Monster Energy Drink isOrganic = false, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.5, 2.0),
+                    ProductId = 255,
+                    MarketId = i
+                });
+                // Monster Energy Drink isOrganic = true, isDicounter = false
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(2.0, 3.0),
+                    ProductId = 256,
+                    MarketId = i
+                });
+                // Monster Energy Drink isOrganic = false, isDicounter = true
+                marketProducts.Add(new MarketProduct
+                {
+                    Price = randomPriceGenerator.GenerateRandomPrice(1.0, 1.6),
+                    ProductId = 257,
+                    MarketId = i
+                });
+
                 #endregion
             }
 
@@ -926,6 +949,7 @@ namespace Trolley.API.Data
             //Mineralwasser(prickelnd) - bottle - water
             //Speck - bacon
             //Apfel - apple - whole
+            // Monster Energy - prescription-bottle
             #endregion
 
             #region Products
@@ -1065,9 +1089,14 @@ namespace Trolley.API.Data
                 // Speck
                 new Product { Id = 100, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = false, },
                 new Product { Id = 101, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = true, IsDiscountProduct = false, },
-                new Product { Id = 102, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = true, }
+                new Product { Id = 102, Name = "Speck", ProductCategoryId = 4, IconName = "bacon", IsOrganic = false, IsDiscountProduct = true, },
 
-            );
+                // Monster Energy
+                new Product { Id = 255, Name = "Monster Energy", ProductCategoryId = 9, IconName = "prescription-bottle", IsOrganic = false, IsDiscountProduct = false, },
+                new Product { Id = 256, Name = "Monster Energy", ProductCategoryId = 9, IconName = "prescription-bottle", IsOrganic = true, IsDiscountProduct = false, },
+                new Product { Id = 257, Name = "Monster Energy", ProductCategoryId = 9, IconName = "prescription-bottle", IsOrganic = false, IsDiscountProduct = true, }
+                );
+
             #endregion
 
 
